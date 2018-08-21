@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>The Analysis of South African Household Survey Data using R</title>
+  <meta name="description" content="The Analysis of South African Household Survey Data using R">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="The Analysis of South African Household Survey Data using R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="The Analysis of South African Household Survey Data using R" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="The Analysis of South African Household Survey Data using R" />
+  
+  <meta name="twitter:description" content="The Analysis of South African Household Survey Data using R" />
+  
+
+<meta name="author" content="Takwanisa Machemedze">
+
+
+<meta name="date" content="2018-08-21">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="getting-started-with-r.html">
+<link rel="next" href="understanding-graphs.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#what-is-r"><i class="fa fa-check"></i><b>1.1</b> What is R?</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#pros-and-cons-of-r"><i class="fa fa-check"></i><b>1.2</b> Pros and cons of R</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="introduction.html"><a href="introduction.html#pros"><i class="fa fa-check"></i><b>1.2.1</b> Pros</a></li>
+<li class="chapter" data-level="1.2.2" data-path="introduction.html"><a href="introduction.html#cons"><i class="fa fa-check"></i><b>1.2.2</b> Cons</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#what-is-rstudio"><i class="fa fa-check"></i><b>1.3</b> What is RStudio?</a></li>
+<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#the-r-system"><i class="fa fa-check"></i><b>1.4</b> The R system</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="introduction.html"><a href="introduction.html#base-system"><i class="fa fa-check"></i><b>1.4.1</b> Base system</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html"><i class="fa fa-check"></i><b>2</b> Getting started with R</a><ul>
+<li class="chapter" data-level="2.1" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#introduction-1"><i class="fa fa-check"></i><b>2.1</b> Introduction</a></li>
+<li class="chapter" data-level="2.2" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#organize-your-r-session"><i class="fa fa-check"></i><b>2.2</b> Organize your R session</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#working-directory"><i class="fa fa-check"></i><b>2.2.1</b> Working directory</a></li>
+<li class="chapter" data-level="2.2.2" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#load-and-install-required-libraries"><i class="fa fa-check"></i><b>2.2.2</b> Load (and install) required libraries</a></li>
+<li class="chapter" data-level="2.2.3" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#comments"><i class="fa fa-check"></i><b>2.2.3</b> Comments</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#getting-help"><i class="fa fa-check"></i><b>2.3</b> Getting help</a></li>
+<li class="chapter" data-level="2.4" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#output-file"><i class="fa fa-check"></i><b>2.4</b> Output file</a></li>
+<li class="chapter" data-level="2.5" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#objects-in-r"><i class="fa fa-check"></i><b>2.5</b> Objects in R</a><ul>
+<li class="chapter" data-level="2.5.1" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#removing-objects-from-the-r-environment---rm-function"><i class="fa fa-check"></i><b>2.5.1</b> Removing objects from the R environment - rm() function</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#saving-in-r"><i class="fa fa-check"></i><b>2.6</b> Saving in R</a></li>
+<li class="chapter" data-level="2.7" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#importing-nids-data-into-r"><i class="fa fa-check"></i><b>2.7</b> Importing NIDS data into R</a></li>
+<li class="chapter" data-level="2.8" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#exploring-the-data"><i class="fa fa-check"></i><b>2.8</b> Exploring the data</a><ul>
+<li class="chapter" data-level="2.8.1" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#subsetting-data---part-1"><i class="fa fa-check"></i><b>2.8.1</b> Subsetting data - part 1</a></li>
+<li class="chapter" data-level="2.8.2" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#data-documentation---value-and-variable-labels"><i class="fa fa-check"></i><b>2.8.2</b> Data documentation - value and variable labels</a></li>
+<li class="chapter" data-level="2.8.3" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#operators-in-r"><i class="fa fa-check"></i><b>2.8.3</b> Operators in R</a></li>
+<li class="chapter" data-level="2.8.4" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#subsetting-data---part-2"><i class="fa fa-check"></i><b>2.8.4</b> Subsetting data - part 2</a></li>
+</ul></li>
+<li class="chapter" data-level="2.9" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#tidyverse"><i class="fa fa-check"></i><b>2.9</b> Tidyverse</a><ul>
+<li class="chapter" data-level="2.9.1" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#brief-introduction-to-tidyverse"><i class="fa fa-check"></i><b>2.9.1</b> Brief introduction to tidyverse</a></li>
+<li class="chapter" data-level="2.9.2" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#core-tidyverse-packages"><i class="fa fa-check"></i><b>2.9.2</b> Core tidyverse packages</a></li>
+<li class="chapter" data-level="2.9.3" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#install-and-load-tidyverse-packages"><i class="fa fa-check"></i><b>2.9.3</b> Install and load tidyverse packages</a></li>
+<li class="chapter" data-level="2.9.4" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#dplyr-verbs"><i class="fa fa-check"></i><b>2.9.4</b> dplyr verbs</a></li>
+<li class="chapter" data-level="2.9.5" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#using-dplyr-functions"><i class="fa fa-check"></i><b>2.9.5</b> Using dplyr functions</a></li>
+<li class="chapter" data-level="2.9.6" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#pipe-operator"><i class="fa fa-check"></i><b>2.9.6</b> Pipe operator %&gt;%</a></li>
+</ul></li>
+<li class="chapter" data-level="2.10" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#more-data-exploration"><i class="fa fa-check"></i><b>2.10</b> More data exploration</a><ul>
+<li class="chapter" data-level="2.10.1" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#example-1-subset-variables"><i class="fa fa-check"></i><b>2.10.1</b> Example 1: Subset variables</a></li>
+<li class="chapter" data-level="2.10.2" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#example-2-subset-observations"><i class="fa fa-check"></i><b>2.10.2</b> Example 2: Subset observations</a></li>
+<li class="chapter" data-level="2.10.3" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#example-3-subset-both-observations-and-variables"><i class="fa fa-check"></i><b>2.10.3</b> Example 3: Subset both observations and variables</a></li>
+</ul></li>
+<li class="chapter" data-level="2.11" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#managing-the-data"><i class="fa fa-check"></i><b>2.11</b> Managing the data</a></li>
+<li class="chapter" data-level="2.12" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#worked-example-creating-a-bmi-variable"><i class="fa fa-check"></i><b>2.12</b> Worked example: creating a bmi variable</a></li>
+<li class="chapter" data-level="2.13" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#question-answers"><i class="fa fa-check"></i><b>2.13</b> Question answers</a></li>
+<li class="chapter" data-level="2.14" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#exercises"><i class="fa fa-check"></i><b>2.14</b> Exercises</a></li>
+<li class="chapter" data-level="2.15" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#exercise-answers"><i class="fa fa-check"></i><b>2.15</b> Exercise answers</a></li>
+<li class="chapter" data-level="2.16" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#session-information"><i class="fa fa-check"></i><b>2.16</b> Session information</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="understanding-distributions.html"><a href="understanding-distributions.html"><i class="fa fa-check"></i><b>3</b> Understanding distributions</a><ul>
+<li class="chapter" data-level="3.1" data-path="understanding-distributions.html"><a href="understanding-distributions.html#introduction-2"><i class="fa fa-check"></i><b>3.1</b> Introduction</a></li>
+<li class="chapter" data-level="3.2" data-path="understanding-distributions.html"><a href="understanding-distributions.html#variable-types"><i class="fa fa-check"></i><b>3.2</b> Variable types</a></li>
+<li class="chapter" data-level="3.3" data-path="understanding-distributions.html"><a href="understanding-distributions.html#count-observations---dimnrow"><i class="fa fa-check"></i><b>3.3</b> Count observations - dim(),nrow()</a></li>
+<li class="chapter" data-level="3.4" data-path="understanding-distributions.html"><a href="understanding-distributions.html#using-household-level-variables"><i class="fa fa-check"></i><b>3.4</b> Using household level variables</a></li>
+<li class="chapter" data-level="3.5" data-path="understanding-distributions.html"><a href="understanding-distributions.html#frequency-distribution-tables"><i class="fa fa-check"></i><b>3.5</b> Frequency distribution tables</a></li>
+<li class="chapter" data-level="3.6" data-path="understanding-distributions.html"><a href="understanding-distributions.html#frequency-distribution-tables-household-level-data"><i class="fa fa-check"></i><b>3.6</b> Frequency distribution tables: household level data</a></li>
+<li class="chapter" data-level="3.7" data-path="understanding-distributions.html"><a href="understanding-distributions.html#missing-data-and-non-responses"><i class="fa fa-check"></i><b>3.7</b> Missing data and non-responses</a></li>
+<li class="chapter" data-level="3.8" data-path="understanding-distributions.html"><a href="understanding-distributions.html#three-primary-origins-of-na-missing-data-in-nids"><i class="fa fa-check"></i><b>3.8</b> Three primary origins of NA-missing data in NIDS</a></li>
+<li class="chapter" data-level="3.9" data-path="understanding-distributions.html"><a href="understanding-distributions.html#missing-data-and-qualifiers"><i class="fa fa-check"></i><b>3.9</b> Missing data and qualifiers</a></li>
+<li class="chapter" data-level="3.10" data-path="understanding-distributions.html"><a href="understanding-distributions.html#question-answers-1"><i class="fa fa-check"></i><b>3.10</b> Question answers</a></li>
+<li class="chapter" data-level="3.11" data-path="understanding-distributions.html"><a href="understanding-distributions.html#exercises-1"><i class="fa fa-check"></i><b>3.11</b> Exercises</a></li>
+<li class="chapter" data-level="3.12" data-path="understanding-distributions.html"><a href="understanding-distributions.html#session-information-1"><i class="fa fa-check"></i><b>3.12</b> Session information</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="understanding-graphs.html"><a href="understanding-graphs.html"><i class="fa fa-check"></i><b>4</b> Understanding graphs</a><ul>
+<li class="chapter" data-level="4.1" data-path="understanding-graphs.html"><a href="understanding-graphs.html#introduction-3"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="understanding-graphs.html"><a href="understanding-graphs.html#getting-ready"><i class="fa fa-check"></i><b>4.2</b> Getting ready</a></li>
+<li class="chapter" data-level="4.3" data-path="understanding-graphs.html"><a href="understanding-graphs.html#ggplot2-and-its-elements"><i class="fa fa-check"></i><b>4.3</b> ggplot2 and its elements</a></li>
+<li class="chapter" data-level="4.4" data-path="understanding-graphs.html"><a href="understanding-graphs.html#histograms"><i class="fa fa-check"></i><b>4.4</b> Histograms</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="understanding-graphs.html"><a href="understanding-graphs.html#graphing-economic-wellbeing-in-south-africa-in-2008"><i class="fa fa-check"></i><b>4.4.1</b> Graphing economic wellbeing in South Africa in 2008</a></li>
+<li class="chapter" data-level="4.4.2" data-path="understanding-graphs.html"><a href="understanding-graphs.html#facetting"><i class="fa fa-check"></i><b>4.4.2</b> Facetting</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="understanding-graphs.html"><a href="understanding-graphs.html#worked-example-1-what-is-the-most-common-age-at-which-people-start-smoking"><i class="fa fa-check"></i><b>4.5</b> Worked example 1: What is the most common age at which people start smoking?</a></li>
+<li class="chapter" data-level="4.6" data-path="understanding-graphs.html"><a href="understanding-graphs.html#pie-charts"><i class="fa fa-check"></i><b>4.6</b> Pie charts</a></li>
+<li class="chapter" data-level="4.7" data-path="understanding-graphs.html"><a href="understanding-graphs.html#investigating-newborn-and-infant-gender"><i class="fa fa-check"></i><b>4.7</b> Investigating newborn and infant gender</a><ul>
+<li class="chapter" data-level="4.7.1" data-path="understanding-graphs.html"><a href="understanding-graphs.html#exploring-the-distribution-of-race-across-provinces"><i class="fa fa-check"></i><b>4.7.1</b> Exploring the distribution of race across provinces</a></li>
+<li class="chapter" data-level="4.7.2" data-path="understanding-graphs.html"><a href="understanding-graphs.html#urban-vs.rural-where-are-south-africans-living"><i class="fa fa-check"></i><b>4.7.2</b> Urban vs. rural, where are South Africans living?</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="understanding-graphs.html"><a href="understanding-graphs.html#worked-example-2-are-there-differences-between-the-age-at-which-men-and-women-start-smoking"><i class="fa fa-check"></i><b>4.8</b> Worked example 2: Are there differences between the age at which men and women start smoking?</a><ul>
+<li class="chapter" data-level="4.8.1" data-path="understanding-graphs.html"><a href="understanding-graphs.html#exercise"><i class="fa fa-check"></i><b>4.8.1</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="4.9" data-path="understanding-graphs.html"><a href="understanding-graphs.html#bar-graphs"><i class="fa fa-check"></i><b>4.9</b> Bar graphs</a><ul>
+<li class="chapter" data-level="4.9.1" data-path="understanding-graphs.html"><a href="understanding-graphs.html#investigating-satisfaction-levels-in-south-africans"><i class="fa fa-check"></i><b>4.9.1</b> Investigating Satisfaction levels in South Africans</a></li>
+<li class="chapter" data-level="4.9.2" data-path="understanding-graphs.html"><a href="understanding-graphs.html#worked-example-3-does-the-frequency-of-alcohol-consumption-vary-by-gender-race-or-religion"><i class="fa fa-check"></i><b>4.9.2</b> Worked example 3: Does the frequency of alcohol consumption vary by gender, race or religion?</a></li>
+</ul></li>
+<li class="chapter" data-level="4.10" data-path="understanding-graphs.html"><a href="understanding-graphs.html#question-answers-2"><i class="fa fa-check"></i><b>4.10</b> Question answers</a></li>
+<li class="chapter" data-level="4.11" data-path="understanding-graphs.html"><a href="understanding-graphs.html#session-information-2"><i class="fa fa-check"></i><b>4.11</b> Session information</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html"><i class="fa fa-check"></i><b>5</b> Measures of central tendency and variability</a><ul>
+<li class="chapter" data-level="5.1" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#getting-ready-1"><i class="fa fa-check"></i><b>5.1</b> Getting ready</a></li>
+<li class="chapter" data-level="5.2" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#introduction-4"><i class="fa fa-check"></i><b>5.2</b> Introduction</a></li>
+<li class="chapter" data-level="5.3" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#understanding-distributions-of-continuous-variables"><i class="fa fa-check"></i><b>5.3</b> Understanding distributions of continuous variables</a></li>
+<li class="chapter" data-level="5.4" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#continuous-variables-and-recoding"><i class="fa fa-check"></i><b>5.4</b> Continuous variables and recoding</a></li>
+<li class="chapter" data-level="5.5" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#summarise-by---summary-base-r-and-group_by---summarise-dplyr"><i class="fa fa-check"></i><b>5.5</b> Summarise: by - summary (base R) and group_by - summarise (dplyr)</a></li>
+<li class="chapter" data-level="5.6" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#medians-and-modes-of-continuous-variables"><i class="fa fa-check"></i><b>5.6</b> Medians and modes of continuous variables</a></li>
+<li class="chapter" data-level="5.7" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#example-recoding-the-education-variable"><i class="fa fa-check"></i><b>5.7</b> Example: recoding the education variable</a></li>
+<li class="chapter" data-level="5.8" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#measures-of-dispersion---variance-and-standard-deviation"><i class="fa fa-check"></i><b>5.8</b> Measures of dispersion - variance and standard deviation</a></li>
+<li class="chapter" data-level="5.9" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#handling-outliers"><i class="fa fa-check"></i><b>5.9</b> Handling outliers</a></li>
+<li class="chapter" data-level="5.10" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#understanding-the-distributions-of-categorical-variables"><i class="fa fa-check"></i><b>5.10</b> Understanding the distributions of categorical variables</a></li>
+<li class="chapter" data-level="5.11" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#worked-example-1-exploring-the-distribution-of-satisfaction-variable"><i class="fa fa-check"></i><b>5.11</b> Worked example 1: Exploring the distribution of satisfaction variable</a></li>
+<li class="chapter" data-level="5.12" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#group-summary"><i class="fa fa-check"></i><b>5.12</b> Group summary</a></li>
+<li class="chapter" data-level="5.13" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#worked-example-2-investigating-bmi-in-south-africa"><i class="fa fa-check"></i><b>5.13</b> Worked example 2: Investigating BMI in South Africa</a></li>
+<li class="chapter" data-level="5.14" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#question-answers-3"><i class="fa fa-check"></i><b>5.14</b> Question answers</a></li>
+<li class="chapter" data-level="5.15" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#exercises-2"><i class="fa fa-check"></i><b>5.15</b> Exercises</a></li>
+<li class="chapter" data-level="5.16" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#exercise-answers-1"><i class="fa fa-check"></i><b>5.16</b> Exercise answers</a></li>
+<li class="chapter" data-level="5.17" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#exercises-3"><i class="fa fa-check"></i><b>5.17</b> Exercises</a></li>
+<li class="chapter" data-level="5.18" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#exercise-answers-2"><i class="fa fa-check"></i><b>5.18</b> Exercise answers</a></li>
+<li class="chapter" data-level="5.19" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#session-information-3"><i class="fa fa-check"></i><b>5.19</b> Session information</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html"><i class="fa fa-check"></i><b>6</b> Bivariate analysis (cross tabs)</a><ul>
+<li class="chapter" data-level="6.1" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#getting-ready-2"><i class="fa fa-check"></i><b>6.1</b> Getting ready</a></li>
+<li class="chapter" data-level="6.2" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#introduction-5"><i class="fa fa-check"></i><b>6.2</b> Introduction</a></li>
+<li class="chapter" data-level="6.3" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#cross---tabulation"><i class="fa fa-check"></i><b>6.3</b> Cross - tabulation</a></li>
+<li class="chapter" data-level="6.4" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#example-1-where-do-households-with-an-elderly-member-tend-to-live"><i class="fa fa-check"></i><b>6.4</b> Example 1: Where do households with an elderly member tend to live?</a></li>
+<li class="chapter" data-level="6.5" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#example-2-is-there-a-relationship-between-the-race-of-a-household-and-the-average-age-of-the-household"><i class="fa fa-check"></i><b>6.5</b> Example 2: Is there a relationship between the race of a household and the average age of the household?</a></li>
+<li class="chapter" data-level="6.6" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#example-3-does-the-level-of-satisfaction-differ-in-different-racegender-groupings"><i class="fa fa-check"></i><b>6.6</b> Example 3: Does the level of satisfaction differ in different race/gender groupings?</a></li>
+<li class="chapter" data-level="6.7" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#example-4-comparing-household-monthly-income-from-the-labour-market-to-individual-monthly-takehome-pay"><i class="fa fa-check"></i><b>6.7</b> Example 4: Comparing Household Monthly Income from the labour market to individual monthly takehome pay</a></li>
+<li class="chapter" data-level="6.8" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#chi-squared-testing-for-independence"><i class="fa fa-check"></i><b>6.8</b> Chi-Squared: testing for independence</a></li>
+<li class="chapter" data-level="6.9" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#cross-tabs-and-hypothesis-testing-chi2-examples-the-comparative-level-of-happiness-variable"><i class="fa fa-check"></i><b>6.9</b> Cross-tabs and hypothesis testing (Chi^2) examples: The comparative level of happiness variable</a><ul>
+<li class="chapter" data-level="6.9.1" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#example-1-comparative-happiness-and-employment-status"><i class="fa fa-check"></i><b>6.9.1</b> Example 1: Comparative happiness and employment status</a></li>
+<li class="chapter" data-level="6.9.2" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#example-2-comparative-happiness-by-province"><i class="fa fa-check"></i><b>6.9.2</b> Example 2: Comparative happiness by province</a></li>
+<li class="chapter" data-level="6.9.3" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#example-3-comparative-happiness-and-household-income"><i class="fa fa-check"></i><b>6.9.3</b> Example 3: Comparative happiness and household income</a></li>
+<li class="chapter" data-level="6.9.4" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#example-4-comparative-happiness-and-geo-type"><i class="fa fa-check"></i><b>6.9.4</b> Example 4: Comparative happiness and geo-type</a></li>
+</ul></li>
+<li class="chapter" data-level="6.10" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#worked-example-assessing-the-impact-of-per-capita-income-on-bmi"><i class="fa fa-check"></i><b>6.10</b> Worked Example: Assessing the impact of per capita income on BMI</a></li>
+<li class="chapter" data-level="6.11" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#question-answers-4"><i class="fa fa-check"></i><b>6.11</b> Question Answers</a></li>
+<li class="chapter" data-level="6.12" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#exercises-4"><i class="fa fa-check"></i><b>6.12</b> Exercises</a></li>
+<li class="chapter" data-level="6.13" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#exercise-answers-3"><i class="fa fa-check"></i><b>6.13</b> Exercise answers</a></li>
+<li class="chapter" data-level="6.14" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#session-information-4"><i class="fa fa-check"></i><b>6.14</b> Session information</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html"><i class="fa fa-check"></i><b>7</b> Simple regression analysis</a><ul>
+<li class="chapter" data-level="7.1" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#getting-ready-3"><i class="fa fa-check"></i><b>7.1</b> Getting ready</a></li>
+<li class="chapter" data-level="7.2" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#introduction-6"><i class="fa fa-check"></i><b>7.2</b> Introduction</a></li>
+<li class="chapter" data-level="7.3" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#correlation-of-variables"><i class="fa fa-check"></i><b>7.3</b> Correlation of variables</a></li>
+<li class="chapter" data-level="7.4" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#outliers"><i class="fa fa-check"></i><b>7.4</b> Outliers</a></li>
+<li class="chapter" data-level="7.5" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#simple-regression"><i class="fa fa-check"></i><b>7.5</b> Simple regression</a></li>
+<li class="chapter" data-level="7.6" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#understanding-regression-output-tables"><i class="fa fa-check"></i><b>7.6</b> Understanding regression output tables</a></li>
+<li class="chapter" data-level="7.7" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#graphing-the-regression-equation"><i class="fa fa-check"></i><b>7.7</b> Graphing the regression equation</a></li>
+<li class="chapter" data-level="7.8" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#worked-example-is-age-a-strong-determinant-of-bmi"><i class="fa fa-check"></i><b>7.8</b> Worked example: Is age a strong determinant of BMI?</a></li>
+<li class="chapter" data-level="7.9" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#question-answers-5"><i class="fa fa-check"></i><b>7.9</b> Question answers:</a></li>
+<li class="chapter" data-level="7.10" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#exercises-5"><i class="fa fa-check"></i><b>7.10</b> Exercises</a></li>
+<li class="chapter" data-level="7.11" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#exercise-1"><i class="fa fa-check"></i><b>7.11</b> Exercise</a></li>
+<li class="chapter" data-level="7.12" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#exercise-answers-4"><i class="fa fa-check"></i><b>7.12</b> Exercise answers</a></li>
+<li class="chapter" data-level="7.13" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#appendix-a-analysis-of-variance-anova-table"><i class="fa fa-check"></i><b>7.13</b> Appendix A: Analysis of variance (anova) table</a></li>
+<li class="chapter" data-level="7.14" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#appendix-b-further-understanding-the-regression-results-table"><i class="fa fa-check"></i><b>7.14</b> Appendix B: Further understanding the regression results table</a></li>
+<li class="chapter" data-level="7.15" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#session-information-5"><i class="fa fa-check"></i><b>7.15</b> Session information</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="multiple-regression-analysis.html"><a href="multiple-regression-analysis.html"><i class="fa fa-check"></i><b>8</b> Multiple regression analysis</a><ul>
+<li class="chapter" data-level="8.1" data-path="multiple-regression-analysis.html"><a href="multiple-regression-analysis.html#getting-ready-4"><i class="fa fa-check"></i><b>8.1</b> Getting ready</a></li>
+<li class="chapter" data-level="8.2" data-path="multiple-regression-analysis.html"><a href="multiple-regression-analysis.html#introduction-7"><i class="fa fa-check"></i><b>8.2</b> Introduction</a></li>
+<li class="chapter" data-level="8.3" data-path="multiple-regression-analysis.html"><a href="multiple-regression-analysis.html#dummy-variables"><i class="fa fa-check"></i><b>8.3</b> Dummy variables</a></li>
+<li class="chapter" data-level="8.4" data-path="multiple-regression-analysis.html"><a href="multiple-regression-analysis.html#interactions-with-dummy-variables"><i class="fa fa-check"></i><b>8.4</b> Interactions with dummy Variables</a></li>
+<li class="chapter" data-level="8.5" data-path="multiple-regression-analysis.html"><a href="multiple-regression-analysis.html#linear-transformations-of-non-linear-relationships"><i class="fa fa-check"></i><b>8.5</b> Linear transformations of non-linear relationships</a></li>
+<li class="chapter" data-level="8.6" data-path="multiple-regression-analysis.html"><a href="multiple-regression-analysis.html#question-answers-6"><i class="fa fa-check"></i><b>8.6</b> Question Answers</a></li>
+<li class="chapter" data-level="8.7" data-path="multiple-regression-analysis.html"><a href="multiple-regression-analysis.html#exercises-6"><i class="fa fa-check"></i><b>8.7</b> Exercises</a></li>
+<li class="chapter" data-level="8.8" data-path="multiple-regression-analysis.html"><a href="multiple-regression-analysis.html#exercise-answers-5"><i class="fa fa-check"></i><b>8.8</b> Exercise answers</a></li>
+<li class="chapter" data-level="8.9" data-path="multiple-regression-analysis.html"><a href="multiple-regression-analysis.html#session-information-6"><i class="fa fa-check"></i><b>8.9</b> Session information</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="further-analysis-and-useful-online-resources.html"><a href="further-analysis-and-useful-online-resources.html"><i class="fa fa-check"></i><b>9</b> Further analysis and useful online resources</a><ul>
+<li class="chapter" data-level="9.1" data-path="further-analysis-and-useful-online-resources.html"><a href="further-analysis-and-useful-online-resources.html#further-analyses"><i class="fa fa-check"></i><b>9.1</b> Further analyses</a></li>
+<li class="chapter" data-level="9.2" data-path="further-analysis-and-useful-online-resources.html"><a href="further-analysis-and-useful-online-resources.html#useful-online-resources"><i class="fa fa-check"></i><b>9.2</b> Useful online resources</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">The Analysis of South African Household Survey Data using R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="understanding-distributions" class="section level1">
+<h1><span class="header-section-number">3</span> Understanding distributions</h1>
+<div id="introduction-2" class="section level2">
+<h2><span class="header-section-number">3.1</span> Introduction</h2>
+<p>Now that we have acquired some basic R skills, we are ready to begin analysing the data. The immediate problem is – Where do we begin? As we have seen, there are an enormous number of variables and observations at our disposal although none of this information in its raw form is especially useful. How can we summarize this massive amount of information simply and quickly to make it more accessible?</p>
+<p>From Chapter 2, we now know how to open a data file and examine the file’s contents in R. It turns out that we have more information than we can usefully process. To see this, import the data set (<code>nids.dta</code>) and open an output file (<code>chapter3.txt</code>). Now, simply type:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)</code></pre></div>
+<pre><code>## -- Attaching packages ----------------------- tidyverse 1.2.1 --</code></pre>
+<pre><code>## v ggplot2 3.0.0     v purrr   0.2.5
+## v tibble  1.4.2     v dplyr   0.7.6
+## v tidyr   0.8.1     v stringr 1.3.1
+## v readr   1.1.1     v forcats 0.3.0</code></pre>
+<pre><code>## -- Conflicts -------------------------- tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(foreign)
+
+nids&lt;-<span class="kw">read.dta</span>(<span class="st">&quot;./data/nids.dta&quot;</span>, <span class="dt">convert.factors=</span><span class="ot">FALSE</span>)
+
+<span class="co">#sink(file=&quot;./sink/chapter3.txt&quot;)</span>
+<span class="co">#table(nids$w1_hhincome)</span>
+<span class="co">#sink()</span></code></pre></div>
+<p>A large number of households scroll by. After seeing these numbers fly by, do you now know more about the distribution of income in South Africa? Probably not. We need a handy way to summarize lots of quantitative raw data, and R is very helpful here. For example, while we could, in principle, simply count the thousands of observations as they scroll by, R commands essentially do this in a much more efficient and sophisticated fashion. We will start by learning how to answer the following questions:</p>
+<ol style="list-style-type: decimal">
+<li>How many Africans are in the data?</li>
+<li>What percentage of the sample is made up of Coloured respondents?</li>
+<li>How many White men in the sample reside in rural areas?</li>
+<li>Are there more men or women over the age of 60?</li>
+<li>What percentage of the NIDS sample is made up of sons and daughters?</li>
+</ol>
+<p>Using R, these questions are quickly and easily answered. First, though, we need to learn about different types of variables.</p>
+</div>
+<div id="variable-types" class="section level2">
+<h2><span class="header-section-number">3.2</span> Variable types</h2>
+<p>In the NIDS dataset, there are several types of variables. If we load/import <code>nids.dta</code> into R and type <code>names(nids)</code>, we will see the list of variables names in the Console window. Economists, sociologists, and psychologists use different language to describe the multiple types of variables. Here, we will divide variables into two types: <em>continuous</em> variables and <em>categorical</em> variables. However, each of these types of variables can be applied to either the <em>individual</em> or the entire <em>household</em>. In this regard, we must understand the difference between an <em>individual-level variable</em> and a <em>household-level variable</em> as well. The statistical and graphical tools used to understand the distributions of the various types of variables are quite different, so it is important to understand the differences between these measures. We will now elaborate on what we mean by continuous versus categorical variables and then move on to explaining how these can be applied on an individual or household level.</p>
+<p><strong>Categorical Variables:</strong> Categorical variables, also known as nominal variables are made up of separate and distinct categories which do not have an inherent order. To code these variables, each category is typically assigned a value, but this assignment is arbitrary. Take for example the race variable, <code>w1_best_race</code>. Each racial group is assigned an arbitrary value. As we saw in chapter 2, in our data set if a person is African, the race variable for that person is set to 1. If the person is Coloured, the value is set to 2, Indian/Asian is 3, and White is 4. For the gender variable <code>w1_r_b4</code>, males are coded as 1 and females as 2. Other examples of what we will consider categorical variables include the household id number (<code>hhid</code>) the relationship to the head of household (<code>w1_r_b3</code>), and province (<code>w1_hhprov</code>).</p>
+<p>A special type of a categorical variable is a dummy variable. A dummy variable is a variable that typically takes on a value of one if the observation meets specified criteria and a value of zero if otherwise. We will often want to create dummy variables ourselves. For example, if we wanted to create a dummy variable for whether a household was White, we could use the following <code>dplyr</code> commands.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids&lt;-nids <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">white =</span> <span class="kw">ifelse</span>(w1_best_race<span class="op">==</span><span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">0</span>))</code></pre></div>
+<p><strong>Continuous Variables:</strong> Continuous variables have an infinite number of possible values that fall between any two observed values. For example, consider age. In our data, age is recorded in years. But it could have been recorded in months, days, minutes, or even seconds. A continuous variable is ordinal in the sense that its values have an inherent order. In the age example, an age of 16 years is one year older than the age of 15 years, thus the unit of measurement in between these two values is itself meaningful. (This may seem like common sense, but when we consider categorical variables, this will no longer be true.). Examples of continuous variables in the NIDS data set include age (<code>w1_r_best_age_yrs</code>), household monthly income (<code>w1_hhincome</code>), and the household expenditure measure (<code>w1_h_expenditure</code>) to name but a few.</p>
+<p>We are actually not being terribly careful with our definitions. Consider, for example, a variable that counts members of the household (<code>w1_hhsizer</code>). Household size might be 5 or 6, but it will never be 5.49. Nonetheless, if we were told that the average number of members of a household was 5.49, this would be comprehendible. We would know that, on average, there are more than 5 members and less than 6. We are going to treat variables like household size and number of births as continuous variables. (Some disciplines refer to these as discrete variables.) Taking the average gives an answer that is readily interpreted. Taking the average of a categorical variable, on the other hand, yields nonsense (e.g. it doesn’t make any sense to talk about the average race in the economy).</p>
+<p>In general, it is important to know the types of variables you are using because some of the tools used to analyze variables differ depending on whether the variable is continuous or categorical. Another point to keep in mind is whether the variable you are using is an <strong>individual level</strong> or <strong>household-level variable.</strong></p>
+<p><strong>Individual-level Variables:</strong> Individual-level variables are made up of values that are unique to each person in the household. An example is the variable for age (<code>w1_r_best_age_yrs</code>). To see an example of an individual-level variable, type the following:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(hhid, w1_r_best_age_yrs)<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">arrange</span>(hhid) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">head</span>(<span class="dv">10</span>)</code></pre></div>
+<pre><code>##      hhid w1_r_best_age_yrs
+## 1  101012                51
+## 2  101013                45
+## 3  101013                32
+## 4  101013                 9
+## 5  101013                13
+## 6  101013                11
+## 7  101014                15
+## 8  101014                25
+## 9  101014                60
+## 10 101014                22</code></pre>
+<p>As we can see, each person in the same household has an age value that is unique to them. Other examples in the NIDS data set would include the following variables: <code>w1_best_edu</code> (educational attainment level), and <code>w1_r_b4</code> (gender).</p>
+<p><strong>Household-level Variables:</strong> Household-level variables have the same value for every person in the household. An example would be the variable for total monthly household income (<code>w1_hhincome</code>). To see an example of a household-level variable, type the following commands:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(hhid, w1_hhincome)<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">arrange</span>(hhid) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">head</span>(<span class="dv">10</span>)</code></pre></div>
+<pre><code>##      hhid w1_hhincome
+## 1  101012   1044.7892
+## 2  101013    588.3008
+## 3  101013    588.3008
+## 4  101013    588.3008
+## 5  101013    588.3008
+## 6  101013    588.3008
+## 7  101014   1307.4182
+## 8  101014   1307.4182
+## 9  101014   1307.4182
+## 10 101014   1307.4182</code></pre>
+<p>As we can see, each person in the same household has the same value of total household monthly income. Other examples in the NIDS data set include the following variables: <code>w1_h_expf</code> (total household monthly food expenditure) and <code>w1_hhgovt</code> (total income from government grants)</p>
+</div>
+<div id="count-observations---dimnrow" class="section level2">
+<h2><span class="header-section-number">3.3</span> Count observations - dim(),nrow()</h2>
+<p>So far we have introduced <code>dim()</code> which return the dimensions of a data frame, i.e. number of rows and columns, e.g.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dim</span>(nids)</code></pre></div>
+<pre><code>## [1] 31170  2090</code></pre>
+<p>There are other base R functions to achieve the same objective. These are <code>nrow</code> and <code>ncol</code> to return the number of rows and columns respectifully. For example, type:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">nrow</span>(nids)</code></pre></div>
+<pre><code>## [1] 31170</code></pre>
+<p>The results should show that there are 31170 observations in this data set. However, try an example using a qualifier.</p>
+<p><code>dplyr</code> has a function that tallies observations as well.Suppose we want to count number of observations that satisfy a specific condition, for instance, suppose we want to count the number of females (<code>w1_r_b4==2</code>) in the data set:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(w1_r_b4<span class="op">==</span><span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co">#filter females</span>
+<span class="st">  </span>count</code></pre></div>
+<pre><code>## # A tibble: 1 x 1
+##       n
+##   &lt;int&gt;
+## 1 16527</code></pre>
+<p>The results should show that there are 16527, females in the data set.</p>
+</div>
+<div id="using-household-level-variables" class="section level2">
+<h2><span class="header-section-number">3.4</span> Using household level variables</h2>
+<p>We have seen above that household level variables have the same value for each member in the household. But it will often be the case where we want to count only one of these values per household. Suppose, for instance, that we wanted to count the number of households in the data set. In order to accomplish this task, we need to create a new variable which we will call <code>hhrestrict</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids&lt;-nids<span class="op">%&gt;%</span><span class="st"> </span><span class="co">#assign the nids object to nids</span>
+<span class="st">  </span><span class="kw">arrange</span>(hhid, pid)<span class="op">%&gt;%</span><span class="st"> </span><span class="co">#sort by hhid then pid</span>
+<span class="st">  </span><span class="kw">group_by</span>(hhid) <span class="op">%&gt;%</span><span class="st"> </span><span class="co">#group by hhid</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">hhrestrict =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># create hhrestrict that is numbered individuals within the group by variable</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">hhrestrict =</span> <span class="kw">ifelse</span>(hhrestrict<span class="op">==</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>)) <span class="co">#make hhrestrict 1 for only the first observation</span></code></pre></div>
+<p>Lets try to understand what this variable looks like. So type the following commands to view the first 20 observations:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(hhid, hhrestrict) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">head</span>(<span class="dv">20</span>)</code></pre></div>
+<pre><code>## # A tibble: 20 x 2
+## # Groups:   hhid [7]
+##      hhid hhrestrict
+##     &lt;int&gt;      &lt;dbl&gt;
+##  1 101012          1
+##  2 101013          1
+##  3 101013          0
+##  4 101013          0
+##  5 101013          0
+##  6 101013          0
+##  7 101014          1
+##  8 101014          0
+##  9 101014          0
+## 10 101014          0
+## 11 101014          0
+## 12 101014          0
+## 13 101015          1
+## 14 101015          0
+## 15 101016          1
+## 16 101016          0
+## 17 101017          1
+## 18 101017          0
+## 19 101017          0
+## 20 101018          1</code></pre>
+<p>Alternatively</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(nids[,<span class="kw">c</span>(<span class="st">&quot;hhid&quot;</span>, <span class="st">&quot;hhrestrict&quot;</span>)], <span class="dt">n =</span> 20L)</code></pre></div>
+<pre><code>## # A tibble: 20 x 2
+## # Groups:   hhid [7]
+##      hhid hhrestrict
+##     &lt;int&gt;      &lt;dbl&gt;
+##  1 101012          1
+##  2 101013          1
+##  3 101013          0
+##  4 101013          0
+##  5 101013          0
+##  6 101013          0
+##  7 101014          1
+##  8 101014          0
+##  9 101014          0
+## 10 101014          0
+## 11 101014          0
+## 12 101014          0
+## 13 101015          1
+## 14 101015          0
+## 15 101016          1
+## 16 101016          0
+## 17 101017          1
+## 18 101017          0
+## 19 101017          0
+## 20 101018          1</code></pre>
+<p>The hhrestrict variable is a dummy variable where a one is given to the first member of the household and a 0 for any consequent members. Using this variable we can count the number of households in the data set:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(hhrestrict<span class="op">==</span><span class="dv">1</span>)<span class="op">%&gt;%</span>
+<span class="st">  </span>nrow</code></pre></div>
+<pre><code>## [1] 7305</code></pre>
+<p>The 7305 that R gives us is the number of households in the data set.</p>
+<p>We will be using the <code>hhrestrict</code> variable extensively in future chapters, so let’s try one more example. Suppose we wanted to create a new type of variable that will only be applied to the first person in the household. Let’s look at the household variable for total monthly income (<code>w1_hhincome</code>). First we sort by <code>hhid</code> and then list the <code>hhid</code>, <code>w1_hhincome</code> and <code>hhrestrict</code> variables. The output given below is the first piece of output you should obtain:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(hhid, w1_hhincome, hhrestrict)<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">arrange</span>(hhid) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">head</span>(<span class="dv">25</span>)</code></pre></div>
+<pre><code>## # A tibble: 25 x 3
+## # Groups:   hhid [8]
+##      hhid w1_hhincome hhrestrict
+##     &lt;int&gt;       &lt;dbl&gt;      &lt;dbl&gt;
+##  1 101012       1045.          1
+##  2 101013        588.          1
+##  3 101013        588.          0
+##  4 101013        588.          0
+##  5 101013        588.          0
+##  6 101013        588.          0
+##  7 101014       1307.          1
+##  8 101014       1307.          0
+##  9 101014       1307.          0
+## 10 101014       1307.          0
+## # ... with 15 more rows</code></pre>
+<p>We can see that everyone with the same household identification number (<code>hhid</code>) has the same total household monthly income. However, we want to create a variable that only assigns the total household monthly income to the first person in the household. One reason for doing this is that when we want to calculate the average household monthly income, we only want to count the income from each household once. If we calculate the average household income in South Africa using all the individuals in the dataset then the income level of large households will be weighted more heavily (i.e. a household with 27 members will be counted 27 times, while a household with 1 member will be counted once).</p>
+<p>In order to create this new variable that we want, we tell R to create a new variable that is equal to the household income level whenever our <code>hhrestrict</code> variable is equal to 1 (i.e. only for the first person in every household).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids&lt;-nids<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">hhincome2 =</span> <span class="kw">ifelse</span>(hhrestrict<span class="op">==</span><span class="dv">1</span>, w1_hhincome, <span class="ot">NA</span>))</code></pre></div>
+<p>Let’s see what our new variable looks like:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>(hhid, w1_hhincome,hhincome2, hhrestrict) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">head</span>(<span class="dv">25</span>)</code></pre></div>
+<pre><code>## # A tibble: 25 x 4
+## # Groups:   hhid [8]
+##      hhid w1_hhincome hhincome2 hhrestrict
+##     &lt;int&gt;       &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;
+##  1 101012       1045.     1045.          1
+##  2 101013        588.      588.          1
+##  3 101013        588.       NA           0
+##  4 101013        588.       NA           0
+##  5 101013        588.       NA           0
+##  6 101013        588.       NA           0
+##  7 101014       1307.     1307.          1
+##  8 101014       1307.       NA           0
+##  9 101014       1307.       NA           0
+## 10 101014       1307.       NA           0
+## # ... with 15 more rows</code></pre>
+<p>From this output it seems that our new variable <code>hhincome2</code> is doing what we would like it to do and only assigning the household income level to the first person in the household. Why do this? As mentioned above, it will often be useful to only count a household level variable once per household, so that observations that come from households with more people are not given more weight than observations coming from households with less people. In doing this, we will hopefully avoid the problem of number bias. Note, it is a very common mistake for people to forget to take into account whether the variables they are working with are household level or individual level variables. It is very important that you are constantly paying attention to the type of variable you are using. If you do not, you can easily get very inaccurate results.</p>
+</div>
+<div id="frequency-distribution-tables" class="section level2">
+<h2><span class="header-section-number">3.5</span> Frequency distribution tables</h2>
+<p>A frequency distribution table is simply a listing of all observed values for a given variable and the number of observations that fall under each of these values. To create a frequency distribution table in R base, we use the command <code>table()</code> ….</p>
+<p>For example, to create a frequency distribution table for the categorical variable w1_best_race, you type:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(nids<span class="op">$</span>w1_best_race)</code></pre></div>
+<pre><code>## 
+##     1     2     3     4 
+## 22157  4166   439  1432</code></pre>
+<p>The race variable does not have negative values for different missing types. We will change it to a factor variable:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids&lt;-nids <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">w1_best_race=</span><span class="kw">factor</span>(w1_best_race, <span class="dt">levels=</span><span class="dv">1</span><span class="op">:</span><span class="dv">4</span>,<span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;African&quot;</span>,<span class="st">&quot;Coloured&quot;</span>,<span class="st">&quot;Asian_Indian&quot;</span>,<span class="st">&quot;White&quot;</span>)))</code></pre></div>
+<p>Tabulate again</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(nids<span class="op">$</span>w1_best_race)</code></pre></div>
+<pre><code>## 
+##      African     Coloured Asian_Indian        White 
+##        22157         4166          439         1432</code></pre>
+<p>We can also use <code>dplyr</code> group by function to tabulate:</p>
+<p>First one:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(w1_best_race)<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">freq=</span><span class="kw">n</span>()) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">percent =</span> <span class="kw">round</span>(freq<span class="op">/</span><span class="kw">sum</span>(freq)<span class="op">*</span><span class="dv">100</span>,<span class="dv">2</span>), <span class="dt">cum_percent =</span> <span class="kw">round</span>(<span class="kw">cumsum</span>(freq)<span class="op">/</span><span class="kw">sum</span>(freq)<span class="op">*</span><span class="dv">100</span>,<span class="dv">2</span>)) </code></pre></div>
+<pre><code>## # A tibble: 5 x 4
+##   w1_best_race  freq percent cum_percent
+##   &lt;fct&gt;        &lt;int&gt;   &lt;dbl&gt;       &lt;dbl&gt;
+## 1 African      22157   71.1         71.1
+## 2 Coloured      4166   13.4         84.4
+## 3 Asian_Indian   439    1.41        85.9
+## 4 White         1432    4.59        90.4
+## 5 &lt;NA&gt;          2976    9.55       100</code></pre>
+<p>Second one (using <code>na.omit()</code> to remove those with missing race):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(w1_best_race)<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">freq=</span><span class="kw">n</span>()) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">na.omit</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="co">#remove category for missing</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">percent =</span> <span class="kw">round</span>(freq<span class="op">/</span><span class="kw">sum</span>(freq)<span class="op">*</span><span class="dv">100</span>,<span class="dv">2</span>), <span class="dt">cum_percent =</span> <span class="kw">round</span>(<span class="kw">cumsum</span>(freq)<span class="op">/</span><span class="kw">sum</span>(freq)<span class="op">*</span><span class="dv">100</span>,<span class="dv">2</span>)) </code></pre></div>
+<pre><code>## # A tibble: 4 x 4
+##   w1_best_race  freq percent cum_percent
+##   &lt;fct&gt;        &lt;int&gt;   &lt;dbl&gt;       &lt;dbl&gt;
+## 1 African      22157   78.6         78.6
+## 2 Coloured      4166   14.8         93.4
+## 3 Asian_Indian   439    1.56        94.9
+## 4 White         1432    5.08       100</code></pre>
+<p>As we can see from the table, there are four distinct categories or values found within the <code>w1_best_race</code> variable. The four observed values being African, Coloured, Asian_India and White.</p>
+<p>We computed three specific numbers related to each race category. The column with the header “freq” is the number of observations that fall within each category. Thus, we can now answer the question, “How many Africans are in the data?” The answer being that there are 22157 Africans in the NIDS data.</p>
+<p>The second computed column with the header “percent” represents the percentage of the sample that falls within each observed category, the first computation including the missing and the second one excluding the missing observations for race. Thus, we can now answer the question “What percentage of the sample is made up of Coloured respondents?” Coloured respondents make up 14.8% of the NIDS sample.</p>
+<p>Ok, now it is your turn to answer a few questions:</p>
+<p><strong>1. How many resident heads are there in the NIDS sample?</strong></p>
+<p>Question 1 Answer</p>
+<p><strong>2. What percentage of the sample is 70 years old and younger?</strong></p>
+<p>Question 2 Answer</p>
+<p><strong>3. How many Coloured respondents are there in the data?</strong></p>
+<p>Question 4 Answer</p>
+<p><strong>4. Are there more men or women over the age of 60?</strong></p>
+<p>Question 4 Answer</p>
+<p><strong>5. How would you create a new variable that is equal to 1 if the respondent is a women and equal to 0 if the respondent is a man (use the w1_r_b4 variable to identify the gender of the respondents)?</strong></p>
+<p>Question 5 Answer</p>
+<p><strong>6. How many White men in the sample reside in rural areas?</strong></p>
+<p>Question 6 Answer</p>
+<p><strong>7. How many respondents in the sample have a missing value for the variable identifying the relationship to the head of household?</strong></p>
+<p>Question 7 Answer</p>
+</div>
+<div id="frequency-distribution-tables-household-level-data" class="section level2">
+<h2><span class="header-section-number">3.6</span> Frequency distribution tables: household level data</h2>
+<p>Let’s say that we are interested in investigating living standards in South Africa. In South Africa, one of the indicators of a household’s living standard is the type of dwelling that people live in. In order to investigate this, we first need to know whether NIDS has any variables dealing with this topic. We should by now be starting to become familiar with the steps that we can take in looking for a variable.</p>
+<p>The household questionnaire proves extremely helpful in this case as there is an entire section on living standards (Section D). Question D1 tells us about the type of dwelling and interestingly question D3 provides us with even more information relating to the building material used to make the dwelling walls and roof.</p>
+<div class="figure"><span id="fig:roof"></span>
+<img src="images/roof.PNG" alt="Labels for main material used for roof" width="158" height="100%" />
+<p class="caption">
+Figure 3.1: Labels for main material used for roof
+</p>
+</div>
+<p><em>Please note that the above table is taken from the official NIDS documents on the DataFirst website, the naming convention is different from the training dataset.</em></p>
+<p>Let’s take a closer look at the corresponding variable that describes roof material. What proportion of households have roofs made of tiles? Corrugated iron? Wood?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(w1_h_d3_<span class="dv">1</span>)<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">freq=</span><span class="kw">n</span>()) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">percent =</span> <span class="kw">round</span>(freq<span class="op">/</span><span class="kw">sum</span>(freq)<span class="op">*</span><span class="dv">100</span>,<span class="dv">2</span>), <span class="dt">cum_percent =</span> <span class="kw">round</span>(<span class="kw">cumsum</span>(freq)<span class="op">/</span><span class="kw">sum</span>(freq)<span class="op">*</span><span class="dv">100</span>,<span class="dv">2</span>)) </code></pre></div>
+<pre><code>## # A tibble: 15 x 4
+##    w1_h_d3_1  freq percent cum_percent
+##        &lt;int&gt; &lt;int&gt;   &lt;dbl&gt;       &lt;dbl&gt;
+##  1        -5     1    0           0   
+##  2        -3   303    0.97        0.98
+##  3         1   257    0.82        1.8 
+##  4         2   447    1.43        3.23
+##  5         3 20453   65.6        68.8 
+##  6         4   186    0.6        69.4 
+##  7         5    31    0.1        69.6 
+##  8         6    62    0.2        69.8 
+##  9         7   104    0.33       70.1 
+## 10         8   187    0.6        70.7 
+## 11         9  3481   11.2        81.8 
+## 12        10   103    0.33       82.2 
+## 13        11  2235    7.17       89.4 
+## 14        12  3316   10.6       100.0 
+## 15        13     4    0.01      100</code></pre>
+<p>We see that there are 304 individuals who have a missing (-3) or not-applicable (-5) value for this variable. We will learn more about these in the next section. For now, let’s ignore them by using qualifiers. We create a new variable <code>mat</code> that is equal to <code>w1_h_d3_1</code> for only positive values and missing otherwise.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids&lt;-nids<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">mat =</span> <span class="kw">ifelse</span>(w1_h_d3_<span class="dv">1</span><span class="op">&gt;</span><span class="dv">0</span> , w1_h_d3_<span class="dv">1</span>, <span class="ot">NA</span>))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(mat)<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">freq=</span><span class="kw">n</span>()) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">na.omit</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">cum_freq =</span> <span class="kw">cumsum</span>(freq), <span class="dt">percent =</span> <span class="kw">round</span>(freq<span class="op">/</span><span class="kw">sum</span>(freq)<span class="op">*</span><span class="dv">100</span>,<span class="dv">2</span>), <span class="dt">cum_percent =</span> <span class="kw">round</span>(<span class="kw">cumsum</span>(freq)<span class="op">/</span><span class="kw">sum</span>(freq)<span class="op">*</span><span class="dv">100</span>,<span class="dv">2</span>)) </code></pre></div>
+<pre><code>## # A tibble: 13 x 5
+##      mat  freq cum_freq percent cum_percent
+##    &lt;int&gt; &lt;int&gt;    &lt;int&gt;   &lt;dbl&gt;       &lt;dbl&gt;
+##  1     1   257      257    0.83        0.83
+##  2     2   447      704    1.45        2.28
+##  3     3 20453    21157   66.3        68.5 
+##  4     4   186    21343    0.6        69.2 
+##  5     5    31    21374    0.1        69.2 
+##  6     6    62    21436    0.2        69.4 
+##  7     7   104    21540    0.34       69.8 
+##  8     8   187    21727    0.61       70.4 
+##  9     9  3481    25208   11.3        81.7 
+## 10    10   103    25311    0.33       82   
+## 11    11  2235    27546    7.24       89.2 
+## 12    12  3316    30862   10.7       100.0 
+## 13    13     4    30866    0.01      100</code></pre>
+<p>Therefore 11% of households live in houses with tile roofs, 66% of households have corrugated iron roofs, and 0.6% have wooden roofs. Or do they? Can you see anything wrong with what we have done?</p>
+<p>Recall that we began this chapter with a discussion about the difference between individual level and household level data. Essentially the table above gives us <strong>individual</strong> level percentages. It tells us that 66% of individuals in the sample live in houses with corrugated iron roofs. This is not the same as saying that 66% of households have corrugated iron roofs.</p>
+<p>To see this, let’s look at a simple example. Say you have a sample of 300 people. 150 live in houses with tile roofs and 150 live in houses with wooden roofs. The average household with a tile roof has 3 people, while the average household with a wooden roof has 5 people. Now you have 50 households with a tile roof and 30 households with a wooden roof. Therefore, 50% of <strong>individuals</strong> have a tiled roof, but 62.5% of <strong>households</strong> have a tile roof.</p>
+<p>Basically, in the table above we are counting every large household more times than we are counting smaller households. Let’s see how different our results are when we only count each household once. Recall that we can use the <code>hhrestrict</code> variable that we created earlier in this chapter to do this.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(hhrestrict<span class="op">==</span><span class="dv">1</span>)<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(mat)<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">freq=</span><span class="kw">n</span>()) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">na.omit</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">cum_freq =</span> <span class="kw">cumsum</span>(freq), <span class="dt">percent =</span> <span class="kw">round</span>(freq<span class="op">/</span><span class="kw">sum</span>(freq)<span class="op">*</span><span class="dv">100</span>,<span class="dv">2</span>), <span class="dt">cum_percent =</span> <span class="kw">round</span>(<span class="kw">cumsum</span>(freq)<span class="op">/</span><span class="kw">sum</span>(freq)<span class="op">*</span><span class="dv">100</span>,<span class="dv">2</span>))</code></pre></div>
+<pre><code>## # A tibble: 13 x 5
+##      mat  freq cum_freq percent cum_percent
+##    &lt;int&gt; &lt;int&gt;    &lt;int&gt;   &lt;dbl&gt;       &lt;dbl&gt;
+##  1     1    63       63    0.87        0.87
+##  2     2   106      169    1.46        2.33
+##  3     3  4793     4962   66.1        68.5 
+##  4     4    46     5008    0.63       69.1 
+##  5     5     8     5016    0.11       69.2 
+##  6     6    20     5036    0.28       69.5 
+##  7     7    18     5054    0.25       69.7 
+##  8     8    37     5091    0.51       70.2 
+##  9     9   929     6020   12.8        83.1 
+## 10    10    22     6042    0.3        83.4 
+## 11    11   349     6391    4.82       88.2 
+## 12    12   854     7245   11.8       100.0 
+## 13    13     3     7248    0.04      100</code></pre>
+<p>Notice that while we had 30866 individuals in the previous table, this table includes 7248 households. However, many of the percentages remain roughly the same size - for instance 66% of households have corrugated iron roofs. This suggests that the average household size for the whole sample is similar to the household size for households with corrugated iron roofs. One roof type that has a large change in percentage prevalence between individual level and household level is thatched roofed dwellings with 7.2% of individuals and 4.8% of households. This tells us that households with thatched roofs are on average larger than households in the whole sample.</p>
+<p><strong>8. What percentage of households consist of only 1 person? What percentage of individuals live in a household consisting of 1 person (i.e. they live alone)? What is the largest household size in the sample? How many households of this size are there?</strong></p>
+<p>Question 8 Answer</p>
+</div>
+<div id="missing-data-and-non-responses" class="section level2">
+<h2><span class="header-section-number">3.7</span> Missing data and non-responses</h2>
+<p>Question 2 brought to our attention the impact that recorded non‐response values (missings, refusals, don’t knows, not‐applicables) can have on our results. In general, taking into account missing data and non‐responses is essential to any data analysis. Therefore, it will be useful to gain a better understanding of the different ways in which missing data and non‐responses come in the NIDS dataset. As mentioned previously, a good first port of call in trying to gain a better grasp of a dataset is always the metadata and questionnaires. Scrolling through the first few pages of the metadata immediately tells us what the potential values each of the variables in the dataset can take. We also see that a:</p>
+<ul>
+<li><p>‐3 refers to a ‘missing’ value (3333 for years, 33 for months),</p></li>
+<li><p>‐5 refers to a ‘not‐applicable’ response (5555 for years, 55 for months),</p></li>
+<li><p>‐8 refers to a ‘refusal’ (8888 for years, 88 for months), and</p></li>
+<li><p>‐9 refers to a ‘don’t know’ response (9999 for years, 99 for years).</p></li>
+</ul>
+<p>However, you may find it puzzling that a ‐3 refers to missing value, but previously in the chapters we talked about a <code>NA</code> indicating a missing value. It is therefore useful for us to look at what the difference between these two types of missing data is and how missing data arises. Take a few seconds to think about why the dataset might be missing data for a specific variable. Is it because someone didn’t want to answer the question? Perhaps the person wasn’t asked the question. Perhaps the person didn’t know the answer to a question. Or perhaps the field worker (person recording the answers to the questionnaire), the data capturer (person who transfers the answers from questionnaire to the computer), or the data cleaner (person who checks that the variables in the dataset have valid values and don’t contradict one another) made a mistake!</p>
+<p>It is clear that there are many different ways in which missing data can occur. Let’s take a closer look at the variable <code>w1_a_m5</code> and to get an idea of how missing data and non‐responses work in the dataset.</p>
+<div class="figure"><span id="fig:satis"></span>
+<img src="images/satisfaction.png" alt="Labels for life satisfaction levels" width="152" />
+<p class="caption">
+Figure 3.2: Labels for life satisfaction levels
+</p>
+</div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(w1_a_m5)<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">freq=</span><span class="kw">n</span>()) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">cum_freq =</span> <span class="kw">cumsum</span>(freq), <span class="dt">percent =</span> <span class="kw">round</span>(freq<span class="op">/</span><span class="kw">sum</span>(freq)<span class="op">*</span><span class="dv">100</span>,<span class="dv">2</span>), <span class="dt">cum_percent =</span> <span class="kw">round</span>(<span class="kw">cumsum</span>(freq)<span class="op">/</span><span class="kw">sum</span>(freq)<span class="op">*</span><span class="dv">100</span>,<span class="dv">2</span>))</code></pre></div>
+<pre><code>## # A tibble: 15 x 5
+##    w1_a_m5  freq cum_freq percent cum_percent
+##      &lt;int&gt; &lt;int&gt;    &lt;int&gt;   &lt;dbl&gt;       &lt;dbl&gt;
+##  1      -9  1433     1433    4.6         4.6 
+##  2      -8   163     1596    0.52        5.12
+##  3      -5     2     1598    0.01        5.13
+##  4      -3   240     1838    0.77        5.9 
+##  5       1  1007     2845    3.23        9.13
+##  6       2   701     3546    2.25       11.4 
+##  7       3  1246     4792    4          15.4 
+##  8       4  1867     6659    5.99       21.4 
+##  9       5  2558     9217    8.21       29.6 
+## 10       6  1803    11020    5.78       35.4 
+## 11       7  1633    12653    5.24       40.6 
+## 12       8  1305    13958    4.19       44.8 
+## 13       9   455    14413    1.46       46.2 
+## 14      10  1217    15630    3.9        50.1 
+## 15      NA 15540    31170   49.9       100</code></pre>
+<p>How many observations of this variable are <code>NA</code>‐missing? Notice that 15540 observations of this variable are NA‐missing. This is almost half of the total number of respondents (31170) in the dataset. This is a huge portion of the respondents. Can you think of a reason why this is the case? It is immediately clear that if you ignore missing data without understanding why it came about, your results might be very, very biased. In this case, our clue as to the origins of the missing observations lies in understanding that the <strong>a</strong> in the variable name means that the variable corresponds to a question in the adult questionnaire. This means that it is an individual level variable that was only asked of adults who were present when the field worker went to the household to administer the questionnaire. Therefore, children and adult members of the household who were absent (represented by proxy questionnaire) would have no recorded answer for this question and therefore would be NA‐missing in the dataset. This would probably explain a large portion of the 15540 NA‐missing observations, however if you are really paying attention you may also notice that the range of this variable is [‐9, 10]. We already know that in the NIDS survey, negative numbers are generally used to refer to non‐responses. Let’s see how many non‐responses there are for this variable.</p>
+<p>In addition to the 15 540 NA‐missings, almost 6 percent of the respondents have non‐response values with 4.6 % saying that they ‘don’t know’ the answer to this question. This brings us back to the difference between a ‐3 and an NA‐missing observation. An observation is recorded as <code>NA</code> if the respondent was not meant to answer the question or have a value recorded for that variable. For example, children are NA‐missing on all adult questionnaire variables. In contrast the observation is recorded as a ‐3 if the respondent is meant to have a value recorded for the variable, but for some reason it is missing. For example, if the field worker forgot to write down the respondent’s age or recorded their age as 312 (which is unlikely to be true). In general, all non‐responses (negative numbers) occur when the respondent should have had a valid value for a given variable, but doesn’t for some reason.</p>
+</div>
+<div id="three-primary-origins-of-na-missing-data-in-nids" class="section level2">
+<h2><span class="header-section-number">3.8</span> Three primary origins of NA-missing data in NIDS</h2>
+<p>Now that we understand the difference between non‐responses and NA‐missing data, we have to ask how we know whether a person was meant to answer a specific question or not. There are three primary ways in which people can be NA‐missing in the NIDS dataset. We discuss these below, but remember that when working with data you can often come across situations different to those we describe here and always need to interrogate your data with an open, curious, questioning mind.</p>
+<p><strong>NA‐missings: Merging Datasets</strong></p>
+<p>We have already seen above that one way in which people can be NA‐missing is when there is more than one dataset merged together and then respondents will only have data from the household level datasets as well as one of the individual level datasets (child, adult, or proxy). They will be NA‐missing for all variables from the other two.</p>
+<p><strong>NA‐missings: Refused Questionnaires</strong></p>
+<p>Above when we were talking about the 15 540 NA‐missing observations, we said that we could explain most of them through the children and absent adults in the dataset, but we didn’t investigate this claim at all. Even though it is a good hypothesis, it is important to check exactly how many of the 15 540 are explained in this way. How would you go about doing this? One way is to check if there is a variable that gives the questionnaire type of an individual. We search for ‘quest’ since it is less restrictive than ‘questionnaire’, although in this specific case it doesn’t make a difference to our results.</p>
+<p>There is a variable called <code>w1_quest_typ</code>:</p>
+<div class="figure"><span id="fig:quest"></span>
+<img src="images/quest_typ.png" alt="Labels for questionnaire type" width="164" height="80%" />
+<p class="caption">
+Figure 3.3: Labels for questionnaire type
+</p>
+</div>
+<p>We see that the variable takes a value of ‘1’ when the respondent was administered the adult questionnaire. So now we can check whether any of the adults who were present are NA-missing.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(w1_quest_typ <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(w1_a_m5)<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">freq=</span><span class="kw">n</span>()) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">cum_freq =</span> <span class="kw">cumsum</span>(freq), <span class="dt">percent =</span> <span class="kw">round</span>(freq<span class="op">/</span><span class="kw">sum</span>(freq)<span class="op">*</span><span class="dv">100</span>,<span class="dv">2</span>), <span class="dt">cum_percent =</span> <span class="kw">round</span>(<span class="kw">cumsum</span>(freq)<span class="op">/</span><span class="kw">sum</span>(freq)<span class="op">*</span><span class="dv">100</span>,<span class="dv">2</span>))</code></pre></div>
+<pre><code>## # A tibble: 15 x 5
+##    w1_a_m5  freq cum_freq percent cum_percent
+##      &lt;int&gt; &lt;int&gt;    &lt;int&gt;   &lt;dbl&gt;       &lt;dbl&gt;
+##  1      -9  1433     1433    8.49        8.49
+##  2      -8   163     1596    0.97        9.45
+##  3      -5     2     1598    0.01        9.46
+##  4      -3   240     1838    1.42       10.9 
+##  5       1  1007     2845    5.96       16.8 
+##  6       2   701     3546    4.15       21   
+##  7       3  1246     4792    7.38       28.4 
+##  8       4  1867     6659   11.1        39.4 
+##  9       5  2558     9217   15.2        54.6 
+## 10       6  1803    11020   10.7        65.3 
+## 11       7  1633    12653    9.67       74.9 
+## 12       8  1305    13958    7.73       82.7 
+## 13       9   455    14413    2.69       85.4 
+## 14      10  1217    15630    7.21       92.6 
+## 15      NA  1255    16885    7.43      100</code></pre>
+<p>Notice how we filtered respondents based on <code>w1_quest_typ</code> to limit our sample to present adults. You will notice that the only value that has changed in this restricted table is the number of NA‐missings which has decreased by 14285. This validates our hypothesis, but we are still left with 1255 NA‐missings that we have not explained. This shows us why it is important to <strong>ALWAYS</strong> check that we FULLY understand where missing data comes from even when we have a plausible explanation. In this case, it is not easy to figure out where these missing observations come from, although we can get a clue from the metadata which tells us on page one of the metadata which tells us that 1246 adults refused to answer the entire adult questionnaire after section A. Let’s check if this explains remaining NA-missings:</p>
+<div class="figure"><span id="fig:refusal"></span>
+<img src="images/refusal.PNG" alt="Labels for refusals" width="520" />
+<p class="caption">
+Figure 3.4: Labels for refusals
+</p>
+</div>
+<p>The corresponding variable is <code>w1_a_a21</code> and lets see its distribution:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(w1_a_a21)<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">freq=</span><span class="kw">n</span>()) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">percent =</span> <span class="kw">round</span>(freq<span class="op">/</span><span class="kw">sum</span>(freq)<span class="op">*</span><span class="dv">100</span>,<span class="dv">2</span>), <span class="dt">cum_percent =</span> <span class="kw">round</span>(<span class="kw">cumsum</span>(freq)<span class="op">/</span><span class="kw">sum</span>(freq)<span class="op">*</span><span class="dv">100</span>,<span class="dv">2</span>))</code></pre></div>
+<pre><code>## # A tibble: 10 x 4
+##    w1_a_a21  freq percent cum_percent
+##       &lt;int&gt; &lt;int&gt;   &lt;dbl&gt;       &lt;dbl&gt;
+##  1        1   175    0.56        0.56
+##  2        2   357    1.15        1.71
+##  3        3    39    0.13        1.83
+##  4        4    80    0.26        2.09
+##  5        5    12    0.04        2.13
+##  6        6    22    0.07        2.2 
+##  7        7    57    0.18        2.38
+##  8        8   321    1.03        3.41
+##  9        9   183    0.59        4   
+## 10       NA 29924   96         100</code></pre>
+<p>Since this variable takes on several different values for the different reasons of refusal to answer the questionnaire, let’s recode it to give us an indicator variable which takes on the value of ‘1’ when an adult refused to answer their questionnaire and ‘0’ otherwise.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids&lt;-nids <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">refusal_dummy=</span><span class="kw">ifelse</span>(<span class="kw">is.na</span>(w1_a_a21),<span class="dv">0</span>,<span class="dv">1</span>))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(refusal_dummy)<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">freq=</span><span class="kw">n</span>())</code></pre></div>
+<pre><code>## # A tibble: 2 x 2
+##   refusal_dummy  freq
+##           &lt;dbl&gt; &lt;int&gt;
+## 1             0 29924
+## 2             1  1246</code></pre>
+<p>We summarise the frequencies of the variable to check that the recode has done what we wanted it to – since we have 1246 one’s (refusals), it would appear that it has.</p>
+<p>Now we are in a position to check how many of our NA‐missings we have explained:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(w1_quest_typ <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="op">&amp;</span><span class="st"> </span>refusal_dummy <span class="op">==</span><span class="st"> </span><span class="dv">0</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(w1_a_m5) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">freq=</span><span class="kw">n</span>()) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">percent =</span> <span class="kw">round</span>(freq<span class="op">/</span><span class="kw">sum</span>(freq)<span class="op">*</span><span class="dv">100</span>,<span class="dv">2</span>), <span class="dt">cum_percent =</span> <span class="kw">round</span>(<span class="kw">cumsum</span>(freq)<span class="op">/</span><span class="kw">sum</span>(freq)<span class="op">*</span><span class="dv">100</span>,<span class="dv">2</span>))</code></pre></div>
+<pre><code>## # A tibble: 15 x 4
+##    w1_a_m5  freq percent cum_percent
+##      &lt;int&gt; &lt;int&gt;   &lt;dbl&gt;       &lt;dbl&gt;
+##  1      -9  1433    9.16        9.16
+##  2      -8   163    1.04       10.2 
+##  3      -5     2    0.01       10.2 
+##  4      -3   240    1.53       11.8 
+##  5       1  1007    6.44       18.2 
+##  6       2   701    4.48       22.7 
+##  7       3  1246    7.97       30.6 
+##  8       4  1867   11.9        42.6 
+##  9       5  2558   16.4        58.9 
+## 10       6  1803   11.5        70.5 
+## 11       7  1633   10.4        80.9 
+## 12       8  1305    8.34       89.2 
+## 13       9   455    2.91       92.2 
+## 14      10  1217    7.78       99.9 
+## 15      NA     9    0.06      100</code></pre>
+<p>It seems we have hit the jackpot. All the values in our table remain unchanged, except that we now only have 9 NA‐missing data points. This is a far more acceptable proportion of our data. Ideally, we would also want to explain these 9, but for our purposes we can move on – happy that we have managed to discover where almost all our NA‐missing values come from.</p>
+<p><strong>NA‐missings: Skip Patterns</strong></p>
+<p>So far we have seen that NA‐missings can come from two types of situations in which an individual didn’t answer any of the questions in an individual questionnaire – either because they refused or because they weren’t meant to due to answering one of the other individual questionnaires. However there is a third common cause of NA‐missings for individual questions within a questionnaire. Intuitively this occurs when it simply doesn’t make sense for a set of people to answer a specific question. An illustrative example is given by question C1.10 of the adult questionnaire “Are you currently pregnant?”. We know that the set of respondents who might have values for the corresponding variable (<code>w1_a_c1_10</code>) is already limited to those who answered the adult questionnaire (i.e. no children or questionnaire refusals). However it will make sense to limit the people who answer this question even further – for instance, it doesn’t make sense to ask men or women past a certain age to answer this question. Here it is informative to look at the questionnaire to see exactly what restrictions are made. Firstly, we see that question C1.1 tells the interviewer to skip all the questions before D1 if the respondent is not female. Secondly, questions C1.3, C1.5, and C1.7 also have skips, but none of them affect whether the respondent answers the question we are interested in (C1.10). Thirdly, question C1.9 tells the interviewer to skip question C1.10 if the respondent is older than 49. Therefore, only adult respondents who are female and younger than 49 are required to answer this question. All others respondents will be NA‐missing. We see below that this rules out a large proportion (79%) of the sample (as one would expect, since only a small proportion of the total population could potentially be pregnant).</p>
+<div class="figure"><span id="fig:c110"></span>
+<img src="images/c110.PNG" alt="Labels for question C1.10" width="504" />
+<p class="caption">
+Figure 3.5: Labels for question C1.10
+</p>
+</div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(w1_a_c1_<span class="dv">10</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">freq=</span><span class="kw">n</span>()) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">percent =</span> <span class="kw">round</span>(freq<span class="op">/</span><span class="kw">sum</span>(freq)<span class="op">*</span><span class="dv">100</span>,<span class="dv">2</span>), <span class="dt">cum_percent =</span> <span class="kw">round</span>(<span class="kw">cumsum</span>(freq)<span class="op">/</span><span class="kw">sum</span>(freq)<span class="op">*</span><span class="dv">100</span>,<span class="dv">2</span>))</code></pre></div>
+<pre><code>## # A tibble: 6 x 4
+##   w1_a_c1_10  freq percent cum_percent
+##        &lt;int&gt; &lt;int&gt;   &lt;dbl&gt;       &lt;dbl&gt;
+## 1         -9    19    0.06        0.06
+## 2         -8    12    0.04        0.1 
+## 3         -3    82    0.26        0.36
+## 4          1   247    0.79        1.15
+## 5          2  6199   19.9        21.0 
+## 6         NA 24611   79.0       100</code></pre>
+</div>
+<div id="missing-data-and-qualifiers" class="section level2">
+<h2><span class="header-section-number">3.9</span> Missing data and qualifiers</h2>
+<p>In the previous chapter, we learnt how to use qualifiers to limit the sample we are working with. Now that we understand the different types of missing data and non‐responses, we may want to look at the reported satisfaction levels of only the individuals who were supposed to answer the question.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(w1_a_m5)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(w1_a_m5) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">freq=</span><span class="kw">n</span>()) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">percent =</span> <span class="kw">round</span>(freq<span class="op">/</span><span class="kw">sum</span>(freq)<span class="op">*</span><span class="dv">100</span>,<span class="dv">2</span>), <span class="dt">cum_percent =</span> <span class="kw">round</span>(<span class="kw">cumsum</span>(freq)<span class="op">/</span><span class="kw">sum</span>(freq)<span class="op">*</span><span class="dv">100</span>,<span class="dv">2</span>))</code></pre></div>
+<pre><code>## # A tibble: 14 x 4
+##    w1_a_m5  freq percent cum_percent
+##      &lt;int&gt; &lt;int&gt;   &lt;dbl&gt;       &lt;dbl&gt;
+##  1      -9  1433    9.17        9.17
+##  2      -8   163    1.04       10.2 
+##  3      -5     2    0.01       10.2 
+##  4      -3   240    1.54       11.8 
+##  5       1  1007    6.44       18.2 
+##  6       2   701    4.48       22.7 
+##  7       3  1246    7.97       30.7 
+##  8       4  1867   11.9        42.6 
+##  9       5  2558   16.4        59.0 
+## 10       6  1803   11.5        70.5 
+## 11       7  1633   10.4        81.0 
+## 12       8  1305    8.35       89.3 
+## 13       9   455    2.91       92.2 
+## 14      10  1217    7.79      100</code></pre>
+<p>We can see that we have indeed excluded all the NA‐missing data. Now, we may want to browse/View all the entries of respondents who have a reported satisfaction level greater than 5</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#nids %&gt;% </span>
+<span class="co">#  select(w1_a_m5) %&gt;% </span>
+<span class="co">#  filter(w1_a_m5&gt;5) %&gt;%</span>
+<span class="co">#  View</span></code></pre></div>
+<p>Now, how would you go about determining what percentage of your sample have a satisfaction level of 1 – excluding all NA‐missings and non‐responses?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(w1_a_m5) <span class="op">&amp;</span><span class="st"> </span>w1_a_m5 <span class="op">&gt;</span><span class="dv">0</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(w1_a_m5) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">freq=</span><span class="kw">n</span>()) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">percent =</span> <span class="kw">round</span>(freq<span class="op">/</span><span class="kw">sum</span>(freq)<span class="op">*</span><span class="dv">100</span>,<span class="dv">2</span>), <span class="dt">cum_percent =</span> <span class="kw">round</span>(<span class="kw">cumsum</span>(freq)<span class="op">/</span><span class="kw">sum</span>(freq)<span class="op">*</span><span class="dv">100</span>,<span class="dv">2</span>))</code></pre></div>
+<pre><code>## # A tibble: 10 x 4
+##    w1_a_m5  freq percent cum_percent
+##      &lt;int&gt; &lt;int&gt;   &lt;dbl&gt;       &lt;dbl&gt;
+##  1       1  1007    7.3          7.3
+##  2       2   701    5.08        12.4
+##  3       3  1246    9.03        21.4
+##  4       4  1867   13.5         35.0
+##  5       5  2558   18.6         53.5
+##  6       6  1803   13.1         66.6
+##  7       7  1633   11.8         78.4
+##  8       8  1305    9.46        87.9
+##  9       9   455    3.3         91.2
+## 10      10  1217    8.82       100</code></pre>
+<p>Here we see that 7.3 % of the sample (excluding NA‐missings and non‐responses) has a satisfaction level of 1.</p>
+<p>Now, the pertinent question is: Does this mean that 7.3 % of the total sample has a satisfaction level of one? Or more generally: “Is the sample for which I have information representative of the entire sample?” This is a very important and difficult question and one you should always ask of your results! You can only try to claim that your results accurately reflect South African society if you can answer ‘yes’ to this question. For instance, it requires a large leap of faith to say that 7.3 % of South Africans have a satisfaction level of 1. Recall that only adults who were present answered this question. Therefore, if children are generally happier than adults, then this percentage should be lower for South Africa as a whole. However, we might avoid this by saying “7.3 % of South African adults report a satisfaction level of 1”. What about adults that were absent? What about the 1433 adults who said they ‘don’t know’ or the 163 who refused? Will they have the same reported satisfaction distribution as those who were present and answered? It’s hard to say without doing further research. In doing research, you will commonly face this problem. For now, let’s return to acquiring a set of tools that will help you tackle these sorts of problems.</p>
+</div>
+<div id="question-answers-1" class="section level2">
+<h2><span class="header-section-number">3.10</span> Question answers</h2>
+</div>
+<div id="exercises-1" class="section level2">
+<h2><span class="header-section-number">3.11</span> Exercises</h2>
+<p>Now it is your turn to explore the distributions of variables using the commands from this chapter.</p>
+<p>Using R and the NIDS data set, answer the following questions.</p>
+<p><strong>1. What percentage of the sample is made up of sons and daughters?</strong></p>
+<p>Exercise 1 Answer</p>
+<p><strong>2. Which of the racial groups makes up the largest proportion of urban formal residents?</strong></p>
+<p>Exercise 2 Answer</p>
+<p><strong>3. How many households are headed by females?</strong></p>
+<p>Exercise 3 Answer</p>
+</div>
+<div id="session-information-1" class="section level2">
+<h2><span class="header-section-number">3.12</span> Session information</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">sessionInfo</span>(), <span class="dt">locale =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<pre><code>## R version 3.5.1 (2018-07-02)
+## Platform: x86_64-w64-mingw32/x64 (64-bit)
+## Running under: Windows 7 x64 (build 7601) Service Pack 1
+## 
+## Matrix products: default
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] bindrcpp_0.2.2  foreign_0.8-70  forcats_0.3.0   stringr_1.3.1  
+##  [5] dplyr_0.7.6     purrr_0.2.5     readr_1.1.1     tidyr_0.8.1    
+##  [9] tibble_1.4.2    ggplot2_3.0.0   tidyverse_1.2.1
+## 
+## loaded via a namespace (and not attached):
+##  [1] tidyselect_0.2.4 xfun_0.3         haven_1.1.2      lattice_0.20-35 
+##  [5] colorspace_1.3-2 htmltools_0.3.6  yaml_2.2.0       utf8_1.1.4      
+##  [9] rlang_0.2.1      pillar_1.3.0     glue_1.3.0       withr_2.1.2     
+## [13] modelr_0.1.2     readxl_1.1.0     bindr_0.1.1      plyr_1.8.4      
+## [17] munsell_0.5.0    gtable_0.2.0     cellranger_1.1.0 rvest_0.3.2     
+## [21] evaluate_0.11    knitr_1.20       fansi_0.3.0      highr_0.7       
+## [25] broom_0.5.0      Rcpp_0.12.18     scales_1.0.0     backports_1.1.2 
+## [29] jsonlite_1.5     png_0.1-7        hms_0.4.2        digest_0.6.15   
+## [33] stringi_1.1.7    bookdown_0.7     grid_3.5.1       rprojroot_1.3-2 
+## [37] cli_1.0.0        tools_3.5.1      magrittr_1.5     lazyeval_0.2.1  
+## [41] crayon_1.3.4     pkgconfig_2.0.2  xml2_1.2.0       lubridate_1.7.4 
+## [45] assertthat_0.2.0 rmarkdown_1.10   httr_1.3.1       rstudioapi_0.7  
+## [49] R6_2.2.2         nlme_3.1-137     compiler_3.5.1</code></pre>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="getting-started-with-r.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="understanding-graphs.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

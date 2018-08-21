@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>The Analysis of South African Household Survey Data using R</title>
+  <meta name="description" content="The Analysis of South African Household Survey Data using R">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="The Analysis of South African Household Survey Data using R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="The Analysis of South African Household Survey Data using R" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="The Analysis of South African Household Survey Data using R" />
+  
+  <meta name="twitter:description" content="The Analysis of South African Household Survey Data using R" />
+  
+
+<meta name="author" content="Takwanisa Machemedze">
+
+
+<meta name="date" content="2018-08-21">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="understanding-graphs.html">
+<link rel="next" href="bivariate-analysis-cross-tabs.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#what-is-r"><i class="fa fa-check"></i><b>1.1</b> What is R?</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#pros-and-cons-of-r"><i class="fa fa-check"></i><b>1.2</b> Pros and cons of R</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="introduction.html"><a href="introduction.html#pros"><i class="fa fa-check"></i><b>1.2.1</b> Pros</a></li>
+<li class="chapter" data-level="1.2.2" data-path="introduction.html"><a href="introduction.html#cons"><i class="fa fa-check"></i><b>1.2.2</b> Cons</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#what-is-rstudio"><i class="fa fa-check"></i><b>1.3</b> What is RStudio?</a></li>
+<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#the-r-system"><i class="fa fa-check"></i><b>1.4</b> The R system</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="introduction.html"><a href="introduction.html#base-system"><i class="fa fa-check"></i><b>1.4.1</b> Base system</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html"><i class="fa fa-check"></i><b>2</b> Getting started with R</a><ul>
+<li class="chapter" data-level="2.1" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#introduction-1"><i class="fa fa-check"></i><b>2.1</b> Introduction</a></li>
+<li class="chapter" data-level="2.2" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#organize-your-r-session"><i class="fa fa-check"></i><b>2.2</b> Organize your R session</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#working-directory"><i class="fa fa-check"></i><b>2.2.1</b> Working directory</a></li>
+<li class="chapter" data-level="2.2.2" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#load-and-install-required-libraries"><i class="fa fa-check"></i><b>2.2.2</b> Load (and install) required libraries</a></li>
+<li class="chapter" data-level="2.2.3" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#comments"><i class="fa fa-check"></i><b>2.2.3</b> Comments</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#getting-help"><i class="fa fa-check"></i><b>2.3</b> Getting help</a></li>
+<li class="chapter" data-level="2.4" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#output-file"><i class="fa fa-check"></i><b>2.4</b> Output file</a></li>
+<li class="chapter" data-level="2.5" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#objects-in-r"><i class="fa fa-check"></i><b>2.5</b> Objects in R</a><ul>
+<li class="chapter" data-level="2.5.1" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#removing-objects-from-the-r-environment---rm-function"><i class="fa fa-check"></i><b>2.5.1</b> Removing objects from the R environment - rm() function</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#saving-in-r"><i class="fa fa-check"></i><b>2.6</b> Saving in R</a></li>
+<li class="chapter" data-level="2.7" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#importing-nids-data-into-r"><i class="fa fa-check"></i><b>2.7</b> Importing NIDS data into R</a></li>
+<li class="chapter" data-level="2.8" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#exploring-the-data"><i class="fa fa-check"></i><b>2.8</b> Exploring the data</a><ul>
+<li class="chapter" data-level="2.8.1" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#subsetting-data---part-1"><i class="fa fa-check"></i><b>2.8.1</b> Subsetting data - part 1</a></li>
+<li class="chapter" data-level="2.8.2" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#data-documentation---value-and-variable-labels"><i class="fa fa-check"></i><b>2.8.2</b> Data documentation - value and variable labels</a></li>
+<li class="chapter" data-level="2.8.3" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#operators-in-r"><i class="fa fa-check"></i><b>2.8.3</b> Operators in R</a></li>
+<li class="chapter" data-level="2.8.4" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#subsetting-data---part-2"><i class="fa fa-check"></i><b>2.8.4</b> Subsetting data - part 2</a></li>
+</ul></li>
+<li class="chapter" data-level="2.9" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#tidyverse"><i class="fa fa-check"></i><b>2.9</b> Tidyverse</a><ul>
+<li class="chapter" data-level="2.9.1" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#brief-introduction-to-tidyverse"><i class="fa fa-check"></i><b>2.9.1</b> Brief introduction to tidyverse</a></li>
+<li class="chapter" data-level="2.9.2" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#core-tidyverse-packages"><i class="fa fa-check"></i><b>2.9.2</b> Core tidyverse packages</a></li>
+<li class="chapter" data-level="2.9.3" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#install-and-load-tidyverse-packages"><i class="fa fa-check"></i><b>2.9.3</b> Install and load tidyverse packages</a></li>
+<li class="chapter" data-level="2.9.4" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#dplyr-verbs"><i class="fa fa-check"></i><b>2.9.4</b> dplyr verbs</a></li>
+<li class="chapter" data-level="2.9.5" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#using-dplyr-functions"><i class="fa fa-check"></i><b>2.9.5</b> Using dplyr functions</a></li>
+<li class="chapter" data-level="2.9.6" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#pipe-operator"><i class="fa fa-check"></i><b>2.9.6</b> Pipe operator %&gt;%</a></li>
+</ul></li>
+<li class="chapter" data-level="2.10" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#more-data-exploration"><i class="fa fa-check"></i><b>2.10</b> More data exploration</a><ul>
+<li class="chapter" data-level="2.10.1" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#example-1-subset-variables"><i class="fa fa-check"></i><b>2.10.1</b> Example 1: Subset variables</a></li>
+<li class="chapter" data-level="2.10.2" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#example-2-subset-observations"><i class="fa fa-check"></i><b>2.10.2</b> Example 2: Subset observations</a></li>
+<li class="chapter" data-level="2.10.3" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#example-3-subset-both-observations-and-variables"><i class="fa fa-check"></i><b>2.10.3</b> Example 3: Subset both observations and variables</a></li>
+</ul></li>
+<li class="chapter" data-level="2.11" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#managing-the-data"><i class="fa fa-check"></i><b>2.11</b> Managing the data</a></li>
+<li class="chapter" data-level="2.12" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#worked-example-creating-a-bmi-variable"><i class="fa fa-check"></i><b>2.12</b> Worked example: creating a bmi variable</a></li>
+<li class="chapter" data-level="2.13" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#question-answers"><i class="fa fa-check"></i><b>2.13</b> Question answers</a></li>
+<li class="chapter" data-level="2.14" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#exercises"><i class="fa fa-check"></i><b>2.14</b> Exercises</a></li>
+<li class="chapter" data-level="2.15" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#exercise-answers"><i class="fa fa-check"></i><b>2.15</b> Exercise answers</a></li>
+<li class="chapter" data-level="2.16" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#session-information"><i class="fa fa-check"></i><b>2.16</b> Session information</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="understanding-distributions.html"><a href="understanding-distributions.html"><i class="fa fa-check"></i><b>3</b> Understanding distributions</a><ul>
+<li class="chapter" data-level="3.1" data-path="understanding-distributions.html"><a href="understanding-distributions.html#introduction-2"><i class="fa fa-check"></i><b>3.1</b> Introduction</a></li>
+<li class="chapter" data-level="3.2" data-path="understanding-distributions.html"><a href="understanding-distributions.html#variable-types"><i class="fa fa-check"></i><b>3.2</b> Variable types</a></li>
+<li class="chapter" data-level="3.3" data-path="understanding-distributions.html"><a href="understanding-distributions.html#count-observations---dimnrow"><i class="fa fa-check"></i><b>3.3</b> Count observations - dim(),nrow()</a></li>
+<li class="chapter" data-level="3.4" data-path="understanding-distributions.html"><a href="understanding-distributions.html#using-household-level-variables"><i class="fa fa-check"></i><b>3.4</b> Using household level variables</a></li>
+<li class="chapter" data-level="3.5" data-path="understanding-distributions.html"><a href="understanding-distributions.html#frequency-distribution-tables"><i class="fa fa-check"></i><b>3.5</b> Frequency distribution tables</a></li>
+<li class="chapter" data-level="3.6" data-path="understanding-distributions.html"><a href="understanding-distributions.html#frequency-distribution-tables-household-level-data"><i class="fa fa-check"></i><b>3.6</b> Frequency distribution tables: household level data</a></li>
+<li class="chapter" data-level="3.7" data-path="understanding-distributions.html"><a href="understanding-distributions.html#missing-data-and-non-responses"><i class="fa fa-check"></i><b>3.7</b> Missing data and non-responses</a></li>
+<li class="chapter" data-level="3.8" data-path="understanding-distributions.html"><a href="understanding-distributions.html#three-primary-origins-of-na-missing-data-in-nids"><i class="fa fa-check"></i><b>3.8</b> Three primary origins of NA-missing data in NIDS</a></li>
+<li class="chapter" data-level="3.9" data-path="understanding-distributions.html"><a href="understanding-distributions.html#missing-data-and-qualifiers"><i class="fa fa-check"></i><b>3.9</b> Missing data and qualifiers</a></li>
+<li class="chapter" data-level="3.10" data-path="understanding-distributions.html"><a href="understanding-distributions.html#question-answers-1"><i class="fa fa-check"></i><b>3.10</b> Question answers</a></li>
+<li class="chapter" data-level="3.11" data-path="understanding-distributions.html"><a href="understanding-distributions.html#exercises-1"><i class="fa fa-check"></i><b>3.11</b> Exercises</a></li>
+<li class="chapter" data-level="3.12" data-path="understanding-distributions.html"><a href="understanding-distributions.html#session-information-1"><i class="fa fa-check"></i><b>3.12</b> Session information</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="understanding-graphs.html"><a href="understanding-graphs.html"><i class="fa fa-check"></i><b>4</b> Understanding graphs</a><ul>
+<li class="chapter" data-level="4.1" data-path="understanding-graphs.html"><a href="understanding-graphs.html#introduction-3"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="understanding-graphs.html"><a href="understanding-graphs.html#getting-ready"><i class="fa fa-check"></i><b>4.2</b> Getting ready</a></li>
+<li class="chapter" data-level="4.3" data-path="understanding-graphs.html"><a href="understanding-graphs.html#ggplot2-and-its-elements"><i class="fa fa-check"></i><b>4.3</b> ggplot2 and its elements</a></li>
+<li class="chapter" data-level="4.4" data-path="understanding-graphs.html"><a href="understanding-graphs.html#histograms"><i class="fa fa-check"></i><b>4.4</b> Histograms</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="understanding-graphs.html"><a href="understanding-graphs.html#graphing-economic-wellbeing-in-south-africa-in-2008"><i class="fa fa-check"></i><b>4.4.1</b> Graphing economic wellbeing in South Africa in 2008</a></li>
+<li class="chapter" data-level="4.4.2" data-path="understanding-graphs.html"><a href="understanding-graphs.html#facetting"><i class="fa fa-check"></i><b>4.4.2</b> Facetting</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="understanding-graphs.html"><a href="understanding-graphs.html#worked-example-1-what-is-the-most-common-age-at-which-people-start-smoking"><i class="fa fa-check"></i><b>4.5</b> Worked example 1: What is the most common age at which people start smoking?</a></li>
+<li class="chapter" data-level="4.6" data-path="understanding-graphs.html"><a href="understanding-graphs.html#pie-charts"><i class="fa fa-check"></i><b>4.6</b> Pie charts</a></li>
+<li class="chapter" data-level="4.7" data-path="understanding-graphs.html"><a href="understanding-graphs.html#investigating-newborn-and-infant-gender"><i class="fa fa-check"></i><b>4.7</b> Investigating newborn and infant gender</a><ul>
+<li class="chapter" data-level="4.7.1" data-path="understanding-graphs.html"><a href="understanding-graphs.html#exploring-the-distribution-of-race-across-provinces"><i class="fa fa-check"></i><b>4.7.1</b> Exploring the distribution of race across provinces</a></li>
+<li class="chapter" data-level="4.7.2" data-path="understanding-graphs.html"><a href="understanding-graphs.html#urban-vs.rural-where-are-south-africans-living"><i class="fa fa-check"></i><b>4.7.2</b> Urban vs. rural, where are South Africans living?</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="understanding-graphs.html"><a href="understanding-graphs.html#worked-example-2-are-there-differences-between-the-age-at-which-men-and-women-start-smoking"><i class="fa fa-check"></i><b>4.8</b> Worked example 2: Are there differences between the age at which men and women start smoking?</a><ul>
+<li class="chapter" data-level="4.8.1" data-path="understanding-graphs.html"><a href="understanding-graphs.html#exercise"><i class="fa fa-check"></i><b>4.8.1</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="4.9" data-path="understanding-graphs.html"><a href="understanding-graphs.html#bar-graphs"><i class="fa fa-check"></i><b>4.9</b> Bar graphs</a><ul>
+<li class="chapter" data-level="4.9.1" data-path="understanding-graphs.html"><a href="understanding-graphs.html#investigating-satisfaction-levels-in-south-africans"><i class="fa fa-check"></i><b>4.9.1</b> Investigating Satisfaction levels in South Africans</a></li>
+<li class="chapter" data-level="4.9.2" data-path="understanding-graphs.html"><a href="understanding-graphs.html#worked-example-3-does-the-frequency-of-alcohol-consumption-vary-by-gender-race-or-religion"><i class="fa fa-check"></i><b>4.9.2</b> Worked example 3: Does the frequency of alcohol consumption vary by gender, race or religion?</a></li>
+</ul></li>
+<li class="chapter" data-level="4.10" data-path="understanding-graphs.html"><a href="understanding-graphs.html#question-answers-2"><i class="fa fa-check"></i><b>4.10</b> Question answers</a></li>
+<li class="chapter" data-level="4.11" data-path="understanding-graphs.html"><a href="understanding-graphs.html#session-information-2"><i class="fa fa-check"></i><b>4.11</b> Session information</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html"><i class="fa fa-check"></i><b>5</b> Measures of central tendency and variability</a><ul>
+<li class="chapter" data-level="5.1" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#getting-ready-1"><i class="fa fa-check"></i><b>5.1</b> Getting ready</a></li>
+<li class="chapter" data-level="5.2" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#introduction-4"><i class="fa fa-check"></i><b>5.2</b> Introduction</a></li>
+<li class="chapter" data-level="5.3" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#understanding-distributions-of-continuous-variables"><i class="fa fa-check"></i><b>5.3</b> Understanding distributions of continuous variables</a></li>
+<li class="chapter" data-level="5.4" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#continuous-variables-and-recoding"><i class="fa fa-check"></i><b>5.4</b> Continuous variables and recoding</a></li>
+<li class="chapter" data-level="5.5" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#summarise-by---summary-base-r-and-group_by---summarise-dplyr"><i class="fa fa-check"></i><b>5.5</b> Summarise: by - summary (base R) and group_by - summarise (dplyr)</a></li>
+<li class="chapter" data-level="5.6" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#medians-and-modes-of-continuous-variables"><i class="fa fa-check"></i><b>5.6</b> Medians and modes of continuous variables</a></li>
+<li class="chapter" data-level="5.7" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#example-recoding-the-education-variable"><i class="fa fa-check"></i><b>5.7</b> Example: recoding the education variable</a></li>
+<li class="chapter" data-level="5.8" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#measures-of-dispersion---variance-and-standard-deviation"><i class="fa fa-check"></i><b>5.8</b> Measures of dispersion - variance and standard deviation</a></li>
+<li class="chapter" data-level="5.9" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#handling-outliers"><i class="fa fa-check"></i><b>5.9</b> Handling outliers</a></li>
+<li class="chapter" data-level="5.10" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#understanding-the-distributions-of-categorical-variables"><i class="fa fa-check"></i><b>5.10</b> Understanding the distributions of categorical variables</a></li>
+<li class="chapter" data-level="5.11" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#worked-example-1-exploring-the-distribution-of-satisfaction-variable"><i class="fa fa-check"></i><b>5.11</b> Worked example 1: Exploring the distribution of satisfaction variable</a></li>
+<li class="chapter" data-level="5.12" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#group-summary"><i class="fa fa-check"></i><b>5.12</b> Group summary</a></li>
+<li class="chapter" data-level="5.13" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#worked-example-2-investigating-bmi-in-south-africa"><i class="fa fa-check"></i><b>5.13</b> Worked example 2: Investigating BMI in South Africa</a></li>
+<li class="chapter" data-level="5.14" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#question-answers-3"><i class="fa fa-check"></i><b>5.14</b> Question answers</a></li>
+<li class="chapter" data-level="5.15" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#exercises-2"><i class="fa fa-check"></i><b>5.15</b> Exercises</a></li>
+<li class="chapter" data-level="5.16" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#exercise-answers-1"><i class="fa fa-check"></i><b>5.16</b> Exercise answers</a></li>
+<li class="chapter" data-level="5.17" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#exercises-3"><i class="fa fa-check"></i><b>5.17</b> Exercises</a></li>
+<li class="chapter" data-level="5.18" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#exercise-answers-2"><i class="fa fa-check"></i><b>5.18</b> Exercise answers</a></li>
+<li class="chapter" data-level="5.19" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#session-information-3"><i class="fa fa-check"></i><b>5.19</b> Session information</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html"><i class="fa fa-check"></i><b>6</b> Bivariate analysis (cross tabs)</a><ul>
+<li class="chapter" data-level="6.1" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#getting-ready-2"><i class="fa fa-check"></i><b>6.1</b> Getting ready</a></li>
+<li class="chapter" data-level="6.2" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#introduction-5"><i class="fa fa-check"></i><b>6.2</b> Introduction</a></li>
+<li class="chapter" data-level="6.3" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#cross---tabulation"><i class="fa fa-check"></i><b>6.3</b> Cross - tabulation</a></li>
+<li class="chapter" data-level="6.4" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#example-1-where-do-households-with-an-elderly-member-tend-to-live"><i class="fa fa-check"></i><b>6.4</b> Example 1: Where do households with an elderly member tend to live?</a></li>
+<li class="chapter" data-level="6.5" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#example-2-is-there-a-relationship-between-the-race-of-a-household-and-the-average-age-of-the-household"><i class="fa fa-check"></i><b>6.5</b> Example 2: Is there a relationship between the race of a household and the average age of the household?</a></li>
+<li class="chapter" data-level="6.6" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#example-3-does-the-level-of-satisfaction-differ-in-different-racegender-groupings"><i class="fa fa-check"></i><b>6.6</b> Example 3: Does the level of satisfaction differ in different race/gender groupings?</a></li>
+<li class="chapter" data-level="6.7" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#example-4-comparing-household-monthly-income-from-the-labour-market-to-individual-monthly-takehome-pay"><i class="fa fa-check"></i><b>6.7</b> Example 4: Comparing Household Monthly Income from the labour market to individual monthly takehome pay</a></li>
+<li class="chapter" data-level="6.8" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#chi-squared-testing-for-independence"><i class="fa fa-check"></i><b>6.8</b> Chi-Squared: testing for independence</a></li>
+<li class="chapter" data-level="6.9" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#cross-tabs-and-hypothesis-testing-chi2-examples-the-comparative-level-of-happiness-variable"><i class="fa fa-check"></i><b>6.9</b> Cross-tabs and hypothesis testing (Chi^2) examples: The comparative level of happiness variable</a><ul>
+<li class="chapter" data-level="6.9.1" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#example-1-comparative-happiness-and-employment-status"><i class="fa fa-check"></i><b>6.9.1</b> Example 1: Comparative happiness and employment status</a></li>
+<li class="chapter" data-level="6.9.2" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#example-2-comparative-happiness-by-province"><i class="fa fa-check"></i><b>6.9.2</b> Example 2: Comparative happiness by province</a></li>
+<li class="chapter" data-level="6.9.3" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#example-3-comparative-happiness-and-household-income"><i class="fa fa-check"></i><b>6.9.3</b> Example 3: Comparative happiness and household income</a></li>
+<li class="chapter" data-level="6.9.4" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#example-4-comparative-happiness-and-geo-type"><i class="fa fa-check"></i><b>6.9.4</b> Example 4: Comparative happiness and geo-type</a></li>
+</ul></li>
+<li class="chapter" data-level="6.10" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#worked-example-assessing-the-impact-of-per-capita-income-on-bmi"><i class="fa fa-check"></i><b>6.10</b> Worked Example: Assessing the impact of per capita income on BMI</a></li>
+<li class="chapter" data-level="6.11" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#question-answers-4"><i class="fa fa-check"></i><b>6.11</b> Question Answers</a></li>
+<li class="chapter" data-level="6.12" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#exercises-4"><i class="fa fa-check"></i><b>6.12</b> Exercises</a></li>
+<li class="chapter" data-level="6.13" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#exercise-answers-3"><i class="fa fa-check"></i><b>6.13</b> Exercise answers</a></li>
+<li class="chapter" data-level="6.14" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#session-information-4"><i class="fa fa-check"></i><b>6.14</b> Session information</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html"><i class="fa fa-check"></i><b>7</b> Simple regression analysis</a><ul>
+<li class="chapter" data-level="7.1" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#getting-ready-3"><i class="fa fa-check"></i><b>7.1</b> Getting ready</a></li>
+<li class="chapter" data-level="7.2" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#introduction-6"><i class="fa fa-check"></i><b>7.2</b> Introduction</a></li>
+<li class="chapter" data-level="7.3" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#correlation-of-variables"><i class="fa fa-check"></i><b>7.3</b> Correlation of variables</a></li>
+<li class="chapter" data-level="7.4" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#outliers"><i class="fa fa-check"></i><b>7.4</b> Outliers</a></li>
+<li class="chapter" data-level="7.5" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#simple-regression"><i class="fa fa-check"></i><b>7.5</b> Simple regression</a></li>
+<li class="chapter" data-level="7.6" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#understanding-regression-output-tables"><i class="fa fa-check"></i><b>7.6</b> Understanding regression output tables</a></li>
+<li class="chapter" data-level="7.7" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#graphing-the-regression-equation"><i class="fa fa-check"></i><b>7.7</b> Graphing the regression equation</a></li>
+<li class="chapter" data-level="7.8" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#worked-example-is-age-a-strong-determinant-of-bmi"><i class="fa fa-check"></i><b>7.8</b> Worked example: Is age a strong determinant of BMI?</a></li>
+<li class="chapter" data-level="7.9" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#question-answers-5"><i class="fa fa-check"></i><b>7.9</b> Question answers:</a></li>
+<li class="chapter" data-level="7.10" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#exercises-5"><i class="fa fa-check"></i><b>7.10</b> Exercises</a></li>
+<li class="chapter" data-level="7.11" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#exercise-1"><i class="fa fa-check"></i><b>7.11</b> Exercise</a></li>
+<li class="chapter" data-level="7.12" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#exercise-answers-4"><i class="fa fa-check"></i><b>7.12</b> Exercise answers</a></li>
+<li class="chapter" data-level="7.13" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#appendix-a-analysis-of-variance-anova-table"><i class="fa fa-check"></i><b>7.13</b> Appendix A: Analysis of variance (anova) table</a></li>
+<li class="chapter" data-level="7.14" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#appendix-b-further-understanding-the-regression-results-table"><i class="fa fa-check"></i><b>7.14</b> Appendix B: Further understanding the regression results table</a></li>
+<li class="chapter" data-level="7.15" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#session-information-5"><i class="fa fa-check"></i><b>7.15</b> Session information</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="multiple-regression-analysis.html"><a href="multiple-regression-analysis.html"><i class="fa fa-check"></i><b>8</b> Multiple regression analysis</a><ul>
+<li class="chapter" data-level="8.1" data-path="multiple-regression-analysis.html"><a href="multiple-regression-analysis.html#getting-ready-4"><i class="fa fa-check"></i><b>8.1</b> Getting ready</a></li>
+<li class="chapter" data-level="8.2" data-path="multiple-regression-analysis.html"><a href="multiple-regression-analysis.html#introduction-7"><i class="fa fa-check"></i><b>8.2</b> Introduction</a></li>
+<li class="chapter" data-level="8.3" data-path="multiple-regression-analysis.html"><a href="multiple-regression-analysis.html#dummy-variables"><i class="fa fa-check"></i><b>8.3</b> Dummy variables</a></li>
+<li class="chapter" data-level="8.4" data-path="multiple-regression-analysis.html"><a href="multiple-regression-analysis.html#interactions-with-dummy-variables"><i class="fa fa-check"></i><b>8.4</b> Interactions with dummy Variables</a></li>
+<li class="chapter" data-level="8.5" data-path="multiple-regression-analysis.html"><a href="multiple-regression-analysis.html#linear-transformations-of-non-linear-relationships"><i class="fa fa-check"></i><b>8.5</b> Linear transformations of non-linear relationships</a></li>
+<li class="chapter" data-level="8.6" data-path="multiple-regression-analysis.html"><a href="multiple-regression-analysis.html#question-answers-6"><i class="fa fa-check"></i><b>8.6</b> Question Answers</a></li>
+<li class="chapter" data-level="8.7" data-path="multiple-regression-analysis.html"><a href="multiple-regression-analysis.html#exercises-6"><i class="fa fa-check"></i><b>8.7</b> Exercises</a></li>
+<li class="chapter" data-level="8.8" data-path="multiple-regression-analysis.html"><a href="multiple-regression-analysis.html#exercise-answers-5"><i class="fa fa-check"></i><b>8.8</b> Exercise answers</a></li>
+<li class="chapter" data-level="8.9" data-path="multiple-regression-analysis.html"><a href="multiple-regression-analysis.html#session-information-6"><i class="fa fa-check"></i><b>8.9</b> Session information</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="further-analysis-and-useful-online-resources.html"><a href="further-analysis-and-useful-online-resources.html"><i class="fa fa-check"></i><b>9</b> Further analysis and useful online resources</a><ul>
+<li class="chapter" data-level="9.1" data-path="further-analysis-and-useful-online-resources.html"><a href="further-analysis-and-useful-online-resources.html#further-analyses"><i class="fa fa-check"></i><b>9.1</b> Further analyses</a></li>
+<li class="chapter" data-level="9.2" data-path="further-analysis-and-useful-online-resources.html"><a href="further-analysis-and-useful-online-resources.html#useful-online-resources"><i class="fa fa-check"></i><b>9.2</b> Useful online resources</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">The Analysis of South African Household Survey Data using R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="measures-of-central-tendency-and-variability" class="section level1">
+<h1><span class="header-section-number">5</span> Measures of central tendency and variability</h1>
+<div id="getting-ready-1" class="section level2">
+<h2><span class="header-section-number">5.1</span> Getting ready</h2>
+<p>In the previous chapters we generated some variables and ran some commands that will influence the results that we get in this chapter. If you are starting a new session of R, please run the following lines of code before you begin the chapter. Make sure that you remember what each line of code is doing.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(foreign)
+<span class="kw">library</span>(tidyverse)</code></pre></div>
+<pre><code>## -- Attaching packages ----------------------- tidyverse 1.2.1 --</code></pre>
+<pre><code>## v ggplot2 3.0.0     v purrr   0.2.5
+## v tibble  1.4.2     v dplyr   0.7.6
+## v tidyr   0.8.1     v stringr 1.3.1
+## v readr   1.1.1     v forcats 0.3.0</code></pre>
+<pre><code>## -- Conflicts -------------------------- tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids&lt;-<span class="kw">read.dta</span>(<span class="st">&quot;./data/nids.dta&quot;</span>, <span class="dt">convert.factors=</span><span class="ot">FALSE</span>)
+
+nids&lt;-nids<span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">arrange</span>(hhid, pid)<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(hhid) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">hhrestrict =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">n</span>()) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">hhrestrict =</span> <span class="kw">ifelse</span>(hhrestrict<span class="op">==</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>))
+
+###Creating a BMI variable - from chapter 2 ***
+
+<span class="co">#Height</span>
+nids&lt;-nids <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">height =</span> <span class="kw">ifelse</span> (w1_a_n1_<span class="dv">1</span> <span class="op">&gt;=</span><span class="st"> </span><span class="dv">0</span> <span class="op">&amp;</span><span class="st"> </span>w1_a_best_age_yrs <span class="op">&gt;=</span><span class="st"> </span><span class="dv">20</span>, w1_a_n1_<span class="dv">1</span><span class="op">/</span><span class="dv">100</span>, <span class="ot">NA</span>))
+
+<span class="co">#Weight</span>
+nids&lt;-nids <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">weight =</span> <span class="kw">ifelse</span> (w1_a_n2_<span class="dv">1</span> <span class="op">&gt;=</span><span class="st"> </span><span class="dv">0</span> <span class="op">&amp;</span><span class="st"> </span>w1_a_best_age_yrs <span class="op">&gt;</span><span class="st"> </span><span class="dv">20</span>, w1_a_n2_<span class="dv">1</span>, <span class="ot">NA</span>)) 
+
+<span class="co">#BMI</span>
+nids&lt;-nids <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">bmi =</span> weight<span class="op">/</span>height<span class="op">^</span><span class="dv">2</span>)
+
+<span class="co">#Age</span>
+nids&lt;-nids<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">age_adult =</span> <span class="kw">ifelse</span>(w1_a_best_age_yrs<span class="op">&lt;</span><span class="dv">0</span>,<span class="ot">NA</span>, w1_a_best_age_yrs))
+
+<span class="co">#Age bins</span>
+nids<span class="op">$</span>age_bins&lt;-<span class="ot">NA</span>
+nids<span class="op">$</span>age_bins[<span class="kw">which</span>(nids<span class="op">$</span>w1_r_best_age_yrs<span class="op">&gt;=</span><span class="dv">20</span> <span class="op">&amp;</span><span class="st"> </span>nids<span class="op">$</span>w1_r_best_age_yrs<span class="op">&lt;=</span><span class="dv">29</span>)]&lt;-<span class="dv">1</span>
+nids<span class="op">$</span>age_bins[<span class="kw">which</span>(nids<span class="op">$</span>w1_r_best_age_yrs<span class="op">&gt;</span><span class="dv">29</span> <span class="op">&amp;</span><span class="st"> </span>nids<span class="op">$</span>w1_r_best_age_yrs<span class="op">&lt;=</span><span class="dv">39</span>)]&lt;-<span class="dv">2</span>
+nids<span class="op">$</span>age_bins[<span class="kw">which</span>(nids<span class="op">$</span>w1_r_best_age_yrs<span class="op">&gt;</span><span class="dv">39</span> <span class="op">&amp;</span><span class="st"> </span>nids<span class="op">$</span>w1_r_best_age_yrs<span class="op">&lt;=</span><span class="dv">49</span>)]&lt;-<span class="dv">3</span>
+nids<span class="op">$</span>age_bins[<span class="kw">which</span>(nids<span class="op">$</span>w1_r_best_age_yrs<span class="op">&gt;</span><span class="dv">49</span> <span class="op">&amp;</span><span class="st"> </span>nids<span class="op">$</span>w1_r_best_age_yrs<span class="op">&lt;=</span><span class="dv">59</span>)]&lt;-<span class="dv">4</span>
+nids<span class="op">$</span>age_bins[<span class="kw">which</span>(nids<span class="op">$</span>w1_r_best_age_yrs<span class="op">&gt;</span><span class="dv">59</span> <span class="op">&amp;</span><span class="st"> </span>nids<span class="op">$</span>w1_r_best_age_yrs<span class="op">&lt;=</span><span class="dv">69</span>)]&lt;-<span class="dv">5</span>
+nids<span class="op">$</span>age_bins[<span class="kw">which</span>(nids<span class="op">$</span>w1_r_best_age_yrs<span class="op">&gt;</span><span class="dv">69</span> <span class="op">&amp;</span><span class="st"> </span>nids<span class="op">$</span>w1_r_best_age_yrs<span class="op">&lt;=</span><span class="dv">120</span>)]&lt;-<span class="dv">6</span>
+
+nids<span class="op">$</span>age_bins &lt;-<span class="st"> </span><span class="kw">factor</span>(nids<span class="op">$</span>age_bins, <span class="dt">levels =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;20 - 29 yrs&quot;</span>,<span class="st">&quot;30 - 39 yrs&quot;</span>, <span class="st">&quot;40 - 49 yrs&quot;</span>, <span class="st">&quot;50 - 59 yrs&quot;</span>, <span class="st">&quot;60 - 69 yrs&quot;</span>, <span class="st">&quot;70 - 120 yrs&quot;</span>))
+
+nids &lt;-<span class="st"> </span>nids<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">rename</span>(<span class="dt">race =</span> w1_best_race,
+        <span class="dt">age =</span> w1_r_best_age_yrs,
+        <span class="dt">gender =</span> w1_r_b4,
+        <span class="dt">province =</span> w1_hhprov, 
+        <span class="dt">hhincome =</span> w1_hhincome) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">gender =</span> <span class="kw">factor</span>(gender, <span class="dt">levels =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>)),
+         <span class="dt">race =</span> <span class="kw">factor</span>(race, <span class="dt">levels =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;African&quot;</span>, <span class="st">&quot;Coloured&quot;</span>,<span class="st">&quot;Asian&quot;</span>, <span class="st">&quot;White&quot;</span>)),
+         <span class="dt">province =</span> <span class="kw">factor</span>(province, <span class="dt">levels=</span><span class="dv">1</span><span class="op">:</span><span class="dv">9</span>, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Western Cape&quot;</span>,<span class="st">&quot;Eastern Cape&quot;</span>,<span class="st">&quot;Northern Cape&quot;</span>,<span class="st">&quot;Free State&quot;</span>,<span class="st">&quot;KwaZulu-Natal&quot;</span>,<span class="st">&quot;North West&quot;</span>,<span class="st">&quot;Gauteng&quot;</span>,<span class="st">&quot;Mpumalanga&quot;</span>,<span class="st">&quot;Limpopo&quot;</span>)),
+         <span class="dt">w1_hhgeo =</span> <span class="kw">factor</span>(w1_hhgeo, <span class="dt">levels =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Rural formal&quot;</span>, <span class="st">&quot;Tribal authority areas&quot;</span>,<span class="st">&quot;Urban formal&quot;</span>, <span class="st">&quot;Urban informal&quot;</span>)))</code></pre></div>
+</div>
+<div id="introduction-4" class="section level2">
+<h2><span class="header-section-number">5.2</span> Introduction</h2>
+<p>In Chapter 3, we learned about the different variable types that exist in the NIDS data set, about different types of missing data, and about the commands that enable us to see frequency distribution tables. In chapter 4 we learned how to produce several types of simple graphs. Based on this knowledge, we are going to start learning how to do some basic statistical analysis, using measures of central tendency and variability.</p>
+<p>As the name NIDS (National Income Dynamics Study) suggests, there are a great many questions that researchers wish to address regarding income levels. A few examples of questions we might wish to investigate using the data on individual monthly income (<code>w1_fwag - the monthly take home pay of main job</code>) are the following:</p>
+<ol style="list-style-type: decimal">
+<li><p>What is the average monthly individual income in South Africa?</p></li>
+<li><p>Is the distribution of income in South Africa somewhat equal or are incomes much higher for the rich than for the poor? How much higher?</p></li>
+<li><p>How does the average income in South Africa vary by racial group and how does income inequality vary within racial groups in South Africa?</p></li>
+<li><p>How does income in South Africa vary by province? Do we live in a province that has above or below average income levels?</p></li>
+</ol>
+<p>We will start this chapter considering continuous variables. Then we will learn some new commands that make analyzing data easier. Lastly, we will go through some of the key methods that will enable us to analyze categorical variables effectively.</p>
+</div>
+<div id="understanding-distributions-of-continuous-variables" class="section level2">
+<h2><span class="header-section-number">5.3</span> Understanding distributions of continuous variables</h2>
+<p>For now, let’s focus on monthly individual income (<code>w1_fwag</code>). Let’s start by seeing what the distribution of income looks like. In the graph below, we find that almost 50 percent of the observations are in the first bar (which means income is roughly less than 1800 Rand per month.) Also note that only a very small fraction of income earners, earn monthly incomes above 40,000 Rand, in fact the bars themselves are very hard to see on the histogram! It turns out that only one person reports an income of 90,000. The next highest monthly income is 75,000 Rand, which is reported by 3 people and there is no one in NIDS that report a monthly income between these two figures. That is why, in the graph below, there are no bars between 90, 000 and 75,000. All in all, only 9 people report an income over 40, 000 Rand thus it is tempting to simply ignore these high values which seem out of keeping with the rest of the observations. Doing so would certainly produce a much more attractive histogram, that would allow us to focus on the where the bulk of the income values lie. This would, however, be a grave mistake; we can’t just arbitrarily delete observations no matter how “unattractive” they may seem! Later we will experiment with different ways of handling these “outlying” data values, but for now, the data are what they are.</p>
+<p>Below we give the code you could enter into your R Script in order to get the graph.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(scales)</code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;scales&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:purrr&#39;:
+## 
+##     discard</code></pre>
+<pre><code>## The following object is masked from &#39;package:readr&#39;:
+## 
+##     col_factor</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(nids, <span class="kw">aes</span>(<span class="dt">x =</span> w1_fwag, <span class="dt">y =</span> (..count..)<span class="op">/</span><span class="kw">sum</span>(..count..)<span class="op">*</span><span class="dv">100</span>)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_histogram</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks=</span><span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">90000</span>,<span class="dv">10000</span>), <span class="dt">labels =</span> comma) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Earnings in Rand&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Percent&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Monthly Take Home Pay&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_classic</span>()</code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<pre><code>## Warning: Removed 26671 rows containing non-finite values (stat_bin).</code></pre>
+<p><img src="05-central_tendency_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+</div>
+<div id="continuous-variables-and-recoding" class="section level2">
+<h2><span class="header-section-number">5.4</span> Continuous variables and recoding</h2>
+<p>While histograms are extremely useful in giving us a quick and clear overview of a particular variable, often we will want to delve a little deeper and obtain more precise results. For instance, we might wish to know exactly how many individuals have an income below R1500. Or we may want to know what percentage of the sample is ‘middle class’, as opposed to ‘lower class’ and ‘upper class’. We learnt in chapter 3 that for categorical variables we can use <code>table</code> to get a good idea of the distribution of the variable, but if you try to use table for a continuous variable the result is not very useful. Try this for yourself!</p>
+<p>We get the clue for how to deal with a continuous variable from the way a histogram works. Basically, a histogram divides the range of the variable up into bins and then counts how many values fall into each bin (for instance, a bin might be an income bracket of R2000). If we use this strategy and recode our income variable into bins then we will be able to tabulate the recoded variable and obtain meaningful results. Note that the choice of bin size is essentially arbitrary and depends on the context. Here, we will divide our income variable into only three bins for simplicity. We will use the following arbitrarily defined bins:</p>
+<ol style="list-style-type: decimal">
+<li>0 - R1500 (“Lower Class”)</li>
+<li>R1500 - R4500 (“Middle Class”)</li>
+<li>R4500 + (“Upper Class”) We generate a new variable that divides the sample into the three bins (and leaves those with dot-missing values as dot-missing).</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(nids<span class="op">$</span>w1_fwag)</code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+##    20.0   936.7  1600.0  3233.4  3550.0 90000.0   26671</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids&lt;-nids <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">class =</span> <span class="kw">case_when</span>(
+    w1_fwag<span class="op">&lt;=</span><span class="dv">1500</span> <span class="op">~</span><span class="st"> </span><span class="dv">1</span>,
+    w1_fwag<span class="op">&gt;</span><span class="dv">1500</span> <span class="op">&amp;</span><span class="st"> </span>w1_fwag<span class="op">&lt;=</span><span class="dv">4500</span> <span class="op">~</span><span class="st"> </span><span class="dv">2</span>,
+    w1_fwag<span class="op">&gt;</span><span class="dv">4500</span> <span class="op">~</span><span class="st"> </span><span class="dv">3</span>
+  )) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">class=</span><span class="kw">factor</span>(class, <span class="dt">levels=</span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Lower Class&quot;</span>,<span class="st">&quot;Middle Class&quot;</span>,<span class="st">&quot;Upper Class&quot;</span>)))</code></pre></div>
+<p>We need to be careful about given what we know about missing values and non‐response codes in the NIDS dataset? Since we know that non‐responses are coded as negative numbers, we have to be careful that we are not including all the non‐responses in the lowest class category. However, when we used <code>summary</code> before running recode, we saw that the range of the <code>w1_fwag</code> variable is [20,90000]. This tells us that there are no non‐responses recorded for this variable.</p>
+<p>Let’s have a look at the variable that we have created.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(nids<span class="op">$</span>class)</code></pre></div>
+<pre><code>## 
+##  Lower Class Middle Class  Upper Class 
+##         2167         1503          829</code></pre>
+<p>or</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(class)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(class) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">freq=</span><span class="kw">n</span>()) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">percent =</span> <span class="kw">round</span>(freq<span class="op">/</span><span class="kw">sum</span>(freq)<span class="op">*</span><span class="dv">100</span>,<span class="dv">2</span>), <span class="dt">cum_percent =</span> <span class="kw">round</span>(<span class="kw">cumsum</span>(freq)<span class="op">/</span><span class="kw">sum</span>(freq)<span class="op">*</span><span class="dv">100</span>,<span class="dv">2</span>))</code></pre></div>
+<pre><code>## # A tibble: 3 x 4
+##   class         freq percent cum_percent
+##   &lt;fct&gt;        &lt;int&gt;   &lt;dbl&gt;       &lt;dbl&gt;
+## 1 Lower Class   2167    48.2        48.2
+## 2 Middle Class  1503    33.4        81.6
+## 3 Upper Class    829    18.4       100</code></pre>
+<p>Notice that the total number of individuals with a class value is 4 499. However, we know that our sample has over 30 000 individuals in it. We know that all the excluded individuals are NA-missing. You can check that the number of NA-missings are the same for the original income variable (<code>w1_fwag</code>) and our newly created <code>class</code> variable.</p>
+<p>Recall that our objective in this section was to learn how to take a continuous variable and recode it in a way that made it easier to interpret. There are many ways of extracting information from a continuous variable - what we have done is one of them. We can now say that of the portion of the sample with recorded income levels, 48% earn below R1500, 33% between R1500 and R4500, and 18% above R4500. However, we must keep in mind the large proportion of the population with no recorded income value. Before thinking about publishing these results, we would need to investigate where all the NA-missings come from, however we will not do that here since you have already learnt how to go about conducting such an investigation.</p>
+</div>
+<div id="summarise-by---summary-base-r-and-group_by---summarise-dplyr" class="section level2">
+<h2><span class="header-section-number">5.5</span> Summarise: by - summary (base R) and group_by - summarise (dplyr)</h2>
+<p>We have just seen one of the ways that you can summarize the information contained in a continuous variable. Upon meeting a new variable, R has a several commands that enable you to get acquainted with your new friend - we have already learnt <code>head</code>, <code>tail</code>, e.t.c. Here we do more exploration using the <code>summary()</code> command. In R, type:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(nids<span class="op">$</span>w1_fwag)</code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+##    20.0   936.7  1600.0  3233.4  3550.0 90000.0   26671</code></pre>
+<p>We see that the average monthly income is R3233.40. There are two nice features of <code>summary</code>. First, <code>summary</code> tells us the range of the variable. For example, when we typed <code>summary(nids$w1_fwag)</code>, we learned that <code>w1_fwag</code> ranged between 20 and 90000. Second, summary works with the <code>by()</code> option. We can compute the mean by each of categories of another variable, e.g. race (<code>w1_best_race</code>), <code>w1_hhprov</code> (province variable), or any other distinguishing characteristic. To summarise <code>w1_fwag</code> by <code>race</code>, type:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">by</span>(nids[, <span class="kw">c</span>(<span class="st">&quot;w1_fwag&quot;</span>)], nids<span class="op">$</span>race, summary)</code></pre></div>
+<pre><code>## nids$race: African
+##     w1_fwag     
+##  Min.   :   20  
+##  1st Qu.:  850  
+##  Median : 1400  
+##  Mean   : 2494  
+##  3rd Qu.: 2995  
+##  Max.   :90000  
+##  NA&#39;s   :19227  
+## -------------------------------------------------------- 
+## nids$race: Coloured
+##     w1_fwag       
+##  Min.   :   55.0  
+##  1st Qu.:  887.6  
+##  Median : 1400.0  
+##  Mean   : 2387.3  
+##  3rd Qu.: 2700.0  
+##  Max.   :42000.0  
+##  NA&#39;s   :3134     
+## -------------------------------------------------------- 
+## nids$race: Asian
+##     w1_fwag     
+##  Min.   :  920  
+##  1st Qu.: 3000  
+##  Median : 4500  
+##  Mean   : 7550  
+##  3rd Qu.: 9338  
+##  Max.   :40000  
+##  NA&#39;s   :346    
+## -------------------------------------------------------- 
+## nids$race: White
+##     w1_fwag     
+##  Min.   :  100  
+##  1st Qu.: 3766  
+##  Median : 6952  
+##  Mean   : 9241  
+##  3rd Qu.:11000  
+##  Max.   :75000  
+##  NA&#39;s   :992</code></pre>
+<p>We see that the average monthly income of Africans, Coloureds, Indians/Asians, and Whites, respectively are 2494, 2387, 7550, and 9241.4 Rand respectively.</p>
+<p>Alternatively, you can use <code>group_by</code> and <code>summarise</code> functions from the library <code>dplyr</code> as follows:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>(hhid,race, w1_fwag) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(race) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">min=</span><span class="kw">min</span>(w1_fwag, <span class="dt">na.rm=</span><span class="ot">TRUE</span>), 
+            <span class="dt">median=</span><span class="kw">median</span>(w1_fwag, <span class="dt">na.rm=</span><span class="ot">TRUE</span>),
+            <span class="dt">mean=</span><span class="kw">mean</span>(w1_fwag, <span class="dt">na.rm=</span><span class="ot">TRUE</span>),
+            <span class="dt">max=</span><span class="kw">max</span>(w1_fwag, <span class="dt">na.rm=</span><span class="ot">TRUE</span>),
+            <span class="dt">std.dev=</span><span class="kw">sd</span>(w1_fwag, <span class="dt">na.rm=</span><span class="ot">TRUE</span>))</code></pre></div>
+<pre><code>## # A tibble: 5 x 6
+##   race       min median  mean   max std.dev
+##   &lt;fct&gt;    &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
+## 1 African     20  1400  2494. 90000   4104.
+## 2 Coloured    55  1400  2387. 42000   3033.
+## 3 Asian      920  4500  7550. 40000   7522.
+## 4 White      100  6952. 9241. 75000   9504.
+## 5 &lt;NA&gt;      1160  1622. 1576.  1900    348.</code></pre>
+<p>Sometimes, it will be helpful to compute means (or other statistics) by groups that we construct. For example, suppose we wanted to <code>summarise</code> to give income levels of different age groups - e.g. under 20, 21-40, 41-60, and over 60. We need to construct these age groups and then compute the means. As usual there are various ways to do this. We learnt how to use the square brackets to subset or <code>dplyr</code>’s <code>case_when</code>. Below is the code for generating an NA-missing variable and replacing it.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids<span class="op">$</span>agegrp&lt;-<span class="ot">NA</span>
+nids<span class="op">$</span>agegrp[<span class="kw">which</span>(nids<span class="op">$</span>age<span class="op">&gt;=</span><span class="dv">0</span> <span class="op">&amp;</span><span class="st"> </span>nids<span class="op">$</span>age<span class="op">&lt;=</span><span class="dv">20</span>)]&lt;-<span class="dv">1</span>
+nids<span class="op">$</span>agegrp[<span class="kw">which</span>(nids<span class="op">$</span>age<span class="op">&gt;</span><span class="dv">20</span> <span class="op">&amp;</span><span class="st"> </span>nids<span class="op">$</span>age<span class="op">&lt;=</span><span class="dv">40</span>)]&lt;-<span class="dv">2</span>
+nids<span class="op">$</span>agegrp[<span class="kw">which</span>(nids<span class="op">$</span>age<span class="op">&gt;</span><span class="dv">40</span> <span class="op">&amp;</span><span class="st"> </span>nids<span class="op">$</span>age<span class="op">&lt;=</span><span class="dv">60</span>)]&lt;-<span class="dv">3</span>
+nids<span class="op">$</span>agegrp[<span class="kw">which</span>(nids<span class="op">$</span>age<span class="op">&gt;</span><span class="dv">60</span> <span class="op">&amp;</span><span class="st"> </span>nids<span class="op">$</span>age<span class="op">&lt;=</span><span class="dv">120</span>)]&lt;-<span class="dv">4</span></code></pre></div>
+<p>To factor variable:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids<span class="op">$</span>agegrp&lt;-<span class="kw">factor</span>(nids<span class="op">$</span>agegrp, <span class="dt">levels=</span><span class="dv">1</span><span class="op">:</span><span class="dv">4</span>, <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;0 - 20 yrs&quot;</span>, <span class="st">&quot;21 - 40 yrs&quot;</span>,<span class="st">&quot;41 - 60 yrs&quot;</span>, <span class="st">&quot;60+ yrs&quot;</span>))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(agegrp)<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">Mean=</span><span class="kw">mean</span>(w1_fwag, <span class="dt">na.rm=</span><span class="ot">TRUE</span>), 
+       <span class="dt">Std.Dev=</span><span class="kw">sd</span>(w1_fwag, <span class="dt">na.rm=</span><span class="ot">TRUE</span>), 
+       <span class="dt">Min=</span><span class="kw">min</span>(w1_fwag, <span class="dt">na.rm=</span><span class="ot">TRUE</span>),
+       <span class="dt">Max=</span><span class="kw">max</span>(w1_fwag, <span class="dt">na.rm=</span><span class="ot">TRUE</span>))</code></pre></div>
+<pre><code>## # A tibble: 5 x 5
+##   agegrp       Mean Std.Dev   Min   Max
+##   &lt;fct&gt;       &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 0 - 20 yrs  1357.   1057.    80  7000
+## 2 21 - 40 yrs 3009.   4803.    20 90000
+## 3 41 - 60 yrs 3851.   6141.    88 75000
+## 4 60+ yrs     2773.   3116.   280 18000
+## 5 &lt;NA&gt;        1226.   1678.   100  7000</code></pre>
+<p>This gives us the average income levels for each of our age categories. For instance, 41 - 60 year olds in the sample, who had a reported income level, earned R3851 on average. Notice that age category 0 - 20 years reports a mean of R1356, but it would be strange if the average person younger than 20 has an income of R1356. What’s going on here? If you look at the Obs category, you see that the group only has 153 respondents with reported income data. This is primarily because most people below the age of 20 do not work in the formal sector and therefore are NA-missing. The individuals who don’t report any income are not included in calculating the mean.</p>
+</div>
+<div id="medians-and-modes-of-continuous-variables" class="section level2">
+<h2><span class="header-section-number">5.6</span> Medians and modes of continuous variables</h2>
+<p>Up to now, the only measure of central tendency that we have examined is the mean. There are other measures and the two that we wish to examine now are the median and the mode of a distribution. The median of a distribution is the value for which half the observations are greater and half are less. If observations are symmetrically distributed, the median and the mean will be the same. If the distribution of a variable is quite skewed, however, the median and the mean will be quite different. In general, medians are sometimes used instead of means if one wants a measure that will be robust to large outliers like the ones we saw at the beginning of this chapter. That is, we want a measure that is not very sensitive to extraordinary values in the distribution.</p>
+<p>Take for example the hypothetical situation in which you have ten people with an income of R100 and one with income of R1000 000. The mean will be R91 000 even though ten out of the eleven people earn less than one hundredth of this amount. Sometimes, it will be more informative to talk about the median of the distribution - in this case the median would be R100. While this example uses unrealistically extreme values, we will see the same principle holds in the actual data below.</p>
+<p>Let’s consider the NIDS income variable (<code>w1_fwag</code>) again. In case you have not noticed it in the previous outputs, the <code>summary()</code> command produces both the mean and median. Type:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(nids<span class="op">$</span>w1_fwag)</code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+##    20.0   936.7  1600.0  3233.4  3550.0 90000.0   26671</code></pre>
+<p>Note that the median income is R1600. The median income is a lot less than the mean income. What is going on here? Have a look at the income histogram that we created in the first section of this chapter. The graph shows us that most of the income values are less than R20 000, with a couple of much larger values - particularly one of R90 000. This extremely large value is inflating the mean of the distribution. In contrast, the median treats it as just one more value above the “half way” mark. For many variables with skewed distributions, the median is a very useful statistic. The mode of a distribution is the value that appears most often in the distribution. The mode is a seldom used measure, but we should be aware of it. Let’s consider the education variable - <code>w1_best_edu</code>.</p>
+<p>The mode of this variable represents the most commonly reported educational level amongst NIDS respondents. There is no simple way to compute the mode in R. we can summarise the grouped categories of <code>w1_best_edu</code> and see which one has the most frequency.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(w1_best_edu) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n=</span><span class="kw">n</span>())</code></pre></div>
+<pre><code>## # A tibble: 31 x 2
+##    w1_best_edu     n
+##          &lt;int&gt; &lt;int&gt;
+##  1          -9   132
+##  2          -8     1
+##  3          -5     1
+##  4          -3   710
+##  5           0   924
+##  6           1   883
+##  7           2   905
+##  8           3  1175
+##  9           4  1340
+## 10           5  1381
+## # ... with 21 more rows</code></pre>
+<p>By examining the entire frequency distribution, we should note that the mode of <code>w1_best_edu</code> is 25. In other words a large number of respondents (5731) reported “no schooling” as their level of education, far more than for any other category. That’s not very surprising since infants and toddlers are included in the sample. What is more surprising is the modal level of education for adults 21 and older. Type:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(age <span class="op">&gt;=</span><span class="st"> </span><span class="dv">21</span> <span class="op">&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(age))<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(w1_best_edu) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n=</span><span class="kw">n</span>())<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">print</span>()</code></pre></div>
+<pre><code>## # A tibble: 29 x 2
+##    w1_best_edu     n
+##          &lt;int&gt; &lt;int&gt;
+##  1          -9    57
+##  2          -3    15
+##  3           0     4
+##  4           1   101
+##  5           2   241
+##  6           3   394
+##  7           4   537
+##  8           5   626
+##  9           6   755
+## 10           7   996
+## # ... with 19 more rows</code></pre>
+<p>As we see the table above, the modal value is still 25. Therefore, even amongst adults, the most common category reported by respondents over the age of 21 is having no education at all.</p>
+</div>
+<div id="example-recoding-the-education-variable" class="section level2">
+<h2><span class="header-section-number">5.7</span> Example: recoding the education variable</h2>
+<p>Suppose we want to know the average level of education for individuals aged 21 or over in South Africa. This entails computing the mean of an education variable. When we compute means for continuous variables, we need to be wary of how the variables are coded. In this extended example, we will consider the education variable, <code>w1_best_edu</code>.</p>
+<p>We need to consider how the education variable was coded. For this, we need to refer to the survey documents, i.e. questionaires.</p>
+<div class="figure"><span id="fig:bestedu"></span>
+<img src="images/best_edu.PNG" alt="Education codes" width="146" />
+<p class="caption">
+Figure 5.1: Education codes
+</p>
+</div>
+<p>From the table above we note that a code of “0” indicates Grade R/0, a code of 3 indicates Grade 3 and so on. The code usually increases by one for each year of schooling up to a value of 12. Codes greater than 12 do not necessarily indicate more years of schooling; for example, a code of 25 represents no schooling. We also observe that negative numbers are assigned for non-responses. In addition, there are several NA-missing values.</p>
+<p>At this point you may be asking: how then, should we compute the average education level for households in the survey? What we really need here is a variable that ranks different educational levels on some numerical scale. There is no single answer on how to create this variable. Below is one answer, worked out in R.</p>
+<p>We begin by creating a new education variable that we call <code>educ_new</code> and setting it equal to the original education variable - w1_best_edu. We will then replace several of the values in order to make our mean meaningful.</p>
+<p>We want to create an education variable that is able to rank in some way different educational qualifications. One of the easiest ways to do this is to consider the <strong>number of years spent on education</strong> up to the point of the level of the qualification. We know that starting from Grade 0 (Code 0) the code increases by one for each year of schooling up to a value of 12. So the education codes for Grade 0 to Grade 12 already have the intrinsic ordering we want.</p>
+<p>Next we elect (rather arbitrarily) to combine those who have no reported education with those whose highest reported education level was Grade R/0.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids<span class="op">$</span>educ.new&lt;-nids<span class="op">$</span>w1_best_edu
+nids<span class="op">$</span>educ.new[<span class="kw">which</span>(nids<span class="op">$</span>w1_best_edu <span class="op">==</span><span class="st"> </span><span class="dv">25</span>)]&lt;-<span class="dv">0</span></code></pre></div>
+<p>Next, we set the negative values to “missing”.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids<span class="op">$</span>educ.new[<span class="kw">which</span>(nids<span class="op">$</span>w1_best_edu <span class="op">&lt;</span><span class="dv">0</span>)]&lt;-<span class="ot">NA</span></code></pre></div>
+<p>We also set the variable coded 24 (“other”) to “missing” since we don’t know how to interpret “other.”</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids<span class="op">$</span>educ.new[<span class="kw">which</span>(nids<span class="op">$</span>w1_best_edu <span class="op">==</span><span class="st"> </span><span class="dv">24</span>)]&lt;-<span class="ot">NA</span></code></pre></div>
+<p>We still are not done. Next we look at categories where respondents have a diploma or certificate but did not complete their schooling up to Grade 12. Here we have to make some educated but essentially subjective decisions on how to code these educational qualifications. This would in practice require researching the South African education system in order to inform these decisions. The code 13 “NTC 1” (note NTC means National Technical Certificate) and code 16 “Certificate with less than Grade 12” are assessed as being more or less equivalent to a Grade 10 qualification and so we assign all of these individuals with a value of “10”. In addition code 14 “NTC2” and code 17 “Diploma with less than Grade 12” are thought to be somewhat equivalent to a Grade 11 education and so we assign individuals in these categories a value of 11. Finally, code 15 “NTC 3” is regarded to be more or less equivalent to Grade 12 so NTC 3 individuals are recoded with a value of “12”.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids<span class="op">$</span>educ.new[<span class="kw">which</span>(nids<span class="op">$</span>w1_best_edu <span class="op">==</span><span class="st"> </span><span class="dv">13</span> <span class="op">|</span><span class="st"> </span>nids<span class="op">$</span>w1_best_edu <span class="op">==</span><span class="st"> </span><span class="dv">16</span>)]&lt;-<span class="dv">10</span>
+nids<span class="op">$</span>educ.new[<span class="kw">which</span>(nids<span class="op">$</span>w1_best_edu <span class="op">==</span><span class="st"> </span><span class="dv">14</span> <span class="op">|</span><span class="st"> </span>nids<span class="op">$</span>w1_best_edu <span class="op">==</span><span class="st"> </span><span class="dv">17</span>)]&lt;-<span class="dv">11</span>
+nids<span class="op">$</span>educ.new[<span class="kw">which</span>(nids<span class="op">$</span>w1_best_edu <span class="op">==</span><span class="st"> </span><span class="dv">15</span>)]&lt;-<span class="dv">12</span></code></pre></div>
+<p>But what about all individuals who have completed Grade 12 plus have additional qualifications? Once again we make some educated but essentially subjective assertions. Those who have a Certificate in addition to Grade 12 are assigned a code of 13, while those who have a diploma with Grade 12 are assigned a code of 14. A Bachelors Degree is assigned a value of 15 - Grade 12 plus 3 more years of education, while those with an Honours Degree or a Bachelors Degree and Diploma are assigned values of 16. Finally, Higher Degrees such as Masters of Doctorate are assigned a code of 17 (Although we could have just as easily assigned this last category a code of 18, if for instance you feel strongly that Masters is most commonly a two year course).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids<span class="op">$</span>educ.new[<span class="kw">which</span>(nids<span class="op">$</span>w1_best_edu <span class="op">==</span><span class="st"> </span><span class="dv">18</span>)]&lt;-<span class="dv">13</span>
+nids<span class="op">$</span>educ.new[<span class="kw">which</span>(nids<span class="op">$</span>w1_best_edu <span class="op">==</span><span class="st"> </span><span class="dv">18</span>)]&lt;-<span class="dv">13</span>
+nids<span class="op">$</span>educ.new[<span class="kw">which</span>(nids<span class="op">$</span>w1_best_edu <span class="op">==</span><span class="st"> </span><span class="dv">19</span>)]&lt;-<span class="dv">14</span>
+nids<span class="op">$</span>educ.new[<span class="kw">which</span>(nids<span class="op">$</span>w1_best_edu <span class="op">==</span><span class="st"> </span><span class="dv">20</span>)]&lt;-<span class="dv">15</span>
+nids<span class="op">$</span>educ.new[<span class="kw">which</span>(nids<span class="op">$</span>w1_best_edu <span class="op">==</span><span class="st"> </span><span class="dv">21</span> <span class="op">|</span><span class="st"> </span>nids<span class="op">$</span>w1_best_edu <span class="op">==</span><span class="st"> </span><span class="dv">22</span>)]&lt;-<span class="dv">16</span>
+nids<span class="op">$</span>educ.new[<span class="kw">which</span>(nids<span class="op">$</span>w1_best_edu <span class="op">==</span><span class="st"> </span><span class="dv">23</span>)]&lt;-<span class="dv">17</span></code></pre></div>
+<p>To review where we stand, type:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(educ.new)<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n=</span><span class="kw">n</span>())</code></pre></div>
+<pre><code>## # A tibble: 19 x 2
+##    educ.new     n
+##       &lt;dbl&gt; &lt;int&gt;
+##  1        0  6655
+##  2        1   883
+##  3        2   905
+##  4        3  1175
+##  5        4  1340
+##  6        5  1381
+##  7        6  1531
+##  8        7  1766
+##  9        8  1782
+## 10        9  1701
+## 11       10  2270
+## 12       11  1821
+## 13       12  2806
+## 14       13   407
+## 15       14   582
+## 16       15   158
+## 17       16   145
+## 18       17    67
+## 19       NA  3795</code></pre>
+<p>We will see that we now have a variable whose values are much more meaningful than those of the original <code>w1_best_edu</code>.</p>
+<p>The distribution of education levels is graphed below.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(., <span class="kw">aes</span>(<span class="dt">x=</span>educ.new)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">y =</span> ..count..<span class="op">*</span><span class="dv">100</span><span class="op">/</span><span class="kw">sum</span>(..count..)), <span class="dt">binwidth=</span><span class="fl">0.5</span>)<span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Recoded education&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Percent&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_classic</span>()</code></pre></div>
+<pre><code>## Warning: Removed 3795 rows containing non-finite values (stat_bin).</code></pre>
+<p><img src="05-central_tendency_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<p>In the above histogram, we can see that about 24 percent of the respondents report having zero years of education. The mean education level is found by simply typing:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(nids<span class="op">$</span>educ.new)</code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+##   0.000   1.000   6.000   6.037  10.000  17.000    3795</code></pre>
+<p>We see that respondents have, on average, an education level of 6.04, somewhere close to having completed Grade 4. The correction for the strange coding of <code>w1_best_edu</code> resulted in a lower mean level of education and this is what we would expect since the original variable coded no schooling with a higher value than a completed university degree.</p>
+<p>A more interesting question is the following:</p>
+<p><em>What is the mean level of education in South Africa for individuals 21 years old and older?</em></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(age <span class="op">&gt;=</span><span class="st"> </span><span class="dv">21</span> <span class="op">&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(age))<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(educ.new)<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">Mean=</span><span class="kw">mean</span>(educ.new, <span class="dt">na.rm=</span>T))</code></pre></div>
+<pre><code>## Adding missing grouping variables: `hhid`</code></pre>
+<pre><code>## # A tibble: 1 x 1
+##    Mean
+##   &lt;dbl&gt;
+## 1  7.68</code></pre>
+<p>You should have found that the average education level of adults was 7.68 - the average respondent over the age of 21 (adult) has completed grade 5. What do we think this statistic will be 20 years from now when those who are now infants reach the age of 21?</p>
+<p>To get an indication of whether today’s youth are getting more education on average, let’s see what the average education level of 23 year olds is as most people have completed their education by this age.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(age <span class="op">==</span><span class="st"> </span><span class="dv">23</span> <span class="op">&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(age))<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(educ.new)<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">Mean=</span><span class="kw">mean</span>(educ.new, <span class="dt">na.rm=</span>T))</code></pre></div>
+<pre><code>## Adding missing grouping variables: `hhid`</code></pre>
+<pre><code>## # A tibble: 1 x 1
+##    Mean
+##   &lt;dbl&gt;
+## 1  10.3</code></pre>
+<p>Although this is a crude measure, it suggests that today’s youth are on average getting a grade 8, which is over two years more than the average adult in the sample.</p>
+<p>As an exercise, try the following question:</p>
+<p><strong>1. Compute the mean education level of adults (21 and older) by gender and of non-adults (under 21) by gender. How about the differences for children between the ages of 6 and 10?</strong></p>
+<p><strong>What do the answers to this exercise suggest for the future?</strong></p>
+<p>Question 1 Answer</p>
+</div>
+<div id="measures-of-dispersion---variance-and-standard-deviation" class="section level2">
+<h2><span class="header-section-number">5.8</span> Measures of dispersion - variance and standard deviation</h2>
+<p>So far, we have learned something about the average level of monthly income among individuals in South Africa. Higher incomes are generally a good thing, but from a policy perspective, we will often care about how widely spread the distribution of income is. In an extreme situation, it could be the case that everyone in the country has exactly the same level of income (therefore every individual would have the “mean” as their level of income). That situation could be considered to be perfectly equal distribution of income. Of course, in the real world, individuals and households have vastly different levels of income.</p>
+<p>In an effort to clarify this notion of variance consider two theoretical distributions with the same mean, as shown below. Both of these distributions have a mean income of about 4500 Rand. Examine these two distributions.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">123</span>) 
+d1&lt;-<span class="kw">data.frame</span>(<span class="dt">dist=</span><span class="st">&quot;distr1&quot;</span>, <span class="dt">value=</span><span class="kw">rnorm</span>(<span class="dv">10000</span>, <span class="dv">4500</span>, <span class="dv">1000</span>))
+d2&lt;-<span class="kw">data.frame</span>(<span class="dt">dist=</span><span class="st">&quot;distr2&quot;</span>, <span class="dt">value=</span><span class="kw">rnorm</span>(<span class="dv">10000</span>, <span class="dv">4500</span>, <span class="dv">500</span>))
+
+df&lt;-<span class="kw">rbind</span>(d1,d2)
+
+<span class="kw">ggplot</span>(df, <span class="kw">aes</span>(<span class="dt">x=</span>value, <span class="dt">y=</span>..count..<span class="op">/</span><span class="kw">sum</span>(..count..))) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_histogram</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_grid</span>(.<span class="op">~</span>dist) <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;Income distribution&quot;</span>, <span class="dt">y=</span><span class="st">&quot;Fraction&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_minimal</span>()</code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="05-central_tendency_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+<p>Even though both distributions have the same average level of income, we can see that the income inequality is greater in the first graph. If we only computed the mean of each of these (made-up) income variables, we might conclude that these distributions were essentially the same even though the first distribution is clearly more dispersed. The variance is a useful measure of dispersion of a variable - basically, the variance gives an indication of how wide the distribution is. The square root of the variance is termed the standard deviation. A bigger variance always means a larger standard deviation. In the above two distributions, the standard deviation of Income Distribution #1 is 1000 while the standard deviation of Income Distribution #2 is 500. Since the standard deviation of the first distribution is twice as large as that of the second distribution, its variance is about four times as large.</p>
+<p>One useful way to think about the standard deviation of a distribution is the following. Suppose that the distribution of a variable is bell-shaped (more formally termed a normal distribution.) If we picked randomly from the normal distribution, two thirds of the time we would pick a value that was within two standard deviations (two times the standard deviation) from the mean of the distribution. For the case of Income Distribution #1 above, this means that if we randomly picked a person with an income level from this distribution, two out of every three people we pick should have an income within 2000 Rand of the mean income of 4500 Rand - i.e. between R2500 and R6500. In contrast, two thirds of the people picked from distribution 2 should have an income level between R3500 and R5500.</p>
+<p>In R, the standard deviation of a variable is obtained using the <code>sd()</code> command.</p>
+<p>What is the standard deviation of individual monthly income by <code>w1_best_race</code> (now renamed <code>race</code>) in South Africa?</p>
+<p>To find out, type:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(race)<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">Mean=</span><span class="kw">mean</span>(w1_fwag, <span class="dt">na.rm=</span><span class="ot">TRUE</span>), 
+            <span class="dt">Std.Dev=</span><span class="kw">sd</span>(w1_fwag, <span class="dt">na.rm=</span><span class="ot">TRUE</span>), 
+            <span class="dt">Min=</span><span class="kw">min</span>(w1_fwag, <span class="dt">na.rm=</span><span class="ot">TRUE</span>), 
+            <span class="dt">Max=</span><span class="kw">max</span>(w1_fwag, <span class="dt">na.rm=</span><span class="ot">TRUE</span>))</code></pre></div>
+<pre><code>## # A tibble: 5 x 5
+##   race      Mean Std.Dev   Min   Max
+##   &lt;fct&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 African  2494.   4104.    20 90000
+## 2 Coloured 2387.   3033.    55 42000
+## 3 Asian    7550.   7522.   920 40000
+## 4 White    9241.   9504.   100 75000
+## 5 &lt;NA&gt;     1576.    348.  1160  1900</code></pre>
+<p>We discover that the standard deviation for some of the groups is quite different from others. Put another way, income inequality appears to vary by racial group. For instance, the variation in income amongst Whites is far larger than amongst Africans.</p>
+<p>As another exercise, let’s investigate the average household size as well as the standard deviation of household size depending on whether a household lives in a Rural, Tribal Authority, Urban Formal or Urban Informal area. To eliminate the bias of household level variables, we need to create a new household-level household size variable.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids&lt;-nids<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">arrange</span>(hhid)<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">w1_hhsizer2 =</span> <span class="kw">ifelse</span>(hhrestrict <span class="op">==</span><span class="st"> </span><span class="dv">1</span>, w1_hhsizer, <span class="ot">NA</span>))</code></pre></div>
+<p>Overall mean:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">Mean=</span><span class="kw">mean</span>(w1_hhsizer2, <span class="dt">na.rm=</span><span class="ot">TRUE</span>), 
+            <span class="dt">Std.Dev=</span><span class="kw">sd</span>(w1_hhsizer2, <span class="dt">na.rm=</span><span class="ot">TRUE</span>), 
+            <span class="dt">Min=</span><span class="kw">min</span>(w1_hhsizer2, <span class="dt">na.rm=</span><span class="ot">TRUE</span>), 
+            <span class="dt">Max=</span><span class="kw">max</span>(w1_hhsizer2, <span class="dt">na.rm=</span><span class="ot">TRUE</span>))</code></pre></div>
+<pre><code>## # A tibble: 1 x 4
+##    Mean Std.Dev   Min   Max
+##   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1  3.87    2.56     1    25</code></pre>
+<p>By <code>w1_hhgeo</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(w1_hhgeo)<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">Mean=</span><span class="kw">mean</span>(w1_hhsizer2, <span class="dt">na.rm=</span><span class="ot">TRUE</span>), 
+            <span class="dt">Std.Dev=</span><span class="kw">sd</span>(w1_hhsizer2, <span class="dt">na.rm=</span><span class="ot">TRUE</span>), 
+            <span class="dt">Min=</span><span class="kw">min</span>(w1_hhsizer2, <span class="dt">na.rm=</span><span class="ot">TRUE</span>), 
+            <span class="dt">Max=</span><span class="kw">max</span>(w1_hhsizer2, <span class="dt">na.rm=</span><span class="ot">TRUE</span>))</code></pre></div>
+<pre><code>## # A tibble: 4 x 5
+##   w1_hhgeo                Mean Std.Dev   Min   Max
+##   &lt;fct&gt;                  &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 Rural formal            3.24    2.37     1    16
+## 2 Tribal authority areas  4.59    2.85     1    25
+## 3 Urban formal            3.48    2.22     1    17
+## 4 Urban informal          3.70    2.53     1    18</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#by(nids[, c(&quot;w1_hhsizer2&quot;)], nids$w1_hhgeo, summary)</span></code></pre></div>
+<p>We note that there is a pretty big difference in average family size depending on whether a household lives in tribal authority or urban informal area. The average household size is about 4.6 persons for the former and about 3.7 overall for the latter. Notice also that the variation in household size is the smallest in urban formal areas and the largest in tribal authority areas.</p>
+<p>Examining the median household size instead of the mean gives a similar picture. (Try it, just add the <code>median ()</code> function to the above command.)</p>
+</div>
+<div id="handling-outliers" class="section level2">
+<h2><span class="header-section-number">5.9</span> Handling outliers</h2>
+<p>The mean can be very sensitive to data points that are very, very different from all the other observations in the distribution. We refer to these extreme data points as “outliers.” There are several large literatures in statistics that deal with outliers. These include statistical measures that are not especially sensitive to outliers– robust statistics, as well as literatures on how to identify outliers and what to do once they are found. Reviewing this literature is beyond the scope of this chapter, but we want to be alert to the presence of outliers and aware of how they can impact some of our results. There are, in general, two ways we will deal with outliers. One is to use measures that are not sensitive to them, such as the median instead of the mean, and the other is to remove their impact (usually by setting them equal to a missing value.)</p>
+<p>Sometimes it will be obvious when an outlier is simply miscoded data and hence should be set to missing. If for example, age was reported as 230, we would know that was a miscode. Most of the NIDS data set has been “cleaned” and we are not aware of many miscodes. (If you think you find some, email us.) This doesn’t mean that outliers won’t matter. Consider our initial example of income, <code>w1_fwag</code>. Examine what happens to mean income if we drop just the highest 8 income levels of the 4499 observations. Since we will want to compare the original income measure to our truncated measure, we want to create a new income measure without writing over the old one:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids&lt;-nids<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">w1_fwag2 =</span> <span class="kw">ifelse</span>(w1_fwag<span class="op">&gt;</span><span class="dv">50000</span>,<span class="ot">NA</span>, w1_fwag))</code></pre></div>
+<p>We can then <code>summary()</code> the two variables:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(nids[,<span class="kw">c</span>(<span class="st">&quot;w1_fwag&quot;</span>, <span class="st">&quot;w1_fwag2&quot;</span>)])</code></pre></div>
+<pre><code>##     w1_fwag           w1_fwag2      
+##  Min.   :   20.0   Min.   :   20.0  
+##  1st Qu.:  936.7   1st Qu.:  932.3  
+##  Median : 1600.0   Median : 1600.0  
+##  Mean   : 3233.4   Mean   : 3114.0  
+##  3rd Qu.: 3550.0   3rd Qu.: 3500.0  
+##  Max.   :90000.0   Max.   :50000.0  
+##  NA&#39;s   :26671     NA&#39;s   :26679</code></pre>
+<p>Simply by dropping these 8 observations out of 4499, our mean has been reduced by over R100.</p>
+<p>And to see how the outliers change our results for how average income varies by race:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">by</span>(nids[, <span class="kw">c</span>(<span class="st">&quot;w1_fwag&quot;</span>, <span class="st">&quot;w1_fwag2&quot;</span>)], nids<span class="op">$</span>race, summary)</code></pre></div>
+<pre><code>## nids$race: African
+##     w1_fwag         w1_fwag2    
+##  Min.   :   20   Min.   :   20  
+##  1st Qu.:  850   1st Qu.:  850  
+##  Median : 1400   Median : 1400  
+##  Mean   : 2494   Mean   : 2382  
+##  3rd Qu.: 2995   3rd Qu.: 2946  
+##  Max.   :90000   Max.   :40000  
+##  NA&#39;s   :19227   NA&#39;s   :19232  
+## -------------------------------------------------------- 
+## nids$race: Coloured
+##     w1_fwag           w1_fwag2      
+##  Min.   :   55.0   Min.   :   55.0  
+##  1st Qu.:  887.6   1st Qu.:  887.6  
+##  Median : 1400.0   Median : 1400.0  
+##  Mean   : 2387.3   Mean   : 2387.3  
+##  3rd Qu.: 2700.0   3rd Qu.: 2700.0  
+##  Max.   :42000.0   Max.   :42000.0  
+##  NA&#39;s   :3134      NA&#39;s   :3134     
+## -------------------------------------------------------- 
+## nids$race: Asian
+##     w1_fwag         w1_fwag2    
+##  Min.   :  920   Min.   :  920  
+##  1st Qu.: 3000   1st Qu.: 3000  
+##  Median : 4500   Median : 4500  
+##  Mean   : 7550   Mean   : 7550  
+##  3rd Qu.: 9338   3rd Qu.: 9338  
+##  Max.   :40000   Max.   :40000  
+##  NA&#39;s   :346     NA&#39;s   :346    
+## -------------------------------------------------------- 
+## nids$race: White
+##     w1_fwag         w1_fwag2    
+##  Min.   :  100   Min.   :  100  
+##  1st Qu.: 3766   1st Qu.: 3760  
+##  Median : 6952   Median : 6800  
+##  Mean   : 9241   Mean   : 8801  
+##  3rd Qu.:11000   3rd Qu.:11000  
+##  Max.   :75000   Max.   :50000  
+##  NA&#39;s   :992     NA&#39;s   :995</code></pre>
+<p>These are significant differences in the mean and median income, on the other hand, barely differs at all between <code>w1_fwag</code> and <code>w1_fwag2</code>.</p>
+<p>It is always important to be aware of possible outliers in the data and there will be other variables in the NIDS datasets whose means are sensitive to a few very high values. For example, dropping just the top 5 of over 951 observations on monthly income from self employment decreases the mean of these income values by almost 10 percent.</p>
+<p>Comparing the mean to the median is a helpful way to gauge the presence of outliers. There are a number of more sophisticated tools in R for examining outliers. These include graphical methods. Graphical methods were introduced in Chapter 5 and we’ll see an example of how useful they can be below.</p>
+<p>If we are comfortable with the concept of logarithms, we can also look at the log of <code>w1_fwag</code>. Here is a graph of monthly income with the x-axis calibrated in logs.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(., <span class="kw">aes</span>(<span class="dt">x=</span>w1_fwag)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">y =</span> ..density..), <span class="dt">binwidth=</span><span class="fl">0.1</span>, <span class="dt">labels =</span> comma) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_x_log10</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;Natural Log of Income&quot;</span>,<span class="dt">y =</span><span class="st">&quot;Density&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_classic</span>()</code></pre></div>
+<pre><code>## Warning: Ignoring unknown parameters: labels</code></pre>
+<pre><code>## Warning: Removed 26671 rows containing non-finite values (stat_bin).</code></pre>
+<p><img src="05-central_tendency_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
+<p>An advantage of calibrating the x-axis in logs is that high income outliers don’t have as large an impact on the graph’s orientation. When we work on regression analysis later on this will become very useful method.</p>
+</div>
+<div id="understanding-the-distributions-of-categorical-variables" class="section level2">
+<h2><span class="header-section-number">5.10</span> Understanding the distributions of categorical variables</h2>
+<p>Many variables in NIDS are categorical variables. Examples that we will work with in this subsection include occupation and race. In Chapter 3 we have already investigated frequency distributions of categorical variables. In this section, we ask whether there are statistics analogous to the mean and standard deviation (which we used to describe distributions of continuous variables) that we can use to describe distributions of categorical variables.</p>
+<p>We begin with a cautionary note. Put simply, taking the mean of a categorical variable yields nonsense. Consider the race variable - R will let we compute the mean of it. Try the following:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(nids<span class="op">$</span>race) <span class="co">#summary factor returns the frequencies</span></code></pre></div>
+<pre><code>##  African Coloured    Asian    White     NA&#39;s 
+##    22157     4166      439     1432     2976</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(<span class="kw">as.numeric</span>(nids<span class="op">$</span>race))</code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+##   1.000   1.000   1.000   1.331   1.000   4.000    2976</code></pre>
+<p>We find the mean of the <code>w1_best_race</code> variable is 1.33. What does this mean? As near as we can tell, it means nothing. It certainly does not mean that the average respondent is about halfway between an African and a Coloured respondent. The coding of the race variable was arbitrary. NIDS dataset could just as easily have coded Whites as a 1, Indians &amp; Asians as a 2, Africans as a 3, and Coloureds as a 4. If the mean of a categorical variable is nonsensical, are there other measures that do convey information? There are two - the mode and the range of the distribution.</p>
+<p>The mode of the distribution, as we have already mentioned is that value that appears most often in the sample. In R, we can use <code>table()</code> or <code>summary()</code> on the factor variable. To find the mode of the race variable (<code>race</code>) and primary occupation variable (<code>w1_a_e4_code</code>), type:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(nids<span class="op">$</span>race)</code></pre></div>
+<pre><code>##  African Coloured    Asian    White     NA&#39;s 
+##    22157     4166      439     1432     2976</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(nids<span class="op">$</span>w1_a_e4_code)</code></pre></div>
+<pre><code>## 
+##  -9  -3   1   2   3   4   5   6   7   8   9 
+##  59  13 147 474 153 328 468 389 492 344 968</code></pre>
+<p>Or the <code>dplyr</code> <code>group_by</code> <code>summarise</code> approach:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(w1_a_e4_code) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">freq=</span><span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">na.omit</span>()</code></pre></div>
+<pre><code>## # A tibble: 11 x 2
+##    w1_a_e4_code  freq
+##           &lt;int&gt; &lt;int&gt;
+##  1           -9    59
+##  2           -3    13
+##  3            1   147
+##  4            2   474
+##  5            3   153
+##  6            4   328
+##  7            5   468
+##  8            6   389
+##  9            7   492
+## 10            8   344
+## 11            9   968</code></pre>
+<div class="figure"><span id="fig:occup"></span>
+<img src="images/occup.PNG" alt="Occupational Codes" width="162" />
+<p class="caption">
+Figure 5.2: Occupational Codes
+</p>
+</div>
+<p>We find that the mode of race is “African” while the mode of the occupation variable is 9 - “Elementary Occupations.”</p>
+<p>Just as the mean of the distribution of a categorical variable does not make any sense, neither does the standard deviation. Still, it may be useful to know the range of the values of a categorical variable. That is, what values are spanned by the variable codes? To see the range of a variable, you can simply use the <code>summary()</code> or <code>range()</code> command:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(nids<span class="op">$</span>w1_a_e4_code)</code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+##  -9.000   4.000   6.000   5.705   9.000   9.000   27335</code></pre>
+<p>The above result tells us that the occupation variable varies from -9 to 9.</p>
+</div>
+<div id="worked-example-1-exploring-the-distribution-of-satisfaction-variable" class="section level2">
+<h2><span class="header-section-number">5.11</span> Worked example 1: Exploring the distribution of satisfaction variable</h2>
+<p>There are many variables that we will want to explore in the NIDS data set. One that we will work with often in our examples and exercises is the variable <code>w1_a_m5</code>. We have already met this variable in chapter 3. Recall that it measures adults’ satisfaction level with their perceived current quality of life. If we refer to the adult questionnaire Section M, Question 2 we see that respondents were asked: ‘Using a scale of 1 to 10, where 1 means “Very dissatisfied” and 10 means “Very satisfied”, how do you feel about your life as a whole right now?’.</p>
+<p>Unlike variables such as age, income, or number of children, the units of measurement for a variable measuring satisfaction may not have been that obvious. In this sense, the “Satisfaction” variable (as we will call it) is not a typical continuous variable. In the language of statistics, it is referred to as an ordinal variable (as opposed to nominal, which has no inherent order). To read more about the subjective wellbeing variables in the NIDS Dataset refer to <a href="http://www.nids.uct.ac.za/publications/discussion-papers/wave-1-papers">Discussion Paper 14</a> of the NIDS survey. The discussion papers are available from the NIDS <a href="http://www.nids.uct.ac.za/">website</a>.</p>
+<p>We will use this variable to “test drive” some of the R commands we have learned. First it is always best to check how the variable is coded in R. To do this we type:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(nids<span class="op">$</span>w1_a_m5)</code></pre></div>
+<pre><code>## 
+##   -9   -8   -5   -3    1    2    3    4    5    6    7    8    9   10 
+## 1433  163    2  240 1007  701 1246 1867 2558 1803 1633 1305  455 1217</code></pre>
+<p>As we expect a code of 10 indicates the highest level of satisfaction and a code of 1 indicates the lowest level. In addition, values where respondents didn’t give a value on the ‘satisfaction scale’ were coded with negative numbers. Before analyzing the data, we recode these to “missing” and create a new variable to work with by typing:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids&lt;-nids<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">satisfaction =</span> <span class="kw">ifelse</span>(w1_a_m5<span class="op">&lt;</span><span class="dv">0</span>,<span class="ot">NA</span>,w1_a_m5))</code></pre></div>
+<p>These lines of code tells R to create a new variable called <code>satisfaction</code> that is exactly the same as <code>w1_a_m5</code>, except that all negative values (between -9 and -3) are recoded to NA-missings. Now we are ready to investigate how respondents perceive their level of satisfaction with life. We can compute the overall mean level of satisfaction and the mean by <code>w1_hhgeo</code> by typing:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(nids<span class="op">$</span>satisfaction)</code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+##   1.000   4.000   5.000   5.464   7.000  10.000   17378</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(w1_hhgeo)<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">Mean=</span><span class="kw">mean</span>(satisfaction, <span class="dt">na.rm=</span><span class="ot">TRUE</span>),
+       <span class="dt">Std.Dev=</span><span class="kw">sd</span>(satisfaction, <span class="dt">na.rm=</span><span class="ot">TRUE</span>), 
+       <span class="dt">Min=</span><span class="kw">min</span>(satisfaction, <span class="dt">na.rm=</span><span class="ot">TRUE</span>),
+       <span class="dt">Max=</span><span class="kw">max</span>(satisfaction, <span class="dt">na.rm=</span><span class="ot">TRUE</span>))</code></pre></div>
+<pre><code>## # A tibble: 4 x 5
+##   w1_hhgeo                Mean Std.Dev   Min   Max
+##   &lt;fct&gt;                  &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 Rural formal            5.46    2.37     1    10
+## 2 Tribal authority areas  4.81    2.39     1    10
+## 3 Urban formal            6.10    2.37     1    10
+## 4 Urban informal          5.13    2.65     1    10</code></pre>
+<p>We see that the overall average level of satisfaction in the sample is 5.46 - just above halfway between “very dissatisfied” and “very satisfied.” The overall median, which must be an integer since this variable takes only integer values, equals 5. It is unclear how far we can take the interpretation of these results. Some social scientists do not believe it is appropriate to take the mean of an ordinal variable, while others do see value in such an effort. Those who consider the mean of an ordinal variable as useless argue that means for these types of variables are based on arbitrary numerical values that have no real meaning. For instance do we even really know what an average value of 5 mean in terms of satisfaction? In addition, intervals between categories are not necessarily equal to one another as a numerical scale would suggest, for instance, taking 5 to hypothetically mean “moderately satisfied”, does it take the same increase in perceived satisfaction to move from “very dissatisfied” to “moderately satisfied” as it does from “moderately satisfied” to “very satisfied”? Those who find value in the mean of an ordinal variable understand that in general, a mean of 5.46 indicates that most people in general feel neither “very dissatisfied” or “very satisfied” but rather lie in the middle portion of the distribution (if not leaning slightly more towards “the very satisfied” side of the distribution.</p>
+<p><strong>2. How would we compute the average food expenditure by province?</strong></p>
+<p>Question 2 Answer</p>
+</div>
+<div id="group-summary" class="section level2">
+<h2><span class="header-section-number">5.12</span> Group summary</h2>
+</div>
+<div id="worked-example-2-investigating-bmi-in-south-africa" class="section level2">
+<h2><span class="header-section-number">5.13</span> Worked example 2: Investigating BMI in South Africa</h2>
+<p>In Chapter 2 we created a body mass index (BMI) variable from the height and weight variables. Let’s look at this variable.</p>
+<p>A recap:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(nids<span class="op">$</span>bmi)</code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+##   6.762  21.696  25.485  27.188  30.964 292.731   20296</code></pre>
+<p>Since BMI is a relationship between a person’s weight and height it is not easy to interpret directly. However, the World Health Organisation (WHO) classifies a BMI under 18.5 as underweight, a BMI between 18.5 and 24.9 as normal, a BMI between 25 and 29.9 as overweight and a BMI of 30 or more as obese. The average BMI in the sample is 27.2, which indicates that the average adult in the sample is a little overweight.</p>
+<p>We also see that the largest and smallest BMI values are 292.7 and 6.76 respectively. The vast majority (over 98%) of respondents, however, have a BMI between 15 and 50. How many people have values outside the range?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(bmi <span class="op">&lt;</span><span class="st"> </span><span class="dv">15</span> <span class="op">|</span><span class="st"> </span>(bmi <span class="op">&gt;</span><span class="st"> </span><span class="dv">50</span> <span class="op">&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(bmi)))<span class="op">%&gt;%</span>
+<span class="st">  </span>nrow</code></pre></div>
+<pre><code>## [1] 240</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#nrow(subset(nids, bmi &lt; 15 | (bmi &gt; 50 &amp; !is.na(bmi))))</span></code></pre></div>
+<p>Let us inspect the height and weight variables for these extreme BMI values.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(weight, height, bmi)<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(bmi <span class="op">&lt;</span><span class="st"> </span><span class="dv">15</span> <span class="op">|</span><span class="st"> </span>bmi <span class="op">&gt;</span><span class="st"> </span><span class="dv">50</span>)<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">head</span>(<span class="dv">20</span>)</code></pre></div>
+<pre><code>## Adding missing grouping variables: `hhid`</code></pre>
+<pre><code>## # A tibble: 20 x 4
+## # Groups:   hhid [18]
+##      hhid weight height   bmi
+##     &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+##  1 101075  119.   1.51   51.9
+##  2 101171   30.2  1.5    13.4
+##  3 101196  111.   1.48   50.5
+##  4 101244   34    1.56   14.0
+##  5 101517   36    1.62   13.7
+##  6 101517   35.5  1.61   13.6
+##  7 101593  133    1.57   54.0
+##  8 101681   66.7  1.1    55.1
+##  9 101700   45.2  1.80   13.9
+## 10 101700  128.   1.57   51.9
+## 11 101749   44.6  1.81   13.6
+## 12 102173   37.1  1.59   14.6
+## 13 102191  111.   1.43   54.2
+## 14 102254  125.   1.54   52.9
+## 15 102485  132    1.57   53.8
+## 16 102568   34.9  1.69   12.2
+## 17 102637   36.5  1.58   14.6
+## 18 102640   37.6  1.74   12.5
+## 19 102663  121.   1.56   50.1
+## 20 102681   66.6  0.585 195.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#head(subset(nids,subset=(bmi &lt; 15 | (bmi &gt; 50 &amp; bmi&lt;=max(bmi))), select=c(weight, height, bmi)) )</span></code></pre></div>
+<p>Do they seem realistic to you? Remember that when dealing with the BMI variable, we are only considering adults over the age of 20. It might be appropriate to restrict our sample to people who have BMI values between 15 and 50 and define anyone with a BMI value outside this range as an outlier. This will be important if we want to exclude outliers from our analysis.</p>
+<p>Does the exclusion of the outliers change the mean significantly?</p>
+<p>First summarise all values:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(nids<span class="op">$</span>bmi)</code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+##   6.762  21.696  25.485  27.188  30.964 292.731   20296</code></pre>
+<p>Summarise a subset of the bmi variable:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(<span class="kw">subset</span>(nids, <span class="dt">subset=</span>(bmi <span class="op">&gt;</span><span class="dv">15</span> <span class="op">&amp;</span><span class="st"> </span>bmi <span class="op">&lt;</span><span class="st"> </span><span class="dv">50</span>), <span class="dt">select=</span><span class="kw">c</span>(bmi)))</code></pre></div>
+<pre><code>##       bmi       
+##  Min.   :15.01  
+##  1st Qu.:21.74  
+##  Median :25.45  
+##  Mean   :26.75  
+##  3rd Qu.:30.78  
+##  Max.   :49.98</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#summary(nids[nids$bmi &gt;15 &amp; nids$bmi &lt; 50,c(&quot;bmi&quot;)])</span></code></pre></div>
+<p>Removing outliers reduces the arithmetic mean by over 0.44 from 27.19 to 26.75. In doing a research project, one should always be extremely careful before removing outliers and make sure that the decision is justified. Here, it goes beyond the scope of the course to fully investigate whether the outliers are valid or not. Therefore, we will ignore outliers from now on even though we have not presented a strong case for doing so.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids&lt;-nids<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">bmi_valid =</span> <span class="kw">ifelse</span>(bmi <span class="op">&gt;</span><span class="st"> </span><span class="dv">15</span> <span class="op">&amp;</span><span class="st"> </span>bmi <span class="op">&lt;</span><span class="st"> </span><span class="dv">50</span>,<span class="dv">1</span>,<span class="ot">NA</span>))</code></pre></div>
+<p>Since BMI is a continuous variable, if we want to use a pie graph to get a general picture of the data, we need to divide the respondents into BMI categories. Let’s use the WHO categories described above.</p>
+<p>You have learnt in the chapters how to recode a variable. Below, we give the base R code to generate BMI categories.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids<span class="op">$</span>bmi.bins.nolabel&lt;-<span class="ot">NA</span>
+nids<span class="op">$</span>bmi.bins.nolabel[<span class="kw">which</span>(nids<span class="op">$</span>bmi<span class="op">&gt;=</span><span class="dv">15</span> <span class="op">&amp;</span><span class="st"> </span>nids<span class="op">$</span>bmi<span class="op">&lt;</span><span class="fl">18.5</span>)]&lt;-<span class="dv">1</span>
+nids<span class="op">$</span>bmi.bins.nolabel[<span class="kw">which</span>(nids<span class="op">$</span>bmi<span class="op">&gt;=</span><span class="fl">18.5</span> <span class="op">&amp;</span><span class="st"> </span>nids<span class="op">$</span>bmi<span class="op">&lt;</span><span class="dv">25</span>)]&lt;-<span class="dv">2</span>
+nids<span class="op">$</span>bmi.bins.nolabel[<span class="kw">which</span>(nids<span class="op">$</span>bmi<span class="op">&gt;=</span><span class="dv">25</span> <span class="op">&amp;</span><span class="st"> </span>nids<span class="op">$</span>bmi<span class="op">&lt;</span><span class="dv">30</span>)]&lt;-<span class="dv">3</span>
+nids<span class="op">$</span>bmi.bins.nolabel[<span class="kw">which</span>(nids<span class="op">$</span>bmi<span class="op">&gt;=</span><span class="dv">30</span> <span class="op">&amp;</span><span class="st"> </span>nids<span class="op">$</span>bmi<span class="op">&lt;=</span><span class="dv">50</span>)]&lt;-<span class="dv">4</span></code></pre></div>
+<p>The code above only recoded those BMI values between 15 and 50. We saw that 240 adults have values outside this range and we want to classify these as outliers and change them to missing values in our recoded bmi.bins.nolabel variable.</p>
+<p>To generate another new variable, but with labels or a factor, simply type;</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids<span class="op">$</span>bmi.bins&lt;-<span class="kw">factor</span>(nids<span class="op">$</span>bmi.bins.nolabel, <span class="dt">levels=</span><span class="dv">1</span><span class="op">:</span><span class="dv">4</span>, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Underweight&quot;</span>,<span class="st">&quot;Normal&quot;</span>, <span class="st">&quot;Overweight&quot;</span>, <span class="st">&quot;Obese&quot;</span>))</code></pre></div>
+<p>Check that the variable looks correct.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(bmi, bmi.bins.nolabel, bmi.bins)<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">head</span>(<span class="dv">15</span>)</code></pre></div>
+<pre><code>## Adding missing grouping variables: `hhid`</code></pre>
+<pre><code>## # A tibble: 15 x 4
+## # Groups:   hhid [5]
+##      hhid   bmi bmi.bins.nolabel bmi.bins  
+##     &lt;int&gt; &lt;dbl&gt;            &lt;dbl&gt; &lt;fct&gt;     
+##  1 101012  30.9                4 Obese     
+##  2 101013  19.3                2 Normal    
+##  3 101013  23.1                2 Normal    
+##  4 101013  NA                 NA &lt;NA&gt;      
+##  5 101013  NA                 NA &lt;NA&gt;      
+##  6 101013  NA                 NA &lt;NA&gt;      
+##  7 101014  NA                 NA &lt;NA&gt;      
+##  8 101014  NA                 NA &lt;NA&gt;      
+##  9 101014  29.4                3 Overweight
+## 10 101014  25.7                3 Overweight
+## 11 101014  22.9                2 Normal    
+## 12 101014  NA                 NA &lt;NA&gt;      
+## 13 101015  19.8                2 Normal    
+## 14 101015  NA                 NA &lt;NA&gt;      
+## 15 101016  NA                 NA &lt;NA&gt;</code></pre>
+<p>Use the following questions to get better acquainted with the BMI variable before we move onto the second half of the worked example.</p>
+<p><strong>3. What proportion of the adult sample is obese? What proportion of adults in the sample has a missing BMI value? How many of these were outliers that we recoded to be missing due to having an extreme BMI value?</strong></p>
+<p>Question 3 Answer</p>
+<p><strong>4. First use a pie graph to graphically depict the BMI distribution in our sample. Now see if you can compare the BMI of individuals both by gender and by whether they reside in an urban or rural area. Include percentages to indicate the size of each of the slices of the pies. Are there bigger differences between the BMI distribution for men and women or between rural and urban areas?</strong></p>
+<p>Question 4 Answer</p>
+<p><strong>5. Bonus Question: See whether you can graphically examine the relationship between BMI and age and gender in a single graph.</strong></p>
+<p>Question 5 Answer</p>
+<p><sub><strong>Continuation of Worked Example 2: Investigating BMI in South Africa</strong></sub></p>
+<p>So far we have used some graphs to gain a better picture of our BMI variable and how it relates to gender, age and an urban/rural living environment. Graphs are often good first getting a first overview of a relationship. But we can also use descriptive statistics disaggregated by different demographic characteristics to give us an even better understanding of BMI.</p>
+<p>Let us compare the mean BMI of different racial groups.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#by(nids[,c(&quot;bmi&quot;)], nids$race, summary)</span>
+nids<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(race)<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">Mean=</span><span class="kw">mean</span>(bmi, <span class="dt">na.rm=</span><span class="ot">TRUE</span>),
+       <span class="dt">Std.Dev=</span><span class="kw">sd</span>(bmi, <span class="dt">na.rm=</span><span class="ot">TRUE</span>), 
+       <span class="dt">Min=</span><span class="kw">min</span>(bmi, <span class="dt">na.rm=</span><span class="ot">TRUE</span>),
+       <span class="dt">Max=</span><span class="kw">max</span>(bmi, <span class="dt">na.rm=</span><span class="ot">TRUE</span>))</code></pre></div>
+<pre><code>## # A tibble: 5 x 5
+##   race      Mean Std.Dev   Min   Max
+##   &lt;fct&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 African   27.2    9.06  6.76 202. 
+## 2 Coloured  27.0   12.2  10.6  293. 
+## 3 Asian     26.6    5.69 16.1   44.1
+## 4 White     28.2    5.83 14.5   63.2
+## 5 &lt;NA&gt;      26.7    4.59 22.8   36.9</code></pre>
+<p>This shows that on average Whites have a higher BMI than the other racial categories. We can also see from the standard deviations that there is far more variation in the BMI values in the African and Coloured groups. The minimum value in the African group is 6.8; the maximum value is 202 and the standard deviation around 9. This compares with a minimum and maximum of 14.5 and 63 respectively, and a standard deviation of 5.8 in the White group. Why would Whites have the highest BMI on average? One reason could be to do with differences in the age distributions between racial groups. How does BMI vary with age?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(age_bins)<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">Mean=</span><span class="kw">mean</span>(bmi, <span class="dt">na.rm=</span><span class="ot">TRUE</span>),
+       <span class="dt">Std.Dev=</span><span class="kw">sd</span>(bmi, <span class="dt">na.rm=</span><span class="ot">TRUE</span>), 
+       <span class="dt">Min=</span><span class="kw">min</span>(bmi, <span class="dt">na.rm=</span><span class="ot">TRUE</span>),
+       <span class="dt">Max=</span><span class="kw">max</span>(bmi, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">na.omit</span>()</code></pre></div>
+<pre><code>## # A tibble: 6 x 5
+##   age_bins      Mean Std.Dev   Min   Max
+##   &lt;fct&gt;        &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 20 - 29 yrs   25.1    8.24  6.76  195.
+## 2 30 - 39 yrs   27.2    9.57 11.6   211.
+## 3 40 - 49 yrs   28.2    9.82  7.08  202.
+## 4 50 - 59 yrs   28.4    8.34  9.90  109.
+## 5 60 - 69 yrs   28.5    8.50 13.4   122.
+## 6 70 - 120 yrs  27.7   13.3   8.62  293.</code></pre>
+<p>BMI increases with age in the first four categories and then stabilizes, before declining when individuals reach old age. Note also that for all age group categories the average BMI is in the overweight category. Notice also that BMI tends to be higher in older age categories. This means that if the White group has, on average, more people in the older age categories than other racial groups, this might contribute to the higher average White BMI value. Let’s look at the age distributions across racial groups.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(race))<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(., <span class="kw">aes</span>(<span class="dt">x=</span>age_adult)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_histogram</span>( <span class="kw">aes</span>(<span class="dt">y =</span> ..density..), <span class="dt">binwidth =</span> <span class="dv">1</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;Age in years - adults&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Density&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>race) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_classic</span>()</code></pre></div>
+<pre><code>## Warning: Removed 11605 rows containing non-finite values (stat_bin).</code></pre>
+<p><img src="05-central_tendency_files/figure-html/unnamed-chunk-55-1.png" width="672" /></p>
+<p>There are differences in the age profiles across racial groups. The African and Coloured groups are weighted quite heavily towards younger adults, while the White group appears to have a more equal number of people across all ages.</p>
+<p>Thus a better comparison of BMI across racial groups should take into consideration the differences in the age profile. We will look at this further in chapter 8.</p>
+<p><strong>6. Plot a histogram showing the BMI distribution in South Africa. What does this tell us about the BMI distribution in South Africa?</strong></p>
+<p>Question 6 Answer</p>
+<p><strong>7. You may have noticed in question 6 that the outliers stretch out the histogram (give it a long tail to the right) and make it difficult to read the graph. Repeat what you did in question 6 but restrict your histogram to exclude outliers. Also, add xlines which indicate which parts of the histogram reflect underweight, normal, overweight and obese individuals.</strong></p>
+<p>Question 7 Answer</p>
+</div>
+<div id="question-answers-3" class="section level2">
+<h2><span class="header-section-number">5.14</span> Question answers</h2>
+</div>
+<div id="exercises-2" class="section level2">
+<h2><span class="header-section-number">5.15</span> Exercises</h2>
+<p>Now it is our turn to explore the measures of central tendency and variability using the commands from Chapter 4. Using R and the NIDS data set, answer the following questions.</p>
+<p><strong>1. What is the average age of heads of households in South Africa?</strong></p>
+<p>Exercise 1 Answer</p>
+<p><strong>2. Do people with income levels at or above the median level report a higher level of satisfaction than those who report an income below the median level, and if so, by how much?</strong></p>
+<p>Exercise 2 Answer</p>
+<p><strong>3. Is income more widely distributed in rural or urban formal areas?</strong></p>
+<p>Exercise 3 Answer</p>
+<p><strong>4. What language is spoken by more households than any other? That is, what is the modal household language?</strong> Exercise 4 Answer</p>
+<p><strong>5. Is the percentage of respondents who self-identify as being a “professional” as their occupation higher for people who have recently moved or for people who have not moved recently?</strong></p>
+<p>Exercise 5 Answer</p>
+</div>
+<div id="exercise-answers-1" class="section level2">
+<h2><span class="header-section-number">5.16</span> Exercise answers</h2>
+</div>
+<div id="exercises-3" class="section level2">
+<h2><span class="header-section-number">5.17</span> Exercises</h2>
+<p>Now it is our turn to explore the measures of central tendency and variability using the commands from Module 4. Using R and the NIDS data set, answer the following questions.</p>
+<p><strong>1. What is the average age of heads of households in South Africa?</strong></p>
+<p>Exercise 1 Answer</p>
+<p><strong>2. Do people with income levels at or above the median level report a higher level of satisfaction than those who report an income below the median level, and if so, by how much?</strong></p>
+<p>Exercise 2 Answer</p>
+<p><strong>3. Is income more widely distributed in rural or urban formal areas?</strong></p>
+<p>Exercise 3 Answer</p>
+<p><strong>4. What language is spoken by more households than any other? That is, what is the modal household language?</strong></p>
+<p>Exercise 4 Answer</p>
+<p><strong>5. Is the percentage of respondents who self‐identify as being a “professional” as their occupation higher for people who have recently moved or for people who have not moved recently?</strong></p>
+<p>Exercise 5 Answer</p>
+</div>
+<div id="exercise-answers-2" class="section level2">
+<h2><span class="header-section-number">5.18</span> Exercise answers</h2>
+</div>
+<div id="session-information-3" class="section level2">
+<h2><span class="header-section-number">5.19</span> Session information</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">sessionInfo</span>(), <span class="dt">locale =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<pre><code>## R version 3.5.1 (2018-07-02)
+## Platform: x86_64-w64-mingw32/x64 (64-bit)
+## Running under: Windows 7 x64 (build 7601) Service Pack 1
+## 
+## Matrix products: default
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] scales_1.0.0    bindrcpp_0.2.2  forcats_0.3.0   stringr_1.3.1  
+##  [5] dplyr_0.7.6     purrr_0.2.5     readr_1.1.1     tidyr_0.8.1    
+##  [9] tibble_1.4.2    ggplot2_3.0.0   tidyverse_1.2.1 foreign_0.8-70 
+## 
+## loaded via a namespace (and not attached):
+##  [1] tidyselect_0.2.4 xfun_0.3         reshape2_1.4.3   haven_1.1.2     
+##  [5] lattice_0.20-35  colorspace_1.3-2 htmltools_0.3.6  yaml_2.2.0      
+##  [9] utf8_1.1.4       rlang_0.2.1      pillar_1.3.0     glue_1.3.0      
+## [13] withr_2.1.2      modelr_0.1.2     readxl_1.1.0     bindr_0.1.1     
+## [17] plyr_1.8.4       munsell_0.5.0    gtable_0.2.0     cellranger_1.1.0
+## [21] rvest_0.3.2      evaluate_0.11    labeling_0.3     knitr_1.20      
+## [25] fansi_0.3.0      highr_0.7        broom_0.5.0      Rcpp_0.12.18    
+## [29] backports_1.1.2  jsonlite_1.5     png_0.1-7        hms_0.4.2       
+## [33] digest_0.6.15    stringi_1.1.7    bookdown_0.7     grid_3.5.1      
+## [37] rprojroot_1.3-2  cli_1.0.0        tools_3.5.1      magrittr_1.5    
+## [41] lazyeval_0.2.1   crayon_1.3.4     pkgconfig_2.0.2  xml2_1.2.0      
+## [45] lubridate_1.7.4  assertthat_0.2.0 rmarkdown_1.10   httr_1.3.1      
+## [49] rstudioapi_0.7   R6_2.2.2         nlme_3.1-137     compiler_3.5.1</code></pre>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="understanding-graphs.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="bivariate-analysis-cross-tabs.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
