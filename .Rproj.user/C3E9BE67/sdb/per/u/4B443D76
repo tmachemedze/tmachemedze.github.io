@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "\nlrfit<-lm(mpg~disp, data = mtcars)\nanova(lrfit)\n\n\na<-table(mtcars$mpg, mtcars$cyl)\nhead(a)\n\ndata(mtcars)\n\nmytable <- xtabs(~cyl+gear, data=mtcars)\nftable(mytable) # print table \n\n\nmytable1 <- table(mtcars$cyl,mtcars$gear)\nmytable1\n\n\nmargin.table(mytable1, 1) # A frequencies (summed over B) \nmargin.table(mytable1, 2) # B frequencies (summed over A)\n\nround(prop.table(mytable1),2) # cell percentages\nprop.table(mytable1, 1) # row percentages \nprop.table(mytable1, 2) # column percentages\n\nnids <- nids%>%\n  mutate(race = w1_best_race,\n         age = w1_r_best_age_yrs,\n         gender = w1_r_b4,\n         province = w1_hhprov, \n         hhincome = w1_hhincome)\n",
+    "created" : 1488544145655.000,
+    "dirty" : true,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "3716197017",
+    "id" : "4B443D76",
+    "lastKnownWriteTime" : 1488543982,
+    "last_content_update" : 1488982552814,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

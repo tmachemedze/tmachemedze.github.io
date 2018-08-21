@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1531854616958.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3510515456",
+    "id" : "7EB7BF92",
+    "lastKnownWriteTime" : 1531909817,
+    "last_content_update" : 1531909817,
+    "path" : "G:/stata2rcourse/01-intro_r.Rmd",
+    "project_path" : "01-intro_r.Rmd",
+    "properties" : {
+        "cursorPosition" : "2,389",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

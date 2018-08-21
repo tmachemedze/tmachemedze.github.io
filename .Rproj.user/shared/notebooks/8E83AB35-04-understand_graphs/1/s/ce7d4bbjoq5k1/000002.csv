@@ -1,0 +1,7 @@
+"0","nids%>%"
+"0","  filter(!is.na(alc)) %>%"
+"0","  ggplot(., aes(x = alc, fill=alc)) +"
+"0","  geom_bar(aes(y = ..count../sum(..count..))) + "
+"0","  xlab(""Alcohol consumption"") + ylab(""Proportion of sample"") +"
+"0","  theme_classic() +"
+"0","  theme(axis.text.x=element_text(angle=90))"

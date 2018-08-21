@@ -1,0 +1,7 @@
+{
+    "installOptions" : {
+        "installDependencies" : true,
+        "installFromRepository" : true,
+        "libraryPath" : "C:/Users/Admin.DFRU005.021/Documents/R/win-library/3.3"
+    }
+}

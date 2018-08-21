@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>The Analysis of South African Household Survey Data using R</title>
+  <meta name="description" content="The Analysis of South African Household Survey Data using R">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="The Analysis of South African Household Survey Data using R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="The Analysis of South African Household Survey Data using R" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="The Analysis of South African Household Survey Data using R" />
+  
+  <meta name="twitter:description" content="The Analysis of South African Household Survey Data using R" />
+  
+
+<meta name="author" content="Takwanisa Machemedze">
+
+
+<meta name="date" content="2018-07-23">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="further-analysis-and-useful-online-resources.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#what-is-r"><i class="fa fa-check"></i><b>1.1</b> What is R?</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#pros-and-cons-of-r"><i class="fa fa-check"></i><b>1.2</b> Pros and cons of R</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="introduction.html"><a href="introduction.html#pros"><i class="fa fa-check"></i><b>1.2.1</b> Pros</a></li>
+<li class="chapter" data-level="1.2.2" data-path="introduction.html"><a href="introduction.html#cons"><i class="fa fa-check"></i><b>1.2.2</b> Cons</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#what-is-rstudio"><i class="fa fa-check"></i><b>1.3</b> What is RStudio?</a></li>
+<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#the-r-system"><i class="fa fa-check"></i><b>1.4</b> The R system</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="introduction.html"><a href="introduction.html#base-system"><i class="fa fa-check"></i><b>1.4.1</b> Base system</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html"><i class="fa fa-check"></i><b>2</b> Getting started with R</a><ul>
+<li class="chapter" data-level="2.1" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#introduction-1"><i class="fa fa-check"></i><b>2.1</b> Introduction</a></li>
+<li class="chapter" data-level="2.2" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#organize-your-r-session"><i class="fa fa-check"></i><b>2.2</b> Organize your R session</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#working-directory"><i class="fa fa-check"></i><b>2.2.1</b> Working directory</a></li>
+<li class="chapter" data-level="2.2.2" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#load-and-install-required-libraries"><i class="fa fa-check"></i><b>2.2.2</b> Load (and install) required libraries</a></li>
+<li class="chapter" data-level="2.2.3" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#comments"><i class="fa fa-check"></i><b>2.2.3</b> Comments</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#getting-help"><i class="fa fa-check"></i><b>2.3</b> Getting help</a></li>
+<li class="chapter" data-level="2.4" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#output-file"><i class="fa fa-check"></i><b>2.4</b> Output file</a></li>
+<li class="chapter" data-level="2.5" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#objects-in-r"><i class="fa fa-check"></i><b>2.5</b> Objects in R</a><ul>
+<li class="chapter" data-level="2.5.1" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#removing-objects-from-the-r-environment---rm-function"><i class="fa fa-check"></i><b>2.5.1</b> Removing objects from the R environment - rm() function</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#saving-in-r"><i class="fa fa-check"></i><b>2.6</b> Saving in R</a></li>
+<li class="chapter" data-level="2.7" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#importing-nids-data-into-r"><i class="fa fa-check"></i><b>2.7</b> Importing NIDS data into R</a></li>
+<li class="chapter" data-level="2.8" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#exploring-the-data"><i class="fa fa-check"></i><b>2.8</b> Exploring the data</a><ul>
+<li class="chapter" data-level="2.8.1" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#subsetting-data---part-1"><i class="fa fa-check"></i><b>2.8.1</b> Subsetting data - part 1</a></li>
+<li class="chapter" data-level="2.8.2" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#data-documentation---value-and-variable-labels"><i class="fa fa-check"></i><b>2.8.2</b> Data documentation - value and variable labels</a></li>
+<li class="chapter" data-level="2.8.3" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#operators-in-r"><i class="fa fa-check"></i><b>2.8.3</b> Operators in R</a></li>
+<li class="chapter" data-level="2.8.4" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#subsetting-data---part-2"><i class="fa fa-check"></i><b>2.8.4</b> Subsetting data - part 2</a></li>
+</ul></li>
+<li class="chapter" data-level="2.9" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#tidyverse"><i class="fa fa-check"></i><b>2.9</b> Tidyverse</a><ul>
+<li class="chapter" data-level="2.9.1" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#brief-introduction-to-tidyverse"><i class="fa fa-check"></i><b>2.9.1</b> Brief introduction to tidyverse</a></li>
+<li class="chapter" data-level="2.9.2" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#core-tidyverse-packages"><i class="fa fa-check"></i><b>2.9.2</b> Core tidyverse packages</a></li>
+<li class="chapter" data-level="2.9.3" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#install-and-load-tidyverse-packages"><i class="fa fa-check"></i><b>2.9.3</b> Install and load tidyverse packages</a></li>
+<li class="chapter" data-level="2.9.4" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#dplyr-verbs"><i class="fa fa-check"></i><b>2.9.4</b> dplyr verbs</a></li>
+<li class="chapter" data-level="2.9.5" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#using-dplyr-functions"><i class="fa fa-check"></i><b>2.9.5</b> Using dplyr functions</a></li>
+<li class="chapter" data-level="2.9.6" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#pipe-operator"><i class="fa fa-check"></i><b>2.9.6</b> Pipe operator %&gt;%</a></li>
+</ul></li>
+<li class="chapter" data-level="2.10" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#more-data-exploration"><i class="fa fa-check"></i><b>2.10</b> More data exploration</a><ul>
+<li class="chapter" data-level="2.10.1" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#example-1-subset-variables"><i class="fa fa-check"></i><b>2.10.1</b> Example 1: Subset variables</a></li>
+<li class="chapter" data-level="2.10.2" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#example-2-subset-observations"><i class="fa fa-check"></i><b>2.10.2</b> Example 2: Subset observations</a></li>
+<li class="chapter" data-level="2.10.3" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#example-3-subset-both-observations-and-variables"><i class="fa fa-check"></i><b>2.10.3</b> Example 3: Subset both observations and variables</a></li>
+</ul></li>
+<li class="chapter" data-level="2.11" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#managing-the-data"><i class="fa fa-check"></i><b>2.11</b> Managing the data</a></li>
+<li class="chapter" data-level="2.12" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#worked-example-creating-a-bmi-variable"><i class="fa fa-check"></i><b>2.12</b> Worked example: creating a bmi variable</a></li>
+<li class="chapter" data-level="2.13" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#question-answers"><i class="fa fa-check"></i><b>2.13</b> Question answers</a></li>
+<li class="chapter" data-level="2.14" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#exercises"><i class="fa fa-check"></i><b>2.14</b> Exercises</a></li>
+<li class="chapter" data-level="2.15" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#exercise-answers"><i class="fa fa-check"></i><b>2.15</b> Exercise answers</a></li>
+<li class="chapter" data-level="2.16" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#session-information"><i class="fa fa-check"></i><b>2.16</b> Session information</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="understanding-distributions.html"><a href="understanding-distributions.html"><i class="fa fa-check"></i><b>3</b> Understanding distributions</a><ul>
+<li class="chapter" data-level="3.1" data-path="understanding-distributions.html"><a href="understanding-distributions.html#introduction-2"><i class="fa fa-check"></i><b>3.1</b> Introduction</a></li>
+<li class="chapter" data-level="3.2" data-path="understanding-distributions.html"><a href="understanding-distributions.html#variable-types"><i class="fa fa-check"></i><b>3.2</b> Variable types</a></li>
+<li class="chapter" data-level="3.3" data-path="understanding-distributions.html"><a href="understanding-distributions.html#count-observations---dimnrow"><i class="fa fa-check"></i><b>3.3</b> Count observations - dim(),nrow()</a></li>
+<li class="chapter" data-level="3.4" data-path="understanding-distributions.html"><a href="understanding-distributions.html#using-household-level-variables"><i class="fa fa-check"></i><b>3.4</b> Using household level variables</a></li>
+<li class="chapter" data-level="3.5" data-path="understanding-distributions.html"><a href="understanding-distributions.html#frequency-distribution-tables"><i class="fa fa-check"></i><b>3.5</b> Frequency distribution tables</a></li>
+<li class="chapter" data-level="3.6" data-path="understanding-distributions.html"><a href="understanding-distributions.html#frequency-distribution-tables-household-level-data"><i class="fa fa-check"></i><b>3.6</b> Frequency distribution tables: household level data</a></li>
+<li class="chapter" data-level="3.7" data-path="understanding-distributions.html"><a href="understanding-distributions.html#missing-data-and-non-responses"><i class="fa fa-check"></i><b>3.7</b> Missing data and non-responses</a></li>
+<li class="chapter" data-level="3.8" data-path="understanding-distributions.html"><a href="understanding-distributions.html#three-primary-origins-of-na-missing-data-in-nids"><i class="fa fa-check"></i><b>3.8</b> Three primary origins of NA-missing data in NIDS</a></li>
+<li class="chapter" data-level="3.9" data-path="understanding-distributions.html"><a href="understanding-distributions.html#missing-data-and-qualifiers"><i class="fa fa-check"></i><b>3.9</b> Missing data and qualifiers</a></li>
+<li class="chapter" data-level="3.10" data-path="understanding-distributions.html"><a href="understanding-distributions.html#question-answers-1"><i class="fa fa-check"></i><b>3.10</b> Question answers</a></li>
+<li class="chapter" data-level="3.11" data-path="understanding-distributions.html"><a href="understanding-distributions.html#exercises-1"><i class="fa fa-check"></i><b>3.11</b> Exercises</a></li>
+<li class="chapter" data-level="3.12" data-path="understanding-distributions.html"><a href="understanding-distributions.html#session-information-1"><i class="fa fa-check"></i><b>3.12</b> Session information</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="understanding-graphs.html"><a href="understanding-graphs.html"><i class="fa fa-check"></i><b>4</b> Understanding graphs</a><ul>
+<li class="chapter" data-level="4.1" data-path="understanding-graphs.html"><a href="understanding-graphs.html#introduction-3"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="understanding-graphs.html"><a href="understanding-graphs.html#getting-ready"><i class="fa fa-check"></i><b>4.2</b> Getting ready</a></li>
+<li class="chapter" data-level="4.3" data-path="understanding-graphs.html"><a href="understanding-graphs.html#ggplot2-and-its-elements"><i class="fa fa-check"></i><b>4.3</b> ggplot2 and its elements</a></li>
+<li class="chapter" data-level="4.4" data-path="understanding-graphs.html"><a href="understanding-graphs.html#histograms"><i class="fa fa-check"></i><b>4.4</b> Histograms</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="understanding-graphs.html"><a href="understanding-graphs.html#graphing-economic-wellbeing-in-south-africa-in-2008"><i class="fa fa-check"></i><b>4.4.1</b> Graphing economic wellbeing in South Africa in 2008</a></li>
+<li class="chapter" data-level="4.4.2" data-path="understanding-graphs.html"><a href="understanding-graphs.html#facetting"><i class="fa fa-check"></i><b>4.4.2</b> Facetting</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="understanding-graphs.html"><a href="understanding-graphs.html#worked-example-1-what-is-the-most-common-age-at-which-people-start-smoking"><i class="fa fa-check"></i><b>4.5</b> Worked example 1: What is the most common age at which people start smoking?</a></li>
+<li class="chapter" data-level="4.6" data-path="understanding-graphs.html"><a href="understanding-graphs.html#pie-charts"><i class="fa fa-check"></i><b>4.6</b> Pie charts</a></li>
+<li class="chapter" data-level="4.7" data-path="understanding-graphs.html"><a href="understanding-graphs.html#investigating-newborn-and-infant-gender"><i class="fa fa-check"></i><b>4.7</b> Investigating newborn and infant gender</a><ul>
+<li class="chapter" data-level="4.7.1" data-path="understanding-graphs.html"><a href="understanding-graphs.html#exploring-the-distribution-of-race-across-provinces"><i class="fa fa-check"></i><b>4.7.1</b> Exploring the distribution of race across provinces</a></li>
+<li class="chapter" data-level="4.7.2" data-path="understanding-graphs.html"><a href="understanding-graphs.html#urban-vs.rural-where-are-south-africans-living"><i class="fa fa-check"></i><b>4.7.2</b> Urban vs. rural, where are South Africans living?</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="understanding-graphs.html"><a href="understanding-graphs.html#worked-example-2-are-there-differences-between-the-age-at-which-men-and-women-start-smoking"><i class="fa fa-check"></i><b>4.8</b> Worked example 2: Are there differences between the age at which men and women start smoking?</a><ul>
+<li class="chapter" data-level="4.8.1" data-path="understanding-graphs.html"><a href="understanding-graphs.html#exercise"><i class="fa fa-check"></i><b>4.8.1</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="4.9" data-path="understanding-graphs.html"><a href="understanding-graphs.html#bar-graphs"><i class="fa fa-check"></i><b>4.9</b> Bar graphs</a><ul>
+<li class="chapter" data-level="4.9.1" data-path="understanding-graphs.html"><a href="understanding-graphs.html#investigating-satisfaction-levels-in-south-africans"><i class="fa fa-check"></i><b>4.9.1</b> Investigating Satisfaction levels in South Africans</a></li>
+<li class="chapter" data-level="4.9.2" data-path="understanding-graphs.html"><a href="understanding-graphs.html#worked-example-3-does-the-frequency-of-alcohol-consumption-vary-by-gender-race-or-religion"><i class="fa fa-check"></i><b>4.9.2</b> Worked example 3: Does the frequency of alcohol consumption vary by gender, race or religion?</a></li>
+</ul></li>
+<li class="chapter" data-level="4.10" data-path="understanding-graphs.html"><a href="understanding-graphs.html#question-answers-2"><i class="fa fa-check"></i><b>4.10</b> Question answers</a></li>
+<li class="chapter" data-level="4.11" data-path="understanding-graphs.html"><a href="understanding-graphs.html#session-information-2"><i class="fa fa-check"></i><b>4.11</b> Session information</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html"><i class="fa fa-check"></i><b>5</b> Measures of central tendency and variability</a><ul>
+<li class="chapter" data-level="5.1" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#getting-ready-1"><i class="fa fa-check"></i><b>5.1</b> Getting ready</a></li>
+<li class="chapter" data-level="5.2" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#introduction-4"><i class="fa fa-check"></i><b>5.2</b> Introduction</a></li>
+<li class="chapter" data-level="5.3" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#understanding-distributions-of-continuous-variables"><i class="fa fa-check"></i><b>5.3</b> Understanding distributions of continuous variables</a></li>
+<li class="chapter" data-level="5.4" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#continuous-variables-and-recoding"><i class="fa fa-check"></i><b>5.4</b> Continuous variables and recoding</a></li>
+<li class="chapter" data-level="5.5" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#summarise-by---summary-base-r-and-group_by---summarise-dplyr"><i class="fa fa-check"></i><b>5.5</b> Summarise: by - summary (base R) and group_by - summarise (dplyr)</a></li>
+<li class="chapter" data-level="5.6" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#medians-and-modes-of-continuous-variables"><i class="fa fa-check"></i><b>5.6</b> Medians and modes of continuous variables</a></li>
+<li class="chapter" data-level="5.7" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#example-recoding-the-education-variable"><i class="fa fa-check"></i><b>5.7</b> Example: recoding the education variable</a></li>
+<li class="chapter" data-level="5.8" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#measures-of-dispersion---variance-and-standard-deviation"><i class="fa fa-check"></i><b>5.8</b> Measures of dispersion - variance and standard deviation</a></li>
+<li class="chapter" data-level="5.9" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#handling-outliers"><i class="fa fa-check"></i><b>5.9</b> Handling outliers</a></li>
+<li class="chapter" data-level="5.10" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#understanding-the-distributions-of-categorical-variables"><i class="fa fa-check"></i><b>5.10</b> Understanding the distributions of categorical variables</a></li>
+<li class="chapter" data-level="5.11" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#worked-example-1-exploring-the-distribution-of-satisfaction-variable"><i class="fa fa-check"></i><b>5.11</b> Worked example 1: Exploring the distribution of satisfaction variable</a></li>
+<li class="chapter" data-level="5.12" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#group-summary"><i class="fa fa-check"></i><b>5.12</b> Group summary</a></li>
+<li class="chapter" data-level="5.13" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#worked-example-2-investigating-bmi-in-south-africa"><i class="fa fa-check"></i><b>5.13</b> Worked example 2: Investigating BMI in South Africa</a></li>
+<li class="chapter" data-level="5.14" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#question-answers-3"><i class="fa fa-check"></i><b>5.14</b> Question answers</a></li>
+<li class="chapter" data-level="5.15" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#exercises-2"><i class="fa fa-check"></i><b>5.15</b> Exercises</a></li>
+<li class="chapter" data-level="5.16" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#exercise-answers-1"><i class="fa fa-check"></i><b>5.16</b> Exercise answers</a></li>
+<li class="chapter" data-level="5.17" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#exercises-3"><i class="fa fa-check"></i><b>5.17</b> Exercises</a></li>
+<li class="chapter" data-level="5.18" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#exercise-answers-2"><i class="fa fa-check"></i><b>5.18</b> Exercise answers</a></li>
+<li class="chapter" data-level="5.19" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#session-information-3"><i class="fa fa-check"></i><b>5.19</b> Session information</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html"><i class="fa fa-check"></i><b>6</b> Bivariate analysis (cross tabs)</a><ul>
+<li class="chapter" data-level="6.1" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#getting-ready-2"><i class="fa fa-check"></i><b>6.1</b> Getting ready</a></li>
+<li class="chapter" data-level="6.2" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#introduction-5"><i class="fa fa-check"></i><b>6.2</b> Introduction</a></li>
+<li class="chapter" data-level="6.3" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#cross---tabulation"><i class="fa fa-check"></i><b>6.3</b> Cross - tabulation</a></li>
+<li class="chapter" data-level="6.4" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#example-1-where-do-households-with-an-elderly-member-tend-to-live"><i class="fa fa-check"></i><b>6.4</b> Example 1: Where do households with an elderly member tend to live?</a></li>
+<li class="chapter" data-level="6.5" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#example-2-is-there-a-relationship-between-the-race-of-a-household-and-the-average-age-of-the-household"><i class="fa fa-check"></i><b>6.5</b> Example 2: Is there a relationship between the race of a household and the average age of the household?</a></li>
+<li class="chapter" data-level="6.6" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#example-3-does-the-level-of-satisfaction-differ-in-different-racegender-groupings"><i class="fa fa-check"></i><b>6.6</b> Example 3: Does the level of satisfaction differ in different race/gender groupings?</a></li>
+<li class="chapter" data-level="6.7" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#example-4-comparing-household-monthly-income-from-the-labour-market-to-individual-monthly-takehome-pay"><i class="fa fa-check"></i><b>6.7</b> Example 4: Comparing Household Monthly Income from the labour market to individual monthly takehome pay</a></li>
+<li class="chapter" data-level="6.8" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#chi-squared-testing-for-independence"><i class="fa fa-check"></i><b>6.8</b> Chi-Squared: testing for independence</a></li>
+<li class="chapter" data-level="6.9" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#cross-tabs-and-hypothesis-testing-chi2-examples-the-comparative-level-of-happiness-variable"><i class="fa fa-check"></i><b>6.9</b> Cross-tabs and hypothesis testing (Chi^2) examples: The comparative level of happiness variable</a><ul>
+<li class="chapter" data-level="6.9.1" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#example-1-comparative-happiness-and-employment-status"><i class="fa fa-check"></i><b>6.9.1</b> Example 1: Comparative happiness and employment status</a></li>
+<li class="chapter" data-level="6.9.2" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#example-2-comparative-happiness-by-province"><i class="fa fa-check"></i><b>6.9.2</b> Example 2: Comparative happiness by province</a></li>
+<li class="chapter" data-level="6.9.3" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#example-3-comparative-happiness-and-household-income"><i class="fa fa-check"></i><b>6.9.3</b> Example 3: Comparative happiness and household income</a></li>
+<li class="chapter" data-level="6.9.4" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#example-4-comparative-happiness-and-geo-type"><i class="fa fa-check"></i><b>6.9.4</b> Example 4: Comparative happiness and geo-type</a></li>
+</ul></li>
+<li class="chapter" data-level="6.10" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#worked-example-assessing-the-impact-of-per-capita-income-on-bmi"><i class="fa fa-check"></i><b>6.10</b> Worked Example: Assessing the impact of per capita income on BMI</a></li>
+<li class="chapter" data-level="6.11" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#question-answers-4"><i class="fa fa-check"></i><b>6.11</b> Question Answers</a></li>
+<li class="chapter" data-level="6.12" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#exercises-4"><i class="fa fa-check"></i><b>6.12</b> Exercises</a></li>
+<li class="chapter" data-level="6.13" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#exercise-answers-3"><i class="fa fa-check"></i><b>6.13</b> Exercise answers</a></li>
+<li class="chapter" data-level="6.14" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#session-information-4"><i class="fa fa-check"></i><b>6.14</b> Session information</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html"><i class="fa fa-check"></i><b>7</b> Simple regression analysis</a><ul>
+<li class="chapter" data-level="7.1" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#getting-ready-3"><i class="fa fa-check"></i><b>7.1</b> Getting ready</a></li>
+<li class="chapter" data-level="7.2" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#introduction-6"><i class="fa fa-check"></i><b>7.2</b> Introduction</a></li>
+<li class="chapter" data-level="7.3" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#correlation-of-variables"><i class="fa fa-check"></i><b>7.3</b> Correlation of variables</a></li>
+<li class="chapter" data-level="7.4" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#outliers"><i class="fa fa-check"></i><b>7.4</b> Outliers</a></li>
+<li class="chapter" data-level="7.5" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#simple-regression"><i class="fa fa-check"></i><b>7.5</b> Simple regression</a></li>
+<li class="chapter" data-level="7.6" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#understanding-regression-output-tables"><i class="fa fa-check"></i><b>7.6</b> Understanding regression output tables</a></li>
+<li class="chapter" data-level="7.7" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#graphing-the-regression-equation"><i class="fa fa-check"></i><b>7.7</b> Graphing the regression equation</a></li>
+<li class="chapter" data-level="7.8" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#worked-example-is-age-a-strong-determinant-of-bmi"><i class="fa fa-check"></i><b>7.8</b> Worked example: Is age a strong determinant of BMI?</a></li>
+<li class="chapter" data-level="7.9" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#question-answers-5"><i class="fa fa-check"></i><b>7.9</b> Question answers:</a></li>
+<li class="chapter" data-level="7.10" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#exercises-5"><i class="fa fa-check"></i><b>7.10</b> Exercises</a></li>
+<li class="chapter" data-level="7.11" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#exercise-1"><i class="fa fa-check"></i><b>7.11</b> Exercise</a></li>
+<li class="chapter" data-level="7.12" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#exercise-answers-4"><i class="fa fa-check"></i><b>7.12</b> Exercise answers</a></li>
+<li class="chapter" data-level="7.13" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#appendix-a-analysis-of-variance-anova-table"><i class="fa fa-check"></i><b>7.13</b> Appendix A: Analysis of variance (anova) table</a></li>
+<li class="chapter" data-level="7.14" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#appendix-b-further-understanding-the-regression-results-table"><i class="fa fa-check"></i><b>7.14</b> Appendix B: Further understanding the regression results table</a></li>
+<li class="chapter" data-level="7.15" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#session-information-5"><i class="fa fa-check"></i><b>7.15</b> Session information</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="multiple-regression-analysis.html"><a href="multiple-regression-analysis.html"><i class="fa fa-check"></i><b>8</b> Multiple regression analysis</a><ul>
+<li class="chapter" data-level="8.1" data-path="multiple-regression-analysis.html"><a href="multiple-regression-analysis.html#getting-ready-4"><i class="fa fa-check"></i><b>8.1</b> Getting ready</a></li>
+<li class="chapter" data-level="8.2" data-path="multiple-regression-analysis.html"><a href="multiple-regression-analysis.html#introduction-7"><i class="fa fa-check"></i><b>8.2</b> Introduction</a></li>
+<li class="chapter" data-level="8.3" data-path="multiple-regression-analysis.html"><a href="multiple-regression-analysis.html#dummy-variables"><i class="fa fa-check"></i><b>8.3</b> Dummy variables</a></li>
+<li class="chapter" data-level="8.4" data-path="multiple-regression-analysis.html"><a href="multiple-regression-analysis.html#interactions-with-dummy-variables"><i class="fa fa-check"></i><b>8.4</b> Interactions with dummy Variables</a></li>
+<li class="chapter" data-level="8.5" data-path="multiple-regression-analysis.html"><a href="multiple-regression-analysis.html#linear-transformations-of-non-linear-relationships"><i class="fa fa-check"></i><b>8.5</b> Linear transformations of non-linear relationships</a></li>
+<li class="chapter" data-level="8.6" data-path="multiple-regression-analysis.html"><a href="multiple-regression-analysis.html#question-answers-6"><i class="fa fa-check"></i><b>8.6</b> Question Answers</a></li>
+<li class="chapter" data-level="8.7" data-path="multiple-regression-analysis.html"><a href="multiple-regression-analysis.html#exercises-6"><i class="fa fa-check"></i><b>8.7</b> Exercises</a></li>
+<li class="chapter" data-level="8.8" data-path="multiple-regression-analysis.html"><a href="multiple-regression-analysis.html#exercise-answers-5"><i class="fa fa-check"></i><b>8.8</b> Exercise answers</a></li>
+<li class="chapter" data-level="8.9" data-path="multiple-regression-analysis.html"><a href="multiple-regression-analysis.html#session-information-6"><i class="fa fa-check"></i><b>8.9</b> Session information</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="further-analysis-and-useful-online-resources.html"><a href="further-analysis-and-useful-online-resources.html"><i class="fa fa-check"></i><b>9</b> Further analysis and useful online resources</a><ul>
+<li class="chapter" data-level="9.1" data-path="further-analysis-and-useful-online-resources.html"><a href="further-analysis-and-useful-online-resources.html#further-analyses"><i class="fa fa-check"></i><b>9.1</b> Further analyses</a></li>
+<li class="chapter" data-level="9.2" data-path="further-analysis-and-useful-online-resources.html"><a href="further-analysis-and-useful-online-resources.html#useful-online-resources"><i class="fa fa-check"></i><b>9.2</b> Useful online resources</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">The Analysis of South African Household Survey Data using R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="references" class="section level1 unnumbered">
+<h1>References</h1>
+
+<div id="refs" class="references">
+<div>
+<p>Bates, Douglas, Martin Maechler, Ben Bolker, and Steven Walker. 2018. <em>Lme4: Linear Mixed-Effects Models Using ’Eigen’ and S4</em>. <a href="https://CRAN.R-project.org/package=lme4" class="uri">https://CRAN.R-project.org/package=lme4</a>.</p>
+</div>
+<div>
+<p>Bolker, Gregory R. Warnes andBen, Thomas Lumley, Randall C Johnson, and Randall C. Johnson. 2018. <em>Gmodels: Various R Programming Tools for Model Fitting</em>. <a href="https://CRAN.R-project.org/package=gmodels" class="uri">https://CRAN.R-project.org/package=gmodels</a>.</p>
+</div>
+<div>
+<p>Burns, Patrick. 2012. <em>The R Inferno</em>. Lulu. com.</p>
+</div>
+<div>
+<p>Chang, Winston. 2012. <em>R Graphics Cookbook: Practical Recipes for Visualizing Data</em>. “ O’Reilly Media, Inc.”</p>
+</div>
+<div>
+<p>Dirk Enzmann, Jakson Aquino. Includes R source code and/or documentation written by, Marc Schwartz, Nitin Jain, and Stefan Kraft. 2018. <em>Descr: Descriptive Statistics</em>. <a href="https://CRAN.R-project.org/package=descr" class="uri">https://CRAN.R-project.org/package=descr</a>.</p>
+</div>
+<div>
+<p>Elff, Martin. 2017. <em>Memisc: Management of Survey Data and Presentation of Analysis Results</em>. <a href="https://CRAN.R-project.org/package=memisc" class="uri">https://CRAN.R-project.org/package=memisc</a>.</p>
+</div>
+<div>
+<p>Henry, Lionel, and Hadley Wickham. 2018. <em>Purrr: Functional Programming Tools</em>. <a href="https://CRAN.R-project.org/package=purrr" class="uri">https://CRAN.R-project.org/package=purrr</a>.</p>
+</div>
+<div>
+<p>Hlavac, Marek. 2018. <em>Stargazer: Well-Formatted Regression and Summary Statistics Tables</em>. <a href="https://CRAN.R-project.org/package=stargazer" class="uri">https://CRAN.R-project.org/package=stargazer</a>.</p>
+</div>
+<div>
+<p>Lumley, Thomas. 2018. <em>Survey: Analysis of Complex Survey Samples</em>. <a href="https://CRAN.R-project.org/package=survey" class="uri">https://CRAN.R-project.org/package=survey</a>.</p>
+</div>
+<div>
+<p>Müller, Kirill, and Hadley Wickham. 2018. <em>Tibble: Simple Data Frames</em>. <a href="https://CRAN.R-project.org/package=tibble" class="uri">https://CRAN.R-project.org/package=tibble</a>.</p>
+</div>
+<div>
+<p>Pinheiro, José, Douglas Bates, and R-core. 2018. <em>Nlme: Linear and Nonlinear Mixed Effects Models</em>. <a href="https://CRAN.R-project.org/package=nlme" class="uri">https://CRAN.R-project.org/package=nlme</a>.</p>
+</div>
+<div>
+<p>R Core Team. 2017. <em>Foreign: Read Data Stored by ’Minitab’, ’S’, ’Sas’, ’Spss’, ’Stata’, ’Systat’, ’Weka’, ’dBase’, ...</em> <a href="https://CRAN.R-project.org/package=foreign" class="uri">https://CRAN.R-project.org/package=foreign</a>.</p>
+</div>
+<div>
+<p>———. year. <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org" class="uri">https://www.R-project.org</a>.</p>
+</div>
+<div>
+<p>Rudis, Bob, Ben Bolker, and Jan Schulz. 2017. <em>Ggalt: Extra Coordinate Systems, ’Geoms’, Statistical Transformations, Scales and Fonts for ’Ggplot2’</em>. <a href="https://CRAN.R-project.org/package=ggalt" class="uri">https://CRAN.R-project.org/package=ggalt</a>.</p>
+</div>
+<div>
+<p>Venables, WN, and DM Smith. 2014. “The R Core Team.” <em>An Introduction to R. Notes on R: A Programming Environment for Data Analysis and Graphics Version</em> 3 (1): 07–10.</p>
+</div>
+<div>
+<p>Wickham, Hadley. 2017a. <em>Scales: Scale Functions for Visualization</em>. <a href="https://CRAN.R-project.org/package=scales" class="uri">https://CRAN.R-project.org/package=scales</a>.</p>
+</div>
+<div>
+<p>———. 2017b. <em>Tidyverse: Easily Install and Load the ’Tidyverse’</em>. <a href="https://CRAN.R-project.org/package=tidyverse" class="uri">https://CRAN.R-project.org/package=tidyverse</a>.</p>
+</div>
+<div>
+<p>Wickham, Hadley, and Garrett Grolemund. 2016. <em>R for Data Science: Import, Tidy, Transform, Visualize, and Model Data</em>. “ O’Reilly Media, Inc.”</p>
+</div>
+<div>
+<p>Wickham, Hadley, and Lionel Henry. 2018. <em>Tidyr: Easily Tidy Data with ’Spread()’ and ’Gather()’ Functions</em>. <a href="https://CRAN.R-project.org/package=tidyr" class="uri">https://CRAN.R-project.org/package=tidyr</a>.</p>
+</div>
+<div>
+<p>Wickham, Hadley, and Evan Miller. 2018. <em>Haven: Import and Export ’Spss’, ’Stata’ and ’Sas’ Files</em>. <a href="https://CRAN.R-project.org/package=haven" class="uri">https://CRAN.R-project.org/package=haven</a>.</p>
+</div>
+<div>
+<p>Wickham, Hadley, Winston Chang, Lionel Henry, Thomas Lin Pedersen, Kohske Takahashi, Claus Wilke, and Kara Woo. 2018. <em>Ggplot2: Create Elegant Data Visualisations Using the Grammar of Graphics</em>. <a href="https://CRAN.R-project.org/package=ggplot2" class="uri">https://CRAN.R-project.org/package=ggplot2</a>.</p>
+</div>
+<div>
+<p>Wickham, Hadley, Romain François, Lionel Henry, and Kirill Müller. 2018. <em>Dplyr: A Grammar of Data Manipulation</em>. <a href="https://CRAN.R-project.org/package=dplyr" class="uri">https://CRAN.R-project.org/package=dplyr</a>.</p>
+</div>
+<div>
+<p>Wickham, Hadley, Jim Hester, and Romain Francois. 2017. <em>Readr: Read Rectangular Text Data</em>. <a href="https://CRAN.R-project.org/package=readr" class="uri">https://CRAN.R-project.org/package=readr</a>.</p>
+</div>
+<div>
+<p>Wood, Simon. 2018. <em>Mgcv: Mixed Gam Computation Vehicle with Automatic Smoothness Estimation</em>. <a href="https://CRAN.R-project.org/package=mgcv" class="uri">https://CRAN.R-project.org/package=mgcv</a>.</p>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="further-analysis-and-useful-online-resources.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

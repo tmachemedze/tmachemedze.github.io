@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "library(foreign)\nlibrary(tidyverse)\n\nnids<-read.dta(\"./nids-data/nids_course_data/nids.dta\", convert.factors = FALSE)\n\nnids<-nids%>% \n  arrange(hhid, pid)%>%\n  group_by(hhid) %>%\n  mutate(hhrestrict = 1:n()) %>%\n  mutate(hhrestrict = ifelse(hhrestrict==1,1,0))\n\nnids<-nids%>%\n  mutate(w1_r_best_age_yrs1 = ifelse(w1_r_best_age_yrs>=0, w1_r_best_age_yrs, NA))%>%\n  group_by(hhid)%>%\n  mutate(avgage = mean(w1_r_best_age_yrs1, na.rm=T))\n\n\nnids<-nids%>%\n  mutate(hrace = ifelse(w1_r_b3==1, w1_best_race,NA))%>%\n  group_by(hhid)%>%\n  mutate(hhrace = max(hrace, na.rm=T))\n\n\nnids<-nids%>%\n  mutate(hhrace = factor(hhrace, levels = 1:4, labels=c(\"African\",\"Coloured\",\"Asian_Indian\",\"White\")))\n\n\nnids_max_hhrace_age<-nids%>%\n  filter(hhrestrict==1)%>%\n  select(hhrace, avgage)\n\ndd<-nids%>%\n  select(hhid, w1_r_best_age_yrs,w1_r_best_age_yrs1, hrace, hhrace, avgage)\n\nwrite.dta(dd, \"ex2.dta\")\n\nmean(dd$avgage, na.rm=T)\ntable(dd$hrace)\ntable(dd$hhrace)\n\nnids%>%\n  filter(!is.na(avgage))%>%\n  group_by(hhrace)%>%\n  summarise(Mean = mean(avgage, na.rm=T),\n            N = n())\n            \nnids%>%\n  group_by(hhrace)%>%\n  summarise(Mini = min(avgage),\n            Mean = mean(avgage, na.rm=T),\n            Median = median(avgage, na.rm=T),\n            Max = max(avgage, na.rm=T),\n            N = n())\n\nnids%>%\n  #filter(!is.na(avgage))%>%\n  group_by(hhrace)%>%\n  summarise(Mini = min(avgage, na.rm=T),\n            Mean = mean(avgage, na.rm=T),\n            Median = median(avgage, na.rm=T),\n            Max = max(avgage, na.rm=T),\n            SD = sd(avgage, na.rm=T),\n            N = n())\n\n\nmtcars%>%\n  group_by(cyl)%>%\n  summarise(n=n()) %>%\n  mutate(freq = round(n/sum(n)*100,2)) %>%\n  mutate(prop = round(prop.table(n)*100,2))%>%\n  ggplot(., aes(x = factor(1), y = freq, fill = factor(cyl))) +\n  geom_col(width = 1) + coord_polar(theta = \"y\") + scale_fill_grey(start=0, end=0.5)\n\n\nnids%>%\n  filter(!is.na(w1_best_race))%>%\n  mutate(race = factor(w1_best_race, levels = 1:4, labels = c(\"African\", \"Coloured\",\"Asian\", \"White\")), \n         province = factor(w1_hhprov, levels=1:9, labels = c(\"Western Cape\",\"Eastern Cape\",\"Northern Cape\",\"Free State\",\"KwaZulu-Natal\",\"North West\",\"Gauteng\",\"Mpumalanga\",\"Limpopo\")))%>%\n  ggplot(.) +\n  geom_bar(aes(x = factor(1), fill = race), width = 1) + \n  coord_polar(theta = \"y\") + facet_wrap(~province, ncol=3)\n\n\nnids%>%\n  filter(!is.na(w1_best_race))%>%\n  mutate(race = factor(w1_best_race, levels = 1:4, labels = c(\"African\", \"Coloured\",\"Asian\", \"White\")), \n         province = factor(w1_hhprov, levels=1:9, labels = c(\"Western Cape\",\"Eastern Cape\",\"Northern Cape\",\"Free State\",\"KwaZulu-Natal\",\"North West\",\"Gauteng\",\"Mpumalanga\",\"Limpopo\")))%>%\n  group_by(province, race)%>%\n  summarise(n=n()) %>%\n  mutate(freq = round(n/sum(n)*100,2)) %>%\n  ggplot(.) +\n  geom_col(aes(x = factor(1), y = freq, fill = race), width = 1) + \n  coord_polar(theta = \"y\") + \n  facet_wrap(~province, ncol=3) \n\n\n\nnids%>%\n  filter(!is.na(w1_best_race))%>%\n  mutate(race = factor(w1_best_race, levels = 1:4, labels = c(\"African\", \"Coloured\",\"Asian\", \"White\")), \n         province = factor(w1_hhprov, levels=1:9, labels = c(\"Western Cape\",\"Eastern Cape\",\"Northern Cape\",\"Free State\",\"KwaZulu-Natal\",\"North West\",\"Gauteng\",\"Mpumalanga\",\"Limpopo\")))%>%\n  group_by(province, race)%>%\n  summarise(n=n()) %>%\n  mutate(freq = round(n/sum(n)*100,2)) %>%\n  mutate(pos = cumsum(freq)- freq/2)%>%\n  ggplot(.) +\n  geom_col(aes(x = factor(1), y = freq, fill = race), width = 1) + \n  geom_text(aes(x= factor(1), y=pos, label = freq), size=2) +  # note y = pos\n  coord_polar(theta = \"y\") + \n  facet_wrap(~province, ncol=3) \n\n\n",
+    "created" : 1488976760539.000,
+    "dirty" : true,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "2582772103",
+    "id" : "312B8D03",
+    "lastKnownWriteTime" : 1488637330,
+    "last_content_update" : 1489052811948,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "tempName" : "Untitled2"
+    },
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

@@ -1,0 +1,1627 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>The Analysis of South African Household Survey Data using R</title>
+  <meta name="description" content="The Analysis of South African Household Survey Data using R">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="The Analysis of South African Household Survey Data using R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="The Analysis of South African Household Survey Data using R" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="The Analysis of South African Household Survey Data using R" />
+  
+  <meta name="twitter:description" content="The Analysis of South African Household Survey Data using R" />
+  
+
+<meta name="author" content="Takwanisa Machemedze">
+
+
+<meta name="date" content="2018-07-23">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="introduction.html">
+<link rel="next" href="understanding-distributions.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#what-is-r"><i class="fa fa-check"></i><b>1.1</b> What is R?</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#pros-and-cons-of-r"><i class="fa fa-check"></i><b>1.2</b> Pros and cons of R</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="introduction.html"><a href="introduction.html#pros"><i class="fa fa-check"></i><b>1.2.1</b> Pros</a></li>
+<li class="chapter" data-level="1.2.2" data-path="introduction.html"><a href="introduction.html#cons"><i class="fa fa-check"></i><b>1.2.2</b> Cons</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#what-is-rstudio"><i class="fa fa-check"></i><b>1.3</b> What is RStudio?</a></li>
+<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#the-r-system"><i class="fa fa-check"></i><b>1.4</b> The R system</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="introduction.html"><a href="introduction.html#base-system"><i class="fa fa-check"></i><b>1.4.1</b> Base system</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html"><i class="fa fa-check"></i><b>2</b> Getting started with R</a><ul>
+<li class="chapter" data-level="2.1" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#introduction-1"><i class="fa fa-check"></i><b>2.1</b> Introduction</a></li>
+<li class="chapter" data-level="2.2" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#organize-your-r-session"><i class="fa fa-check"></i><b>2.2</b> Organize your R session</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#working-directory"><i class="fa fa-check"></i><b>2.2.1</b> Working directory</a></li>
+<li class="chapter" data-level="2.2.2" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#load-and-install-required-libraries"><i class="fa fa-check"></i><b>2.2.2</b> Load (and install) required libraries</a></li>
+<li class="chapter" data-level="2.2.3" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#comments"><i class="fa fa-check"></i><b>2.2.3</b> Comments</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#getting-help"><i class="fa fa-check"></i><b>2.3</b> Getting help</a></li>
+<li class="chapter" data-level="2.4" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#output-file"><i class="fa fa-check"></i><b>2.4</b> Output file</a></li>
+<li class="chapter" data-level="2.5" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#objects-in-r"><i class="fa fa-check"></i><b>2.5</b> Objects in R</a><ul>
+<li class="chapter" data-level="2.5.1" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#removing-objects-from-the-r-environment---rm-function"><i class="fa fa-check"></i><b>2.5.1</b> Removing objects from the R environment - rm() function</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#saving-in-r"><i class="fa fa-check"></i><b>2.6</b> Saving in R</a></li>
+<li class="chapter" data-level="2.7" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#importing-nids-data-into-r"><i class="fa fa-check"></i><b>2.7</b> Importing NIDS data into R</a></li>
+<li class="chapter" data-level="2.8" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#exploring-the-data"><i class="fa fa-check"></i><b>2.8</b> Exploring the data</a><ul>
+<li class="chapter" data-level="2.8.1" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#subsetting-data---part-1"><i class="fa fa-check"></i><b>2.8.1</b> Subsetting data - part 1</a></li>
+<li class="chapter" data-level="2.8.2" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#data-documentation---value-and-variable-labels"><i class="fa fa-check"></i><b>2.8.2</b> Data documentation - value and variable labels</a></li>
+<li class="chapter" data-level="2.8.3" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#operators-in-r"><i class="fa fa-check"></i><b>2.8.3</b> Operators in R</a></li>
+<li class="chapter" data-level="2.8.4" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#subsetting-data---part-2"><i class="fa fa-check"></i><b>2.8.4</b> Subsetting data - part 2</a></li>
+</ul></li>
+<li class="chapter" data-level="2.9" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#tidyverse"><i class="fa fa-check"></i><b>2.9</b> Tidyverse</a><ul>
+<li class="chapter" data-level="2.9.1" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#brief-introduction-to-tidyverse"><i class="fa fa-check"></i><b>2.9.1</b> Brief introduction to tidyverse</a></li>
+<li class="chapter" data-level="2.9.2" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#core-tidyverse-packages"><i class="fa fa-check"></i><b>2.9.2</b> Core tidyverse packages</a></li>
+<li class="chapter" data-level="2.9.3" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#install-and-load-tidyverse-packages"><i class="fa fa-check"></i><b>2.9.3</b> Install and load tidyverse packages</a></li>
+<li class="chapter" data-level="2.9.4" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#dplyr-verbs"><i class="fa fa-check"></i><b>2.9.4</b> dplyr verbs</a></li>
+<li class="chapter" data-level="2.9.5" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#using-dplyr-functions"><i class="fa fa-check"></i><b>2.9.5</b> Using dplyr functions</a></li>
+<li class="chapter" data-level="2.9.6" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#pipe-operator"><i class="fa fa-check"></i><b>2.9.6</b> Pipe operator %&gt;%</a></li>
+</ul></li>
+<li class="chapter" data-level="2.10" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#more-data-exploration"><i class="fa fa-check"></i><b>2.10</b> More data exploration</a><ul>
+<li class="chapter" data-level="2.10.1" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#example-1-subset-variables"><i class="fa fa-check"></i><b>2.10.1</b> Example 1: Subset variables</a></li>
+<li class="chapter" data-level="2.10.2" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#example-2-subset-observations"><i class="fa fa-check"></i><b>2.10.2</b> Example 2: Subset observations</a></li>
+<li class="chapter" data-level="2.10.3" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#example-3-subset-both-observations-and-variables"><i class="fa fa-check"></i><b>2.10.3</b> Example 3: Subset both observations and variables</a></li>
+</ul></li>
+<li class="chapter" data-level="2.11" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#managing-the-data"><i class="fa fa-check"></i><b>2.11</b> Managing the data</a></li>
+<li class="chapter" data-level="2.12" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#worked-example-creating-a-bmi-variable"><i class="fa fa-check"></i><b>2.12</b> Worked example: creating a bmi variable</a></li>
+<li class="chapter" data-level="2.13" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#question-answers"><i class="fa fa-check"></i><b>2.13</b> Question answers</a></li>
+<li class="chapter" data-level="2.14" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#exercises"><i class="fa fa-check"></i><b>2.14</b> Exercises</a></li>
+<li class="chapter" data-level="2.15" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#exercise-answers"><i class="fa fa-check"></i><b>2.15</b> Exercise answers</a></li>
+<li class="chapter" data-level="2.16" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#session-information"><i class="fa fa-check"></i><b>2.16</b> Session information</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="understanding-distributions.html"><a href="understanding-distributions.html"><i class="fa fa-check"></i><b>3</b> Understanding distributions</a><ul>
+<li class="chapter" data-level="3.1" data-path="understanding-distributions.html"><a href="understanding-distributions.html#introduction-2"><i class="fa fa-check"></i><b>3.1</b> Introduction</a></li>
+<li class="chapter" data-level="3.2" data-path="understanding-distributions.html"><a href="understanding-distributions.html#variable-types"><i class="fa fa-check"></i><b>3.2</b> Variable types</a></li>
+<li class="chapter" data-level="3.3" data-path="understanding-distributions.html"><a href="understanding-distributions.html#count-observations---dimnrow"><i class="fa fa-check"></i><b>3.3</b> Count observations - dim(),nrow()</a></li>
+<li class="chapter" data-level="3.4" data-path="understanding-distributions.html"><a href="understanding-distributions.html#using-household-level-variables"><i class="fa fa-check"></i><b>3.4</b> Using household level variables</a></li>
+<li class="chapter" data-level="3.5" data-path="understanding-distributions.html"><a href="understanding-distributions.html#frequency-distribution-tables"><i class="fa fa-check"></i><b>3.5</b> Frequency distribution tables</a></li>
+<li class="chapter" data-level="3.6" data-path="understanding-distributions.html"><a href="understanding-distributions.html#frequency-distribution-tables-household-level-data"><i class="fa fa-check"></i><b>3.6</b> Frequency distribution tables: household level data</a></li>
+<li class="chapter" data-level="3.7" data-path="understanding-distributions.html"><a href="understanding-distributions.html#missing-data-and-non-responses"><i class="fa fa-check"></i><b>3.7</b> Missing data and non-responses</a></li>
+<li class="chapter" data-level="3.8" data-path="understanding-distributions.html"><a href="understanding-distributions.html#three-primary-origins-of-na-missing-data-in-nids"><i class="fa fa-check"></i><b>3.8</b> Three primary origins of NA-missing data in NIDS</a></li>
+<li class="chapter" data-level="3.9" data-path="understanding-distributions.html"><a href="understanding-distributions.html#missing-data-and-qualifiers"><i class="fa fa-check"></i><b>3.9</b> Missing data and qualifiers</a></li>
+<li class="chapter" data-level="3.10" data-path="understanding-distributions.html"><a href="understanding-distributions.html#question-answers-1"><i class="fa fa-check"></i><b>3.10</b> Question answers</a></li>
+<li class="chapter" data-level="3.11" data-path="understanding-distributions.html"><a href="understanding-distributions.html#exercises-1"><i class="fa fa-check"></i><b>3.11</b> Exercises</a></li>
+<li class="chapter" data-level="3.12" data-path="understanding-distributions.html"><a href="understanding-distributions.html#session-information-1"><i class="fa fa-check"></i><b>3.12</b> Session information</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="understanding-graphs.html"><a href="understanding-graphs.html"><i class="fa fa-check"></i><b>4</b> Understanding graphs</a><ul>
+<li class="chapter" data-level="4.1" data-path="understanding-graphs.html"><a href="understanding-graphs.html#introduction-3"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="understanding-graphs.html"><a href="understanding-graphs.html#getting-ready"><i class="fa fa-check"></i><b>4.2</b> Getting ready</a></li>
+<li class="chapter" data-level="4.3" data-path="understanding-graphs.html"><a href="understanding-graphs.html#ggplot2-and-its-elements"><i class="fa fa-check"></i><b>4.3</b> ggplot2 and its elements</a></li>
+<li class="chapter" data-level="4.4" data-path="understanding-graphs.html"><a href="understanding-graphs.html#histograms"><i class="fa fa-check"></i><b>4.4</b> Histograms</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="understanding-graphs.html"><a href="understanding-graphs.html#graphing-economic-wellbeing-in-south-africa-in-2008"><i class="fa fa-check"></i><b>4.4.1</b> Graphing economic wellbeing in South Africa in 2008</a></li>
+<li class="chapter" data-level="4.4.2" data-path="understanding-graphs.html"><a href="understanding-graphs.html#facetting"><i class="fa fa-check"></i><b>4.4.2</b> Facetting</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="understanding-graphs.html"><a href="understanding-graphs.html#worked-example-1-what-is-the-most-common-age-at-which-people-start-smoking"><i class="fa fa-check"></i><b>4.5</b> Worked example 1: What is the most common age at which people start smoking?</a></li>
+<li class="chapter" data-level="4.6" data-path="understanding-graphs.html"><a href="understanding-graphs.html#pie-charts"><i class="fa fa-check"></i><b>4.6</b> Pie charts</a></li>
+<li class="chapter" data-level="4.7" data-path="understanding-graphs.html"><a href="understanding-graphs.html#investigating-newborn-and-infant-gender"><i class="fa fa-check"></i><b>4.7</b> Investigating newborn and infant gender</a><ul>
+<li class="chapter" data-level="4.7.1" data-path="understanding-graphs.html"><a href="understanding-graphs.html#exploring-the-distribution-of-race-across-provinces"><i class="fa fa-check"></i><b>4.7.1</b> Exploring the distribution of race across provinces</a></li>
+<li class="chapter" data-level="4.7.2" data-path="understanding-graphs.html"><a href="understanding-graphs.html#urban-vs.rural-where-are-south-africans-living"><i class="fa fa-check"></i><b>4.7.2</b> Urban vs. rural, where are South Africans living?</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="understanding-graphs.html"><a href="understanding-graphs.html#worked-example-2-are-there-differences-between-the-age-at-which-men-and-women-start-smoking"><i class="fa fa-check"></i><b>4.8</b> Worked example 2: Are there differences between the age at which men and women start smoking?</a><ul>
+<li class="chapter" data-level="4.8.1" data-path="understanding-graphs.html"><a href="understanding-graphs.html#exercise"><i class="fa fa-check"></i><b>4.8.1</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="4.9" data-path="understanding-graphs.html"><a href="understanding-graphs.html#bar-graphs"><i class="fa fa-check"></i><b>4.9</b> Bar graphs</a><ul>
+<li class="chapter" data-level="4.9.1" data-path="understanding-graphs.html"><a href="understanding-graphs.html#investigating-satisfaction-levels-in-south-africans"><i class="fa fa-check"></i><b>4.9.1</b> Investigating Satisfaction levels in South Africans</a></li>
+<li class="chapter" data-level="4.9.2" data-path="understanding-graphs.html"><a href="understanding-graphs.html#worked-example-3-does-the-frequency-of-alcohol-consumption-vary-by-gender-race-or-religion"><i class="fa fa-check"></i><b>4.9.2</b> Worked example 3: Does the frequency of alcohol consumption vary by gender, race or religion?</a></li>
+</ul></li>
+<li class="chapter" data-level="4.10" data-path="understanding-graphs.html"><a href="understanding-graphs.html#question-answers-2"><i class="fa fa-check"></i><b>4.10</b> Question answers</a></li>
+<li class="chapter" data-level="4.11" data-path="understanding-graphs.html"><a href="understanding-graphs.html#session-information-2"><i class="fa fa-check"></i><b>4.11</b> Session information</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html"><i class="fa fa-check"></i><b>5</b> Measures of central tendency and variability</a><ul>
+<li class="chapter" data-level="5.1" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#getting-ready-1"><i class="fa fa-check"></i><b>5.1</b> Getting ready</a></li>
+<li class="chapter" data-level="5.2" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#introduction-4"><i class="fa fa-check"></i><b>5.2</b> Introduction</a></li>
+<li class="chapter" data-level="5.3" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#understanding-distributions-of-continuous-variables"><i class="fa fa-check"></i><b>5.3</b> Understanding distributions of continuous variables</a></li>
+<li class="chapter" data-level="5.4" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#continuous-variables-and-recoding"><i class="fa fa-check"></i><b>5.4</b> Continuous variables and recoding</a></li>
+<li class="chapter" data-level="5.5" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#summarise-by---summary-base-r-and-group_by---summarise-dplyr"><i class="fa fa-check"></i><b>5.5</b> Summarise: by - summary (base R) and group_by - summarise (dplyr)</a></li>
+<li class="chapter" data-level="5.6" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#medians-and-modes-of-continuous-variables"><i class="fa fa-check"></i><b>5.6</b> Medians and modes of continuous variables</a></li>
+<li class="chapter" data-level="5.7" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#example-recoding-the-education-variable"><i class="fa fa-check"></i><b>5.7</b> Example: recoding the education variable</a></li>
+<li class="chapter" data-level="5.8" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#measures-of-dispersion---variance-and-standard-deviation"><i class="fa fa-check"></i><b>5.8</b> Measures of dispersion - variance and standard deviation</a></li>
+<li class="chapter" data-level="5.9" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#handling-outliers"><i class="fa fa-check"></i><b>5.9</b> Handling outliers</a></li>
+<li class="chapter" data-level="5.10" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#understanding-the-distributions-of-categorical-variables"><i class="fa fa-check"></i><b>5.10</b> Understanding the distributions of categorical variables</a></li>
+<li class="chapter" data-level="5.11" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#worked-example-1-exploring-the-distribution-of-satisfaction-variable"><i class="fa fa-check"></i><b>5.11</b> Worked example 1: Exploring the distribution of satisfaction variable</a></li>
+<li class="chapter" data-level="5.12" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#group-summary"><i class="fa fa-check"></i><b>5.12</b> Group summary</a></li>
+<li class="chapter" data-level="5.13" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#worked-example-2-investigating-bmi-in-south-africa"><i class="fa fa-check"></i><b>5.13</b> Worked example 2: Investigating BMI in South Africa</a></li>
+<li class="chapter" data-level="5.14" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#question-answers-3"><i class="fa fa-check"></i><b>5.14</b> Question answers</a></li>
+<li class="chapter" data-level="5.15" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#exercises-2"><i class="fa fa-check"></i><b>5.15</b> Exercises</a></li>
+<li class="chapter" data-level="5.16" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#exercise-answers-1"><i class="fa fa-check"></i><b>5.16</b> Exercise answers</a></li>
+<li class="chapter" data-level="5.17" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#exercises-3"><i class="fa fa-check"></i><b>5.17</b> Exercises</a></li>
+<li class="chapter" data-level="5.18" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#exercise-answers-2"><i class="fa fa-check"></i><b>5.18</b> Exercise answers</a></li>
+<li class="chapter" data-level="5.19" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#session-information-3"><i class="fa fa-check"></i><b>5.19</b> Session information</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html"><i class="fa fa-check"></i><b>6</b> Bivariate analysis (cross tabs)</a><ul>
+<li class="chapter" data-level="6.1" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#getting-ready-2"><i class="fa fa-check"></i><b>6.1</b> Getting ready</a></li>
+<li class="chapter" data-level="6.2" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#introduction-5"><i class="fa fa-check"></i><b>6.2</b> Introduction</a></li>
+<li class="chapter" data-level="6.3" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#cross---tabulation"><i class="fa fa-check"></i><b>6.3</b> Cross - tabulation</a></li>
+<li class="chapter" data-level="6.4" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#example-1-where-do-households-with-an-elderly-member-tend-to-live"><i class="fa fa-check"></i><b>6.4</b> Example 1: Where do households with an elderly member tend to live?</a></li>
+<li class="chapter" data-level="6.5" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#example-2-is-there-a-relationship-between-the-race-of-a-household-and-the-average-age-of-the-household"><i class="fa fa-check"></i><b>6.5</b> Example 2: Is there a relationship between the race of a household and the average age of the household?</a></li>
+<li class="chapter" data-level="6.6" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#example-3-does-the-level-of-satisfaction-differ-in-different-racegender-groupings"><i class="fa fa-check"></i><b>6.6</b> Example 3: Does the level of satisfaction differ in different race/gender groupings?</a></li>
+<li class="chapter" data-level="6.7" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#example-4-comparing-household-monthly-income-from-the-labour-market-to-individual-monthly-takehome-pay"><i class="fa fa-check"></i><b>6.7</b> Example 4: Comparing Household Monthly Income from the labour market to individual monthly takehome pay</a></li>
+<li class="chapter" data-level="6.8" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#chi-squared-testing-for-independence"><i class="fa fa-check"></i><b>6.8</b> Chi-Squared: testing for independence</a></li>
+<li class="chapter" data-level="6.9" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#cross-tabs-and-hypothesis-testing-chi2-examples-the-comparative-level-of-happiness-variable"><i class="fa fa-check"></i><b>6.9</b> Cross-tabs and hypothesis testing (Chi^2) examples: The comparative level of happiness variable</a><ul>
+<li class="chapter" data-level="6.9.1" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#example-1-comparative-happiness-and-employment-status"><i class="fa fa-check"></i><b>6.9.1</b> Example 1: Comparative happiness and employment status</a></li>
+<li class="chapter" data-level="6.9.2" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#example-2-comparative-happiness-by-province"><i class="fa fa-check"></i><b>6.9.2</b> Example 2: Comparative happiness by province</a></li>
+<li class="chapter" data-level="6.9.3" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#example-3-comparative-happiness-and-household-income"><i class="fa fa-check"></i><b>6.9.3</b> Example 3: Comparative happiness and household income</a></li>
+<li class="chapter" data-level="6.9.4" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#example-4-comparative-happiness-and-geo-type"><i class="fa fa-check"></i><b>6.9.4</b> Example 4: Comparative happiness and geo-type</a></li>
+</ul></li>
+<li class="chapter" data-level="6.10" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#worked-example-assessing-the-impact-of-per-capita-income-on-bmi"><i class="fa fa-check"></i><b>6.10</b> Worked Example: Assessing the impact of per capita income on BMI</a></li>
+<li class="chapter" data-level="6.11" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#question-answers-4"><i class="fa fa-check"></i><b>6.11</b> Question Answers</a></li>
+<li class="chapter" data-level="6.12" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#exercises-4"><i class="fa fa-check"></i><b>6.12</b> Exercises</a></li>
+<li class="chapter" data-level="6.13" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#exercise-answers-3"><i class="fa fa-check"></i><b>6.13</b> Exercise answers</a></li>
+<li class="chapter" data-level="6.14" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#session-information-4"><i class="fa fa-check"></i><b>6.14</b> Session information</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html"><i class="fa fa-check"></i><b>7</b> Simple regression analysis</a><ul>
+<li class="chapter" data-level="7.1" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#getting-ready-3"><i class="fa fa-check"></i><b>7.1</b> Getting ready</a></li>
+<li class="chapter" data-level="7.2" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#introduction-6"><i class="fa fa-check"></i><b>7.2</b> Introduction</a></li>
+<li class="chapter" data-level="7.3" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#correlation-of-variables"><i class="fa fa-check"></i><b>7.3</b> Correlation of variables</a></li>
+<li class="chapter" data-level="7.4" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#outliers"><i class="fa fa-check"></i><b>7.4</b> Outliers</a></li>
+<li class="chapter" data-level="7.5" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#simple-regression"><i class="fa fa-check"></i><b>7.5</b> Simple regression</a></li>
+<li class="chapter" data-level="7.6" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#understanding-regression-output-tables"><i class="fa fa-check"></i><b>7.6</b> Understanding regression output tables</a></li>
+<li class="chapter" data-level="7.7" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#graphing-the-regression-equation"><i class="fa fa-check"></i><b>7.7</b> Graphing the regression equation</a></li>
+<li class="chapter" data-level="7.8" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#worked-example-is-age-a-strong-determinant-of-bmi"><i class="fa fa-check"></i><b>7.8</b> Worked example: Is age a strong determinant of BMI?</a></li>
+<li class="chapter" data-level="7.9" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#question-answers-5"><i class="fa fa-check"></i><b>7.9</b> Question answers:</a></li>
+<li class="chapter" data-level="7.10" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#exercises-5"><i class="fa fa-check"></i><b>7.10</b> Exercises</a></li>
+<li class="chapter" data-level="7.11" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#exercise-1"><i class="fa fa-check"></i><b>7.11</b> Exercise</a></li>
+<li class="chapter" data-level="7.12" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#exercise-answers-4"><i class="fa fa-check"></i><b>7.12</b> Exercise answers</a></li>
+<li class="chapter" data-level="7.13" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#appendix-a-analysis-of-variance-anova-table"><i class="fa fa-check"></i><b>7.13</b> Appendix A: Analysis of variance (anova) table</a></li>
+<li class="chapter" data-level="7.14" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#appendix-b-further-understanding-the-regression-results-table"><i class="fa fa-check"></i><b>7.14</b> Appendix B: Further understanding the regression results table</a></li>
+<li class="chapter" data-level="7.15" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#session-information-5"><i class="fa fa-check"></i><b>7.15</b> Session information</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="multiple-regression-analysis.html"><a href="multiple-regression-analysis.html"><i class="fa fa-check"></i><b>8</b> Multiple regression analysis</a><ul>
+<li class="chapter" data-level="8.1" data-path="multiple-regression-analysis.html"><a href="multiple-regression-analysis.html#getting-ready-4"><i class="fa fa-check"></i><b>8.1</b> Getting ready</a></li>
+<li class="chapter" data-level="8.2" data-path="multiple-regression-analysis.html"><a href="multiple-regression-analysis.html#introduction-7"><i class="fa fa-check"></i><b>8.2</b> Introduction</a></li>
+<li class="chapter" data-level="8.3" data-path="multiple-regression-analysis.html"><a href="multiple-regression-analysis.html#dummy-variables"><i class="fa fa-check"></i><b>8.3</b> Dummy variables</a></li>
+<li class="chapter" data-level="8.4" data-path="multiple-regression-analysis.html"><a href="multiple-regression-analysis.html#interactions-with-dummy-variables"><i class="fa fa-check"></i><b>8.4</b> Interactions with dummy Variables</a></li>
+<li class="chapter" data-level="8.5" data-path="multiple-regression-analysis.html"><a href="multiple-regression-analysis.html#linear-transformations-of-non-linear-relationships"><i class="fa fa-check"></i><b>8.5</b> Linear transformations of non-linear relationships</a></li>
+<li class="chapter" data-level="8.6" data-path="multiple-regression-analysis.html"><a href="multiple-regression-analysis.html#question-answers-6"><i class="fa fa-check"></i><b>8.6</b> Question Answers</a></li>
+<li class="chapter" data-level="8.7" data-path="multiple-regression-analysis.html"><a href="multiple-regression-analysis.html#exercises-6"><i class="fa fa-check"></i><b>8.7</b> Exercises</a></li>
+<li class="chapter" data-level="8.8" data-path="multiple-regression-analysis.html"><a href="multiple-regression-analysis.html#exercise-answers-5"><i class="fa fa-check"></i><b>8.8</b> Exercise answers</a></li>
+<li class="chapter" data-level="8.9" data-path="multiple-regression-analysis.html"><a href="multiple-regression-analysis.html#session-information-6"><i class="fa fa-check"></i><b>8.9</b> Session information</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="further-analysis-and-useful-online-resources.html"><a href="further-analysis-and-useful-online-resources.html"><i class="fa fa-check"></i><b>9</b> Further analysis and useful online resources</a><ul>
+<li class="chapter" data-level="9.1" data-path="further-analysis-and-useful-online-resources.html"><a href="further-analysis-and-useful-online-resources.html#further-analyses"><i class="fa fa-check"></i><b>9.1</b> Further analyses</a></li>
+<li class="chapter" data-level="9.2" data-path="further-analysis-and-useful-online-resources.html"><a href="further-analysis-and-useful-online-resources.html#useful-online-resources"><i class="fa fa-check"></i><b>9.2</b> Useful online resources</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">The Analysis of South African Household Survey Data using R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="getting-started-with-r" class="section level1">
+<h1><span class="header-section-number">2</span> Getting started with R</h1>
+<div id="introduction-1" class="section level2">
+<h2><span class="header-section-number">2.1</span> Introduction</h2>
+<p>This guide was prepared using RStudio and therefore you might need to launch RStudio if you want to follow the coding. <strong>Note</strong>: there are several other IDEs for R other than RStudio and you can as well use whichever IDE you are comfortable with.</p>
+<p>Most R commands adopt the following syntax:</p>
+<p><code>&gt; command(argument1, argument2, ...,)</code></p>
+<p>Any R command needs to be followed by brackets. Using RStudio, you can either type your commands at the console and press enter or type in the script editor (<code>Menu -&gt; New File -&gt; R Script</code>) and press the <code>Run</code> button to the top right corner of the same window. Alternatively, selected/highlighted parts of an R script file can be run pressing <code>Ctrl + Enter</code> and the whole script can be run by pressing <code>Ctrl + Alt + R</code>.</p>
+</div>
+<div id="organize-your-r-session" class="section level2">
+<h2><span class="header-section-number">2.2</span> Organize your R session</h2>
+<div id="working-directory" class="section level3">
+<h3><span class="header-section-number">2.2.1</span> Working directory</h3>
+<p>We check the current working directory by typing:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">getwd</span>()</code></pre></div>
+<pre><code>## [1] &quot;E:/stata2rcourse&quot;</code></pre>
+<p>We set another working directory by typing:</p>
+<p><code>setwd(&quot;path_to_directory&quot;</code></p>
+<p>Note that R uses forward slashes to separate directories or you can use double back slashes.</p>
+</div>
+<div id="load-and-install-required-libraries" class="section level3">
+<h3><span class="header-section-number">2.2.2</span> Load (and install) required libraries</h3>
+<p>To install a package, we type:</p>
+<p><code>install.packages(&quot;package name&quot;)</code></p>
+<p>Unlike in Stata where you just need to install an ado file and start running the programme, in R you need to load the package in each session where it is required. The command for loading a package is:</p>
+<p><code>library(package name)</code></p>
+</div>
+<div id="comments" class="section level3">
+<h3><span class="header-section-number">2.2.3</span> Comments</h3>
+<p><code>#</code> denotes a comment. Anything after the <code>#</code> is not evaluated and ignored in R</p>
+</div>
+</div>
+<div id="getting-help" class="section level2">
+<h2><span class="header-section-number">2.3</span> Getting help</h2>
+<p>R has several help functions as described below:</p>
+<ul>
+<li><p><code>help(solve)</code> or <code>?solve</code> - access help page for command <code>solve</code>.</p>
+<ul>
+<li>useful only if you already know the name of the function that you wish to use.</li>
+</ul></li>
+<li><code>apropos()</code> - searches for objects, including functions, directly accessible in the current R session that have names that include a specified character string. For example: <code>apropos(&quot;glm&quot;)</code>.</li>
+<li><p><code>help.search(&quot;solve&quot;)</code> and <code>??solve</code> - scans the documentation for packages installed in your library for commands which could be related to string <code>solve</code>.</p></li>
+<li><p><code>help.start()</code> - Start the hypertext (currently HTML) version of R’s online documentation.</p></li>
+<li><p><code>RSiteSearch()</code> - uses an internet search engine to search for information in function help pages. For example: <code>RSiteSearch(&quot;glm&quot;)</code>.</p></li>
+<li><p><code>example(exp)</code> - examples for the usage of <code>exp</code>.</p></li>
+<li><p><code>example(&quot;*&quot;)</code> - special characters have to be in quotation marks.</p></li>
+<li><p>Some packages provides a demonstration of the R functionality and typying <code>demo()</code> will return a list of all demos and the associated packages.</p></li>
+<li><p>For tricky questions, error messages and other issues, use <a href="https://www.google.com/">Google</a> (include “in R” to the end of your query).</p></li>
+<li><p>Thre is also a search engine just for <code>R</code>, <a href="https://rseek.org/">RSeek</a>.</p></li>
+<li><p><a href="https://stackoverflow.com/">StackOverflow</a> is also a great resource with many questions for many specific packages in R and a rating system for answers.</p></li>
+</ul>
+</div>
+<div id="output-file" class="section level2">
+<h2><span class="header-section-number">2.4</span> Output file</h2>
+<p><strong><code>sink()</code> function</strong></p>
+<p>For example:</p>
+<p><code>sink(file=&quot;output_file_name.txt&quot;)</code></p>
+<p>The <code>sink(file=&quot;output_file_name.txt&quot;)</code> function redirects output to the file <code>&quot;output_file_name.txt&quot;</code> and saves to your current working directory.By default, if the file already exists, its contents are overwritten. Include the option <code>append=TRUE</code> to append text to the file rather than overwriting it. Including the option <code>split=TRUE</code> will send output to both the screen and the output file. Issuing the command <code>sink()</code> without options will return output to the screen alone.</p>
+<p>Unfortunately, compared to the Stata log file system, the <code>sink()</code> function only save the output, i.e. results with no code. It appears as if there is no straight forward way of having both “input” line and “output” results. One of the suggested solutions is to save output with <code>sink()</code> and input with <code>savehistory()</code> separately. We will show how to save command history in the section to follow.</p>
+</div>
+<div id="objects-in-r" class="section level2">
+<h2><span class="header-section-number">2.5</span> Objects in R</h2>
+<p>It is possible and usual to have multiple pieces of data simultaneously open during an R session. These include datasets, summary tables, graphs, derived variables, functions, e.t.c. All these are referred to as objects. In fact, everything in R is an object and each can be manipulated independently in many ways.</p>
+<p>For example, lets assign <code>x</code> to be 5 and <code>y</code> to be 3:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x&lt;-<span class="dv">5</span>
+y&lt;-<span class="dv">3</span></code></pre></div>
+<p>where <code>&lt;-</code> (the less than sign plus the minus) is an assignment operator. <code>x</code> is assigned a value 5 and <code>y</code> a value 3.</p>
+<p><code>x</code> and <code>y</code> can be accessed by simply typing the object name:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x</code></pre></div>
+<pre><code>## [1] 5</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y</code></pre></div>
+<pre><code>## [1] 3</code></pre>
+<p>A list of all objects loaded in the workspace can be retrieved by typing:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ls</span>()</code></pre></div>
+<pre><code>## [1] &quot;x&quot; &quot;y&quot;</code></pre>
+<p>There are several classes or types of objects in R which have distinct properties. By comparison, the Stata <a href="http://www.saldru.uct.ac.za/courses/">course</a> introduced tabular datasets with variables and observations. There are also macros and scalars in Stata.</p>
+<p>The R equivalent of a Stata dataset is called a <code>data frame</code>. This is the data structure we are going to be working with most of the time. A <strong>factor</strong> is another important data structure in R especially when working with survey data. Basically a factor is equivalent to a categorical variable (a variable with value labels) in Stata. Other common object classes include: vectors, matrices, lists, etc. Describing R objects and their properties (data types and structures) is well beyond the purpose of this guide and users interested should consult the online documentation for further explanations.</p>
+<div id="removing-objects-from-the-r-environment---rm-function" class="section level3">
+<h3><span class="header-section-number">2.5.1</span> Removing objects from the R environment - rm() function</h3>
+<p>All R objects are stored in the memory of the computer, limiting the available space for calculation to the size of the <strong>RAM</strong> on your machine. To do more we need to learn how to manipulate the workspace and R makes organizing the workspace easy. The object <code>x</code> can be removed by typing:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rm</span>(x)  <span class="co"># remove object x</span></code></pre></div>
+<p>Check:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ls</span>()</code></pre></div>
+<pre><code>## [1] &quot;y&quot;</code></pre>
+<p>We can see that we now only have <code>y</code> in the workspace.</p>
+<p>To remove everything in in the workspace, you type:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rm</span>(<span class="dt">list=</span><span class="kw">ls</span>()) <span class="co">#or rm(object1,object2) to remove specific objects, object1 and object2</span></code></pre></div>
+<p>Check:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ls</span>()</code></pre></div>
+<pre><code>## character(0)</code></pre>
+</div>
+</div>
+<div id="saving-in-r" class="section level2">
+<h2><span class="header-section-number">2.6</span> Saving in R</h2>
+<p>By default, R keeps track of all the commands you use in a session.You can browse the history from the command line by pressing the up-arrow and down-arrow keys. When you press the up-arrow key, you get the commands you typed earlier at the command line.</p>
+<p>You can as well type the following commands to retrieve or save the history: (taken from <a href="https://www.statmethods.net/interface/workspace.html">statmethods</a> website):</p>
+<p><code>history()</code> - work with previous commands and display last 25 commands</p>
+<p><code>savehistory(file=&quot;myfile&quot;)</code> - save your command history, default is “.Rhistory”</p>
+<p><code>loadhistory(file=&quot;myfile&quot;)</code> - recall your command history, default is “.Rhistory”</p>
+<p>Objects in the current workspace can also be saved and loaded using the following commands:</p>
+<p><code>save.image()</code> - save the workspace to the file .RData in the current working directory</p>
+<p><code>save(objectlist,file=&quot;myfile.RData&quot;)</code> - save specific objects to a file, if you don’t specify the path, the current working directory is assumed</p>
+<p><code>load(&quot;myfile.RData&quot;)</code> - load a workspace into the current session if you don’t specify the path, the current working directory is assumed</p>
+<p>You can quit the current workspace by simply typing:</p>
+<p><code>q()</code> - to quit R. You will be prompted to save the workspace. The are also options to tell R to/not to save, check help results for <code>?q()</code></p>
+</div>
+<div id="importing-nids-data-into-r" class="section level2">
+<h2><span class="header-section-number">2.7</span> Importing NIDS data into R</h2>
+<p>In this document, we use a <a href="http://www.nids.uct.ac.za/">National Income Dynamics Study (NIDS)</a> training dataset used in the corresponding Stata <a href="http://www.saldru.uct.ac.za/courses/">course</a>. Therefore it is important to note that this is <strong>NOT</strong> the NIDS dataset that can be used to do serious analysis. If you need proper NIDS data, you need to apply for the data on the <a href="https://datafirst.uct.ac.za/">DataFirst</a> website.</p>
+<p><a href="https://datafirst.uct.ac.za/">DataFirst</a> provides microdata mainly in SAS, SPSS and Stata formats. It is possible to import either of these formats into R. For purposes of this course, we will import the Stata files with extension “.dta” and it is not difficult to import the other formats.</p>
+<p>In order to import the data file, we need to employ the services of the <code>foreign</code> package <span class="citation">(R Core Team <a href="#ref-R-foreign">2017</a>)</span>. The foreign package has functions to import, for example, Stata (<code>read.dta()</code>), SPSS (<code>read.spss()</code>) and other formats.</p>
+<p>It is important to note that the <code>foreign</code> package can only read Stata files up to version 12. However, <code>haven</code> <span class="citation">(Wickham and Miller <a href="#ref-R-haven">2018</a>)</span>, a recently new package provides an alternative way to import Stata (up to version 14), SAS and SPSS data files into R.</p>
+<p>Before we call functions from the <code>foreign</code> package <span class="citation">(R Core Team <a href="#ref-R-foreign">2017</a>)</span>, we first need to load the package.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#install.packages(&quot;foreign&quot;) # to install if not installed</span>
+<span class="kw">library</span>(foreign)</code></pre></div>
+<p>The data is in a subfolder of the current working directory called “data”.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids&lt;-<span class="kw">read.dta</span>(<span class="st">&quot;./data/nids.dta&quot;</span>, <span class="dt">convert.factors=</span><span class="ot">FALSE</span>)</code></pre></div>
+<p>You can check arguments of the <code>read.dta()</code> function by typing <code>?read.dta</code>. Note that I have instructed R not to use Stata value labels to create factors. The reason for doing this and for this specific dataset is that factors in R have underlying values which are natural numbers (1,2,3,…). NIDS used negative numbers for different missing types, e.g., -9 (Don’t Know), -8 (Refused) and -3 (Missing). Setting <code>convert.factors=TRUE</code> or the default will not necessarily lead to losing data but the aforementioned value labels will be forced to be 1 (Don’t Know), 2 (Refused) and 3 (Missing), i.e. natural numbers starting from the smallest. A factor is a very special and sometimes frustrating data type in R. While factors in R are comparable to categorical variables in Stata, the two programmes handle them differently. Factors in R look (and often behave) like character vectors but they are actually integers under the hood, and you need to be careful when treating them like strings or when converting to numeric.</p>
+<p>The NIDS dataset is loaded in the workspace as a <code>nids</code> data frame, i.e. we have assigned (<code>nids&lt;-</code>) the imported object to <code>nids</code> but you can give it any other name. Lets explore the data to get a better understanding.</p>
+</div>
+<div id="exploring-the-data" class="section level2">
+<h2><span class="header-section-number">2.8</span> Exploring the data</h2>
+<p><strong><code>dim()</code></strong> - We can use the base R <code>dim()</code> function to get dimensions of tabular data by typing:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dim</span>(nids)</code></pre></div>
+<pre><code>## [1] 31170  2089</code></pre>
+<p>The dimensions are the number of rows and number of columns respectively. One can see that there are 31170 observations (rows) and 2089 variables (columns) in the dataset.</p>
+<div id="subsetting-data---part-1" class="section level3">
+<h3><span class="header-section-number">2.8.1</span> Subsetting data - part 1</h3>
+<p>Here we introduce the concept of subsetting data in R. To subset is to select specific elements of a data set. Since we have too many variables and we do not know anything about them yet, I will start by introducing the square bracket or matrix index notation.</p>
+<p>We have a <code>nids</code> data frame with rows (observations) and columns (variables). Therefore, elements of nids are in the form:</p>
+<p><code>nids[rows,columns]</code></p>
+<p>if you want to think of this in matrix notation. The comma is crucial here since the dataset is organized by rows and columns.</p>
+<p>Each row and column can be identified by its number between the square brackets. For example, if we type:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids[<span class="dv">2</span>,<span class="dv">7</span>]</code></pre></div>
+<pre><code>## [1] 1</code></pre>
+<p>we will get the value of the second observation of the 7th column in the data.</p>
+<p>We can as well type:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>]</code></pre></div>
+<pre><code>##      hhqi   hhid    pid w1_r_b1 w1_r_phase w1_r_b1_1 w1_r_b3 w1_r_b4
+## 1  201020 103034 301011       1          1         1       1       2
+## 2  201015 103037 301012       1          1         1       1       2
+## 3  201015 103037 301013       3          1         1       4       1
+## 4  201015 103037 301014       2          1         1       8       2
+## 5  201019 103050 301015       2          1         1       3       2
+## 6  201018 103046 301016       6          1         1       4       1
+## 7  201018 103046 301017       2          1         1       1       1
+## 8  201022 103049 301018       1          1         1       1       2
+## 9  201022 103049 301019       2          1         1       4       2
+## 10 201022 103049 301020       3          1         1       8       1</code></pre>
+<p>which returns the first 10 observations <code>1:10</code> and the first 8 columns <code>1:8</code>. The <code>:</code> is an integer sequence operator, i.e. for example, <code>1:3</code> returns integers 1,2,3.</p>
+<p>It is not always the case that you want to select everything in the range of certain integer, row or columns, and therefore we use the <code>c()</code> function to specifify the rows or columns that we need. Here, <code>c()</code> creates a vector based on the numbers you input. For example <code>c(1,2,3)</code> is equivalent to <code>1:3</code> as decribed above. However, <code>c()</code> allows to input non-sequential integers.</p>
+<p>For example:</p>
+<p><code>nids[c(1:5,8),]</code> - to select rows 1 to 5 and 8</p>
+<p><code>nids[,c(1,2,3,7,8)]</code> - to select columns 1,2,3,7 and 8</p>
+<p>To do the above in one line:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids[<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,<span class="dv">8</span>),<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">7</span>,<span class="dv">8</span>)]</code></pre></div>
+<pre><code>##     hhqi   hhid    pid w1_r_b3 w1_r_b4
+## 1 201020 103034 301011       1       2
+## 2 201015 103037 301012       1       2
+## 3 201015 103037 301013       4       1
+## 4 201015 103037 301014       8       2
+## 5 201019 103050 301015       3       2
+## 8 201022 103049 301018       1       2</code></pre>
+<p>Given that our dataset has too many variables to print to screen (2089 variables) and that we are now able to subset specific elements of our dataset, we introduce other functions.</p>
+<p><strong>names()</strong></p>
+<p><code>names</code> returns the names of the variables in the selected data frame. For example, We can see <code>names</code> of the first eight variables (columns) by typing:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(nids[,<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>])</code></pre></div>
+<pre><code>## [1] &quot;hhqi&quot;       &quot;hhid&quot;       &quot;pid&quot;        &quot;w1_r_b1&quot;    &quot;w1_r_phase&quot;
+## [6] &quot;w1_r_b1_1&quot;  &quot;w1_r_b3&quot;    &quot;w1_r_b4&quot;</code></pre>
+<p><strong>head(), tail()</strong></p>
+<p>The R functions <code>head()</code> and <code>tail()</code> return the first 6 and last 6 parts of a vector, matrix, table and data frame. For our dataset:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(nids[,<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>])</code></pre></div>
+<pre><code>##     hhqi   hhid    pid w1_r_b1 w1_r_phase w1_r_b1_1 w1_r_b3 w1_r_b4
+## 1 201020 103034 301011       1          1         1       1       2
+## 2 201015 103037 301012       1          1         1       1       2
+## 3 201015 103037 301013       3          1         1       4       1
+## 4 201015 103037 301014       2          1         1       8       2
+## 5 201019 103050 301015       2          1         1       3       2
+## 6 201018 103046 301016       6          1         1       4       1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tail</span>(nids[,<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>])</code></pre></div>
+<pre><code>##         hhqi   hhid pid w1_r_b1 w1_r_phase w1_r_b1_1 w1_r_b3 w1_r_b4
+## 31165 209107 105648  NA       4          1         2      13       1
+## 31166 207825 103699  NA       2          1         2       4       1
+## 31167 201494 102647  NA       1          1         2       2       1
+## 31168 201530 101684  NA       4          1         2      12       2
+## 31169 202052 111168  NA       1          1         2       1       1
+## 31170 207775 104193  NA       7          1         2       4       2</code></pre>
+<p><strong>str()</strong> - compactly display the internal structure of an R object. Perhaps the most useful diagnostic function in R. <code>str</code> is short for structure and you can use it on any object. The structure of the first 8 variables are as follows:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(nids[,<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>])</code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    31170 obs. of  8 variables:
+##  $ hhqi      : int  201020 201015 201015 201015 201019 201018 201018 201022 201022 201022 ...
+##  $ hhid      : int  103034 103037 103037 103037 103050 103046 103046 103049 103049 103049 ...
+##  $ pid       : int  301011 301012 301013 301014 301015 301016 301017 301018 301019 301020 ...
+##  $ w1_r_b1   : int  1 1 3 2 2 6 2 1 2 3 ...
+##  $ w1_r_phase: int  1 1 1 1 1 1 1 1 1 1 ...
+##  $ w1_r_b1_1 : int  1 1 1 1 1 1 1 1 1 1 ...
+##  $ w1_r_b3   : int  1 1 4 8 3 4 1 1 4 8 ...
+##  $ w1_r_b4   : int  2 2 1 2 2 1 1 2 2 1 ...</code></pre>
+<p>We see that the subsetted dataset is a data frame with <code>31170</code> observations, <code>8</code> variables (as expected), their names, all of integer variable type (<code>int</code>) and the first 10 observations.</p>
+</div>
+<div id="data-documentation---value-and-variable-labels" class="section level3">
+<h3><span class="header-section-number">2.8.2</span> Data documentation - value and variable labels</h3>
+<p>So far we have managed to import the data and view subset of its elements. However, we do not know what each of the variable names are or what the numbers represent. This is where we need the documentation about the data or a codebook with a description of the variable names, variable description and value labels, e.t.c</p>
+<p>You can find some of this information in the questionnaires provided. We have also included a codebook with a list of variable names and their description. The codebook was prepared using an R package called <code>memisc</code> from the imported stata file. The Stata course made it easy by using the Stata <code>lookfor</code> function, but for this guide, you need to search in the documents (questionnaires and codebook) for more information.</p>
+<p><strong>Note:</strong> NIDS data from the <a href="https://datafirst.uct.ac.za/">DataFirst website</a> has consistent standard names that are slightly different from the ones in this training dataset.</p>
+</div>
+<div id="operators-in-r" class="section level3">
+<h3><span class="header-section-number">2.8.3</span> Operators in R</h3>
+<p>As we use these commands, we will often want to use qualifiers and operators. By using these options, we can restrict the specified R command to a specific sub-population.</p>
+<p>Qualifiers and operators add more detail to the data exploration commands that we will be using. For instance, what if we wanted to explore information specific to a particular group or person only? This is where the qualifier and operators are used. Using qualifiers and operators allows us to apply R commands to specific observations in the data. To make things a bit more clear, here are some examples:</p>
+<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:unnamed-chunk-19">Table 2.1: </span>Operators
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Operator
+</th>
+<th style="text-align:left;">
+Description
+</th>
+</tr>
+</thead>
+<tbody>
+<tr grouplength="5">
+<td colspan="2" style="border-bottom: 1px solid;">
+<strong>Arithmetic Operators</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
++
+</td>
+<td style="text-align:left;">
+addition
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+-
+</td>
+<td style="text-align:left;">
+subtraction
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+*
+</td>
+<td style="text-align:left;">
+multiplication
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+/
+</td>
+<td style="text-align:left;">
+division
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+^ or **
+</td>
+<td style="text-align:left;">
+exponentiation
+</td>
+</tr>
+<tr grouplength="9">
+<td colspan="2" style="border-bottom: 1px solid;">
+<strong>Logical Operators</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+&lt;
+</td>
+<td style="text-align:left;">
+less than
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+&lt;=
+</td>
+<td style="text-align:left;">
+less than or equal to
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+&gt;
+</td>
+<td style="text-align:left;">
+greater than
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+&gt;=
+</td>
+<td style="text-align:left;">
+greater than or equal to
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+==
+</td>
+<td style="text-align:left;">
+exactly equal to
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+!=
+</td>
+<td style="text-align:left;">
+not equal to
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+!x
+</td>
+<td style="text-align:left;">
+not x
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+x | y
+</td>
+<td style="text-align:left;">
+x or y
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+x &amp; y
+</td>
+<td style="text-align:left;">
+x and y
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="subsetting-data---part-2" class="section level3">
+<h3><span class="header-section-number">2.8.4</span> Subsetting data - part 2</h3>
+<p>Here we introduce another subset notation, the <code>subset</code> function. The basic structure of subset is like this:</p>
+<p><code>subset(x, condition, select=c(var1, var2))</code></p>
+<p>where x is the original dataset you want to subset, condition is a condition on your rows, and select is the columns you want to keep.</p>
+<p>For example, if we want to examine the age (<code>w1_r_best_age_yrs</code>), race (<code>w1_best_race</code>) and highest educational qualification achieved (<code>w1_r_b7</code>) by all those aged 90 and above, we type:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(<span class="kw">subset</span>(nids, 
+            <span class="dt">subset =</span> w1_r_best_age_yrs<span class="op">&gt;</span><span class="dv">90</span>, 
+            <span class="dt">select =</span> <span class="kw">c</span>(w1_r_best_age_yrs, w1_best_race, w1_r_b7)))</code></pre></div>
+<pre><code>##      w1_r_best_age_yrs w1_best_race w1_r_b7
+## 575                101            1      25
+## 925                 94            1      25
+## 1293                92            1      25
+## 1844                95            1      25
+## 1887                99            1      25
+## 1905                93            1      25</code></pre>
+<p>Where:</p>
+<p><code>x</code> is <code>nids</code>;</p>
+<p><code>condition</code> or <code>subset</code> is <code>w1_r_best_age_yrs&gt;90</code> and</p>
+<p>variable <code>select</code>ion is <code>c(w1_r_best_age_yrs, w1_best_race, w1_r_b7)</code></p>
+</div>
+</div>
+<div id="tidyverse" class="section level2">
+<h2><span class="header-section-number">2.9</span> Tidyverse</h2>
+<div id="brief-introduction-to-tidyverse" class="section level3">
+<h3><span class="header-section-number">2.9.1</span> Brief introduction to tidyverse</h3>
+<p>So far we have introduced the <code>foreign</code> package to import data and performing some basic data exploration using some base R functions. There are other base R functions that can perform a number of other operations. However, as mentioned in the introduction, the power of R is also derived from packages that make some of the processes easier to follow and efficient.</p>
+<p>Here, we introduce <code>tidyverse</code> <span class="citation">(Wickham <a href="#ref-R-tidyverse">2017</a><a href="#ref-R-tidyverse">b</a>)</span>, a collection of modern R packages that share common philosophies, embed best practices, and are designed to work together. The <a href="https://www.tidyverse.org/">tidyverse</a> is the collective name given to a suite of R packages designed mostly by Hadley Wickham. All tidyverse packages share an underlying design philosophy, grammar, and data structures. At the time of writing this document, members of the <code>tidyverse</code> (or individual packages) include: <code>broom</code>, <code>dplyr</code>, <code>forcats</code>, <code>ggplot2</code>, <code>haven</code>, <code>httr</code>, <code>hms</code>, <code>jsonlite</code>, <code>lubridate</code>, <code>magrittr</code>, <code>modelr</code>, <code>purrr</code>, <code>readr</code>, <code>readxl</code>, <code>stringr</code>, <code>tibble</code>, <code>rvest</code>, <code>tidyr</code>, <code>xml2</code>.</p>
+</div>
+<div id="core-tidyverse-packages" class="section level3">
+<h3><span class="header-section-number">2.9.2</span> Core tidyverse packages</h3>
+<p>The core tidyverse packages and their main functions are:</p>
+<ul>
+<li><p><code>ggplot2</code> - for data visualisation <span class="citation">(Wickham, Chang, et al. <a href="#ref-R-ggplot2">2018</a>)</span>.</p></li>
+<li><p><code>dplyr</code> - for data manipulation - the data wrangling workhorse <span class="citation">(Wickham, François, et al. <a href="#ref-R-dplyr">2018</a>)</span>.</p></li>
+<li><p><code>tidyr</code> - for data tidying <span class="citation">(Wickham and Henry <a href="#ref-R-tidyr">2018</a>)</span>.</p></li>
+<li><p><code>readr</code> - for data import <span class="citation">(Wickham, Hester, and Francois <a href="#ref-R-readr">2017</a>)</span>.</p></li>
+<li><p><code>purrr</code> - for functional programming <span class="citation">(Henry and Wickham <a href="#ref-R-purrr">2018</a>)</span>.</p></li>
+<li><p><code>tibble</code> - for tibbles, a modern reimagining of data frames <span class="citation">(Müller and Wickham <a href="#ref-R-tibble">2018</a>)</span>.</p></li>
+</ul>
+<p>You can install <code>tidyverse</code> packages by typing:</p>
+</div>
+<div id="install-and-load-tidyverse-packages" class="section level3">
+<h3><span class="header-section-number">2.9.3</span> Install and load tidyverse packages</h3>
+<p>To install <code>tidyverse packages</code>, we type:</p>
+<p><code>install.packages(&quot;tidyverse&quot;)</code></p>
+<p>and to load the packages:</p>
+<p><code>library(&quot;tidyverse&quot;)</code></p>
+</div>
+<div id="dplyr-verbs" class="section level3">
+<h3><span class="header-section-number">2.9.4</span> dplyr verbs</h3>
+<p><code>dplyr</code> <span class="citation">(Wickham, François, et al. <a href="#ref-R-dplyr">2018</a>)</span> is one of the most important packages for data manipulation and it implements five fundamental verbs for data wrangling:</p>
+<p><code>filter()</code> – rows by their values</p>
+<p><code>arrange()</code> – reorder rows</p>
+<p><code>select()</code> – pick and/or exclude columns</p>
+<p><code>mutate()</code> – create new columns</p>
+<p><code>summarize()</code> – collapse rows with summaries</p>
+<p>And any of the above may be scoped over a group of rows with:</p>
+<p><code>group_by()</code> – define groups based on categorical variables</p>
+</div>
+<div id="using-dplyr-functions" class="section level3">
+<h3><span class="header-section-number">2.9.5</span> Using dplyr functions</h3>
+<p>Arguments:</p>
+<ul>
+<li><p>First argument is the data frame to work on</p></li>
+<li><p>Following arguments define what to do on which named columns in the data frame. Result is always another data frame:</p></li>
+</ul>
+</div>
+<div id="pipe-operator" class="section level3">
+<h3><span class="header-section-number">2.9.6</span> Pipe operator %&gt;%</h3>
+<p>Pipes takes the result of the left hand side (LHS) and pushes into the first argument of the right hand side (RHS):</p>
+<p><code>%&gt;%</code> is the pipe “operator”. It takes what is on the left hand side and puts it in the right hand side’s function.</p>
+</div>
+</div>
+<div id="more-data-exploration" class="section level2">
+<h2><span class="header-section-number">2.10</span> More data exploration</h2>
+<p>Here, we demonstrate how to perform some tasks using both base R and tidyverse functions. However, this guide will use more of the tidyverse functions as we explore further.</p>
+<p>The tidyverse packages are already installed and we load as follows:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)</code></pre></div>
+<pre><code>## -- Attaching packages --------</code></pre>
+<pre><code>## v ggplot2 3.0.0     v purrr   0.2.5
+## v tibble  1.4.2     v dplyr   0.7.6
+## v tidyr   0.8.1     v stringr 1.3.1
+## v readr   1.1.1     v forcats 0.3.0</code></pre>
+<pre><code>## -- Conflicts -----------------
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<p>For now you can ignore the warnings and messages.</p>
+<div id="example-1-subset-variables" class="section level3">
+<h3><span class="header-section-number">2.10.1</span> Example 1: Subset variables</h3>
+<p>Our first task is to view the first few elements for age (<code>w1_r_best_age_yrs</code>), race (<code>w1_best_race</code>) and highest educational qualification (<code>w1_r_b7</code>) for every respondent in the dataset. We are going to use the <code>head()</code> function on a subset of the variables mentioned.</p>
+<p><strong>Option 1 - matrix index</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(nids[,<span class="kw">c</span>(<span class="st">&#39;w1_r_best_age_yrs&#39;</span>, <span class="st">&#39;w1_best_race&#39;</span>, <span class="st">&#39;w1_r_b7&#39;</span>)])</code></pre></div>
+<pre><code>##   w1_r_best_age_yrs w1_best_race w1_r_b7
+## 1                -9            4      12
+## 2                66            4      10
+## 3                26            4       9
+## 4                78            4       7
+## 5                46            4      10
+## 6                -9            4      12</code></pre>
+<p><strong>Option 2 - subset</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(<span class="kw">subset</span>(nids, <span class="dt">select=</span><span class="kw">c</span>(w1_r_best_age_yrs, w1_best_race, w1_r_b7)))</code></pre></div>
+<pre><code>##   w1_r_best_age_yrs w1_best_race w1_r_b7
+## 1                -9            4      12
+## 2                66            4      10
+## 3                26            4       9
+## 4                78            4       7
+## 5                46            4      10
+## 6                -9            4      12</code></pre>
+<p><strong>Option 3 - dplyr</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>(w1_r_best_age_yrs, w1_best_race, w1_r_b7) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># pick columns</span>
+<span class="st">  </span><span class="kw">head</span>()</code></pre></div>
+<pre><code>##   w1_r_best_age_yrs w1_best_race w1_r_b7
+## 1                -9            4      12
+## 2                66            4      10
+## 3                26            4       9
+## 4                78            4       7
+## 5                46            4      10
+## 6                -9            4      12</code></pre>
+<p>The <code>dplyr</code> option takes the object <code>nids</code> then (<code>%&gt;%</code>) select the variables then (<code>%&gt;%</code>) list the first few observations</p>
+</div>
+<div id="example-2-subset-observations" class="section level3">
+<h3><span class="header-section-number">2.10.2</span> Example 2: Subset observations</h3>
+<p>Lets view contents of first few observations where race (<code>w1_best_race</code>) equals 3; the number 3 in this case refers to Indians, thus only information for Indian respondents will be displayed.</p>
+<p>For this subset, we will suppress the command since it will print all variables to screen and fill several pages.</p>
+<p><strong>Option 1 - matrix index</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#head(nids[nids$w1_best_race==3,])</span></code></pre></div>
+<p>The <code>$</code> sign allows you to extract elements of the data frame by name, i.e., <code>dataframe_name$column_name</code>.</p>
+<p><strong>Option 2 - subset</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#head(subset (nids, subset=w1_best_race == 3))</span></code></pre></div>
+<p><strong>Option 3 - dplyr</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#nids %&gt;%</span>
+<span class="co">#  filter(w1_best_race == 3) %&gt;% # filter rows by values</span>
+<span class="co">#  head()</span></code></pre></div>
+</div>
+<div id="example-3-subset-both-observations-and-variables" class="section level3">
+<h3><span class="header-section-number">2.10.3</span> Example 3: Subset both observations and variables</h3>
+<p>In this example, we want to print all the observations for the race variable where age of the individual is greater than 90.</p>
+<p><strong>Option 1 - matrix index</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids[nids<span class="op">$</span>w1_r_best_age_yrs <span class="op">&gt;</span><span class="st"> </span><span class="dv">90</span>,<span class="kw">c</span>(<span class="st">&quot;w1_best_race&quot;</span>)]</code></pre></div>
+<pre><code>##  [1]  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1
+## [24]  1  2  2  1  1  1  1  1  1  1  1  1  2  1  2  1  1  1  3  4  2  2 NA
+## [47] NA</code></pre>
+<p><strong>Option 2 - subset</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">subset</span>(nids, <span class="dt">subset=</span>w1_r_best_age_yrs <span class="op">&gt;</span><span class="st"> </span><span class="dv">90</span>,<span class="dt">select=</span><span class="kw">c</span>(w1_best_race))</code></pre></div>
+<pre><code>##       w1_best_race
+## 575              1
+## 925              1
+## 1293             1
+## 1844             1
+## 1887             1
+## 1905             1
+## 3031             1
+## 3300             1
+## 3332             1
+## 3430             1
+## 4362             1
+## 4954             1
+## 6625             1
+## 6627             1
+## 7261             1
+## 7734             1
+## 7945             1
+## 9203             1
+## 9513             1
+## 11194            1
+## 11415            1
+## 11593            1
+## 12309            1
+## 12374            1
+## 12673            2
+## 12726            2
+## 12749            1
+## 12930            1
+## 12972            1
+## 13849            1
+## 13890            1
+## 14469            1
+## 14625            1
+## 26620            1
+## 26768            1
+## 26907            2
+## 27285            1
+## 27394            2
+## 27404            1
+## 27587            1
+## 27645            1
+## 27792            3
+## 27799            4
+## 28117            2
+## 28195            2
+## 29246           NA
+## 30220           NA</code></pre>
+<p><strong>Option 3 - dplyr</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(w1_r_best_age_yrs <span class="op">&gt;</span><span class="st"> </span><span class="dv">90</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(w1_best_race)</code></pre></div>
+<pre><code>##    w1_best_race
+## 1             1
+## 2             1
+## 3             1
+## 4             1
+## 5             1
+## 6             1
+## 7             1
+## 8             1
+## 9             1
+## 10            1
+## 11            1
+## 12            1
+## 13            1
+## 14            1
+## 15            1
+## 16            1
+## 17            1
+## 18            1
+## 19            1
+## 20            1
+## 21            1
+## 22            1
+## 23            1
+## 24            1
+## 25            2
+## 26            2
+## 27            1
+## 28            1
+## 29            1
+## 30            1
+## 31            1
+## 32            1
+## 33            1
+## 34            1
+## 35            1
+## 36            2
+## 37            1
+## 38            2
+## 39            1
+## 40            1
+## 41            1
+## 42            3
+## 43            4
+## 44            2
+## 45            2
+## 46           NA
+## 47           NA</code></pre>
+<p>When you try the above commands, you will note that two of the observations for race are recorded as a missing value, <code>NA</code>. If you wanted to list the race of all individuals older than 90 years old and did not want to list those for whom race was missing, you could type:</p>
+<p><strong>Option 1 - matrix index</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids[nids<span class="op">$</span>w1_r_best_age_yrs <span class="op">&gt;</span><span class="st"> </span><span class="dv">90</span> <span class="op">&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(nids<span class="op">$</span>w1_best_race),<span class="kw">c</span>(<span class="st">&quot;w1_best_race&quot;</span>)]</code></pre></div>
+<pre><code>##  [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 1 1 1 1 1 1 1 1 1
+## [36] 2 1 2 1 1 1 3 4 2 2</code></pre>
+<p><strong>Option 2 - subset</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">subset</span>(nids, <span class="dt">subset=</span>w1_r_best_age_yrs <span class="op">&gt;</span><span class="st"> </span><span class="dv">90</span> <span class="op">&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(w1_best_race),<span class="dt">select=</span><span class="kw">c</span>(w1_best_race))</code></pre></div>
+<pre><code>##       w1_best_race
+## 575              1
+## 925              1
+## 1293             1
+## 1844             1
+## 1887             1
+## 1905             1
+## 3031             1
+## 3300             1
+## 3332             1
+## 3430             1
+## 4362             1
+## 4954             1
+## 6625             1
+## 6627             1
+## 7261             1
+## 7734             1
+## 7945             1
+## 9203             1
+## 9513             1
+## 11194            1
+## 11415            1
+## 11593            1
+## 12309            1
+## 12374            1
+## 12673            2
+## 12726            2
+## 12749            1
+## 12930            1
+## 12972            1
+## 13849            1
+## 13890            1
+## 14469            1
+## 14625            1
+## 26620            1
+## 26768            1
+## 26907            2
+## 27285            1
+## 27394            2
+## 27404            1
+## 27587            1
+## 27645            1
+## 27792            3
+## 27799            4
+## 28117            2
+## 28195            2</code></pre>
+<p><strong>Option 3 - dplyr</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(w1_r_best_age_yrs <span class="op">&gt;</span><span class="st"> </span><span class="dv">90</span> <span class="op">&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(w1_best_race)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(w1_best_race) </code></pre></div>
+<pre><code>##    w1_best_race
+## 1             1
+## 2             1
+## 3             1
+## 4             1
+## 5             1
+## 6             1
+## 7             1
+## 8             1
+## 9             1
+## 10            1
+## 11            1
+## 12            1
+## 13            1
+## 14            1
+## 15            1
+## 16            1
+## 17            1
+## 18            1
+## 19            1
+## 20            1
+## 21            1
+## 22            1
+## 23            1
+## 24            1
+## 25            2
+## 26            2
+## 27            1
+## 28            1
+## 29            1
+## 30            1
+## 31            1
+## 32            1
+## 33            1
+## 34            1
+## 35            1
+## 36            2
+## 37            1
+## 38            2
+## 39            1
+## 40            1
+## 41            1
+## 42            3
+## 43            4
+## 44            2
+## 45            2</code></pre>
+<p>In the above, <code>is.na(x)</code> returns a logical value that is <code>TRUE</code> if x is missing and FALSE otherwise. By the same reasoning, <code>!is.na(x)</code> returns a logical value that is <code>TRUE</code> if <code>x</code> is not (<code>!</code>) missing and <code>FALSE</code> otherwise.</p>
+<p>With NIDS being the National Income Dynamics Survey, there are obviously a large amount of variables dealing with various forms of income. We will be dealing mainly with the variable for imputed total household monthly income, <code>w1_hhincome</code>. This variable is calculated by aggregating all forms of income from the adult questionnaire. How do you think you would get R to list the incomes and races of all those households that earn over R75 000 per month as well as listing their race and age?</p>
+<p>From now onwards, we will adopt <code>dplyr</code> functions to manipulate the data. The <code>dplyr</code> functions offers a more intuitive way of writing code by using the pipe <code>%&gt;%</code> operator. To extract the income information, we can type:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(w1_hhincome<span class="op">&gt;</span><span class="st"> </span><span class="dv">75000</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(w1_best_race, w1_r_best_age_yrs, w1_hhincome) </code></pre></div>
+<pre><code>##    w1_best_race w1_r_best_age_yrs w1_hhincome
+## 1             4                57    87082.52
+## 2             4                46    87082.52
+## 3             1                29    89981.23
+## 4             3                18    79500.00
+## 5             3                56    79500.00
+## 6             1                23   100070.00
+## 7             1                39    93800.00
+## 8             4                36   130000.00
+## 9             1                58    84200.00
+## 10            1                23    84200.00
+## 11            1                50    84200.00
+## 12            1                21    84200.00
+## 13            1                65    89981.23
+## 14            1                63    89981.23
+## 15            1                21   100070.00
+## 16            4                19   112000.00
+## 17            4                58   112000.00
+## 18            4                41   102033.33
+## 19            4                17   102033.33
+## 20            4                45   102033.33
+## 21            1                17    89981.23
+## 22            1                29    89981.23
+## 23            4                70   137239.22
+## 24            4                65   137239.22
+## 25            3                44    79500.00
+## 26            3                17    79500.00
+## 27            4                52    86500.00
+## 28            3                15    79500.00
+## 29            4                21    77397.88
+## 30            4                19    77397.88
+## 31            4                41    84066.66
+## 32            4                44    77397.88
+## 33            4                44    77397.88
+## 34            4                24    77397.88
+## 35            4                54   106605.23
+## 36            2                68   106605.23
+## 37            4                57   106605.23
+## 38            4                39    84066.66
+## 39            4                57    99000.00
+## 40            3                52    99000.00
+## 41            4                56    75908.09
+## 42            4                14   130000.00
+## 43            4                14   102033.33
+## 44            4                12   130000.00
+## 45            4                10    84066.66
+## 46            4                 4    84066.66
+## 47            4                 5    75908.09
+## 48            4                13    77397.88
+## 49            3                14    99000.00
+## 50            1                 0    89981.23
+## 51            1                 5    89981.23
+## 52            1                15    84200.00
+## 53            4                61    75908.09
+## 54            4                57    86500.00
+## 55            4                59   112000.00</code></pre>
+<p>We see that there are some 4 and 5 years olds listed in the output. Why do you think this is? It can often be useful to also include the household identifier variable to see which respondents come from the same household. Use the “up-arrow” key to include the household identifier variable, <code>hhid</code>, in the variables that are listed.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(w1_hhincome<span class="op">&gt;</span><span class="st"> </span><span class="dv">75000</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(hhid,w1_best_race, w1_r_best_age_yrs,w1_hhincome) </code></pre></div>
+<pre><code>##      hhid w1_best_race w1_r_best_age_yrs w1_hhincome
+## 1  107006            4                57    87082.52
+## 2  107006            4                46    87082.52
+## 3  113860            1                29    89981.23
+## 4  170283            3                18    79500.00
+## 5  170283            3                56    79500.00
+## 6  107242            1                23   100070.00
+## 7  112961            1                39    93800.00
+## 8  170611            4                36   130000.00
+## 9  105215            1                58    84200.00
+## 10 105215            1                23    84200.00
+## 11 105215            1                50    84200.00
+## 12 105215            1                21    84200.00
+## 13 113860            1                65    89981.23
+## 14 113860            1                63    89981.23
+## 15 107242            1                21   100070.00
+## 16 170533            4                19   112000.00
+## 17 170533            4                58   112000.00
+## 18 107067            4                41   102033.33
+## 19 107067            4                17   102033.33
+## 20 107067            4                45   102033.33
+## 21 113860            1                17    89981.23
+## 22 113860            1                29    89981.23
+## 23 170593            4                70   137239.22
+## 24 170593            4                65   137239.22
+## 25 170283            3                44    79500.00
+## 26 170283            3                17    79500.00
+## 27 175112            4                52    86500.00
+## 28 170283            3                15    79500.00
+## 29 109426            4                21    77397.88
+## 30 109426            4                19    77397.88
+## 31 171093            4                41    84066.66
+## 32 109426            4                44    77397.88
+## 33 109426            4                44    77397.88
+## 34 109426            4                24    77397.88
+## 35 109253            4                54   106605.23
+## 36 109253            2                68   106605.23
+## 37 109253            4                57   106605.23
+## 38 171093            4                39    84066.66
+## 39 101257            4                57    99000.00
+## 40 101257            3                52    99000.00
+## 41 109186            4                56    75908.09
+## 42 170611            4                14   130000.00
+## 43 107067            4                14   102033.33
+## 44 170611            4                12   130000.00
+## 45 171093            4                10    84066.66
+## 46 171093            4                 4    84066.66
+## 47 109186            4                 5    75908.09
+## 48 109426            4                13    77397.88
+## 49 101257            3                14    99000.00
+## 50 113860            1                 0    89981.23
+## 51 113860            1                 5    89981.23
+## 52 105215            1                15    84200.00
+## 53 109186            4                61    75908.09
+## 54 175112            4                57    86500.00
+## 55 170533            4                59   112000.00</code></pre>
+<p>You should find that members of the same household are listed directly above one another. This is because the data has been sorted according to the household identifier. We can choose to change the way in which the data is sorted using the <code>arrange</code> command. For instance, we may wish to have the data ordered according to income.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids&lt;-nids <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(w1_hhincome)</code></pre></div>
+<p>The above command assign <code>nids</code> to be <code>nids</code> sorted by <code>w1_hhincome</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(w1_hhincome<span class="op">&gt;</span><span class="st"> </span><span class="dv">75000</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(hhid,w1_best_race, w1_r_best_age_yrs,w1_hhincome)</code></pre></div>
+<pre><code>##      hhid w1_best_race w1_r_best_age_yrs w1_hhincome
+## 1  109186            4                56    75908.09
+## 2  109186            4                 5    75908.09
+## 3  109186            4                61    75908.09
+## 4  109426            4                21    77397.88
+## 5  109426            4                19    77397.88
+## 6  109426            4                44    77397.88
+## 7  109426            4                44    77397.88
+## 8  109426            4                24    77397.88
+## 9  109426            4                13    77397.88
+## 10 170283            3                18    79500.00
+## 11 170283            3                56    79500.00
+## 12 170283            3                44    79500.00
+## 13 170283            3                17    79500.00
+## 14 170283            3                15    79500.00
+## 15 171093            4                41    84066.66
+## 16 171093            4                39    84066.66
+## 17 171093            4                10    84066.66
+## 18 171093            4                 4    84066.66
+## 19 105215            1                58    84200.00
+## 20 105215            1                23    84200.00
+## 21 105215            1                50    84200.00
+## 22 105215            1                21    84200.00
+## 23 105215            1                15    84200.00
+## 24 175112            4                52    86500.00
+## 25 175112            4                57    86500.00
+## 26 107006            4                57    87082.52
+## 27 107006            4                46    87082.52
+## 28 113860            1                29    89981.23
+## 29 113860            1                65    89981.23
+## 30 113860            1                63    89981.23
+## 31 113860            1                17    89981.23
+## 32 113860            1                29    89981.23
+## 33 113860            1                 0    89981.23
+## 34 113860            1                 5    89981.23
+## 35 112961            1                39    93800.00
+## 36 101257            4                57    99000.00
+## 37 101257            3                52    99000.00
+## 38 101257            3                14    99000.00
+## 39 107242            1                23   100070.00
+## 40 107242            1                21   100070.00
+## 41 107067            4                41   102033.33
+## 42 107067            4                17   102033.33
+## 43 107067            4                45   102033.33
+## 44 107067            4                14   102033.33
+## 45 109253            4                54   106605.23
+## 46 109253            2                68   106605.23
+## 47 109253            4                57   106605.23
+## 48 170533            4                19   112000.00
+## 49 170533            4                58   112000.00
+## 50 170533            4                59   112000.00
+## 51 170611            4                36   130000.00
+## 52 170611            4                14   130000.00
+## 53 170611            4                12   130000.00
+## 54 170593            4                70   137239.22
+## 55 170593            4                65   137239.22</code></pre>
+<p>We can see that the level of income now increases as we scroll down the list. However, notice that members of the same household are still next to one another. This is because the income variable we are using is a household level variable and therefore has the same value for every member of the household.</p>
+<p>Let’s see if you have gotten the hang of this, try these quick exercises:</p>
+<p><strong>Exercises</strong></p>
+<p><strong>1. What is the hhid value for the 1000th observation?</strong></p>
+<p>Question 1 Answer</p>
+<p><strong>2. What are the ages of the respondents with an hhid equal to 42011?</strong></p>
+<p>Question 2 Answer</p>
+<p><strong>3. How many 50 year old Indian respondents are there in the data? (Be careful this one is a bit tougher than the others)</strong></p>
+<p>Question 3 Answer</p>
+</div>
+</div>
+<div id="managing-the-data" class="section level2">
+<h2><span class="header-section-number">2.11</span> Managing the data</h2>
+<p>In this section, we’ll learn some data management commands. In many circumstances, we will want to amend the original NIDS data set. We might want to add new variables that we create from the existing variables, we might want to drop variables that we will never use to free up memory, we might want to recode missing values, and/or we might want to create our own variable labels. While we will not deal with some of the trickier data management issues (such as merging data sets) in this section, you will learn enough to get started.</p>
+<p>We’ll start by creating a new variable. To create a new variable in R using <code>dplyr</code> functions you use the <code>mutate</code> command. Suppose we want to create a new variable called “temp” and we would like this variable to be equal to 1 for every observation in the dataset. To create this new variable you need to type:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids&lt;-nids <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">temp=</span><span class="dv">1</span>)</code></pre></div>
+<p>Go ahead and enter this command into R. You will notice that our new variable temp has been added to the end of the variable list in the R variables window. How do we know for sure what this new variable is equal to? Did the command work correctly?</p>
+<p>See if you can figure this out:</p>
+<p><strong>4. How can we check to make sure our new variable is equal to 1?</strong></p>
+<p>Question 4 Answer</p>
+<p><strong>5. How would you create a new variable called “temp2” that is equal to 50 for all of the observations in the data set?</strong></p>
+<p>Question 5 Answer</p>
+<p>Now you may be asking yourself, why would I want to create a variable like temp that has the same value for each observation in the data set. Variables like temp can actually be quite useful at times, although a majority of the variables you create will not have the same value for all observations. Let’s try another example. Suppose we want to create a variable for race that has only two values: white and non‐white. This can be useful if we are investigating the consequences of past discrimination in South Africa. The variable <code>w1_best_race</code> in the NIDS data set has four values: 1 (African), 2 (Coloured), 3 (Asian/Indian) and 4 (White).</p>
+<p>Our goal here is to have a variable <code>w1_best_race2</code> which is equal to 1 if the individual is white and equal to 2 if the individual is non‐white. Here we suggest to use the <code>ifelse</code> command within the <code>mutate</code> function. The <code>ifelse</code> command works as follows:</p>
+<p><code>ifelse(condition, value if condition is true, value if condition is false)</code></p>
+<p>In the case of <code>w1_best_race2</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids&lt;-nids <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">w1_best_race2=</span><span class="kw">ifelse</span>(w1_best_race<span class="op">==</span><span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">2</span>))</code></pre></div>
+<p>We can tabulate results for the new variable and see the breakdown:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(nids<span class="op">$</span>w1_best_race2)</code></pre></div>
+<pre><code>## 
+##     1     2 
+##  1432 26762</code></pre>
+<p>We can achieve the same results using base R functions.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids<span class="op">$</span>w1_best_race3&lt;-<span class="ot">NA</span> <span class="co"># NA for all values of w1_best_race3</span>
+nids<span class="op">$</span>w1_best_race3[nids<span class="op">$</span>w1_best_race<span class="op">==</span><span class="dv">4</span>]&lt;-<span class="dv">1</span> <span class="co"># w1_best_race3 is 0 for all cases where w1_best_race==4</span>
+nids<span class="op">$</span>w1_best_race3[nids<span class="op">$</span>w1_best_race<span class="op">&lt;</span><span class="dv">4</span> <span class="op">&amp;</span><span class="st"> </span>nids<span class="op">$</span>w1_best_race<span class="op">&gt;=</span><span class="dv">1</span>]&lt;-<span class="dv">2</span> <span class="co"># w1_best_race3 is 1 for all cases where w1_best_race!=4</span>
+<span class="kw">table</span>(nids<span class="op">$</span>w1_best_race3)</code></pre></div>
+<pre><code>## 
+##     1     2 
+##  1432 26762</code></pre>
+<p>The above example provides us with a good opportunity to introduce factor variables, the equivalent of Stata’s categorical variables. Here, we want to assign the new variable, <code>w1_best_race2</code>, the respective value labels. We achieve this using the <code>factor</code> function:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids&lt;-nids <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">w1_best_race2=</span><span class="kw">factor</span>(w1_best_race2, <span class="dt">levels=</span><span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;White&quot;</span>,<span class="st">&quot;Non-White&quot;</span>)))
+<span class="co">#nids$w1_best_race2&lt;-factor(nids$w1_best_race2, levels=c(1,2), labels=c(&quot;White&quot;,&quot;Non-White&quot;))</span></code></pre></div>
+<p>Tabulate labelled variable:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(nids<span class="op">$</span>w1_best_race2)</code></pre></div>
+<pre><code>## 
+##     White Non-White 
+##      1432     26762</code></pre>
+<p>You will now notice that at the end of the Variable view window that our new variable <code>w1_best_race2</code> is listed. Alright now it’s your turn. Try to answer the following questions:</p>
+<p><strong>6. How would you create a new variable called “head” that is equal to 1 if the individual is the resident head, and equal to 0 if the individual is not?</strong></p>
+<p>Question 6 Answer</p>
+<p><del><strong>7. How would you label this new variable with the following label ‐ “Resident head indicator”?</strong></del></p>
+<p>Question 7 Answer</p>
+<p>We can also generate variables using the mathematical operators. For example, if we wanted a variable for the total monthly household income from government we could add household monthly income from government grants (<code>w1_hhgovt</code>) and household monthly income from other government sources (<code>w1_hhother</code>) to create a new variable which we call <code>hhincome_govt</code>. Thus, we would type:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids&lt;-nids <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">hhincome_govt =</span> w1_hhgovt <span class="op">+</span><span class="st"> </span>w1_hhother)</code></pre></div>
+</div>
+<div id="worked-example-creating-a-bmi-variable" class="section level2">
+<h2><span class="header-section-number">2.12</span> Worked example: creating a bmi variable</h2>
+<p>In this worked example, our aim is to create a body mass index (BMI) variable. The Body Mass Index (BMI) is a measure of the nutritional status of adults and is calculated by dividing weight in kilograms by the square of height in metres. As such, we first need to find and explore the height and weight variables in the dataset. Let’s start with height.</p>
+<p>You will see in the metadata document that there are 3 height variables for children and 3 height variables for adults. You should turn to the metadata and questionnaires to investigate why this is the case. One of the reasons for repeated measurement is to try to minimize the chance that heights are measured incorrectly. Ideally, we would collate the information contained in the three measures to obtain a variable containing the best estimate of every individual in the dataset. Here, we will instead use the first measure (<code>w1_a_n1_1</code>) as a crude estimate of the height of adults in the sample.</p>
+<p>Let’s have a look at this variable:</p>
+<p>First six observations</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>(w1_a_n1_<span class="dv">1</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">head</span>()</code></pre></div>
+<pre><code>##   w1_a_n1_1
+## 1     161.0
+## 2     156.2
+## 3     160.0
+## 4     176.2
+## 5     165.0
+## 6     158.2</code></pre>
+<p>Last six observations</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>(w1_a_n1_<span class="dv">1</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">tail</span>()</code></pre></div>
+<pre><code>##       w1_a_n1_1
+## 31165        NA
+## 31166     187.1
+## 31167        NA
+## 31168        NA
+## 31169      -8.0
+## 31170      -8.0</code></pre>
+<p>Did you notice that the heights are measured in centimeters? In order to calculate BMI, we will need heights in meters. Also, since BMI is a ratio of weight to height squared, we will not want to include the negative nonresponse height or weight values. Lastly, BMI is only valid for people over the age of 20 years of age. Let’s create a new height variable in a more useful form for our purposes:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids&lt;-nids <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">height =</span> <span class="kw">ifelse</span> (w1_a_n1_<span class="dv">1</span> <span class="op">&gt;=</span><span class="st"> </span><span class="dv">0</span> <span class="op">&amp;</span><span class="st"> </span>w1_a_best_age_yrs <span class="op">&gt;=</span><span class="st"> </span><span class="dv">20</span>, w1_a_n1_<span class="dv">1</span><span class="op">/</span><span class="dv">100</span>, <span class="ot">NA</span>))</code></pre></div>
+<p>What is the height of the tallest person in our sample? What is the mean height of the sample?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(nids<span class="op">$</span>height)</code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+##   0.453   1.553   1.610   1.614   1.680   2.074   19718</code></pre>
+<p>The <code>summary()</code> function is a generic function that recognizes objects belonging to different classes and treat them accordingly without returning an error message.</p>
+<p>We see that applying the <code>summary()</code> function to a numerical variable above computes basic descriptive statistics (mean, median, quartiles, maximum and minimum). R automatically works out which type of summary is best suited to a given object class. Typing <code>summary(nids)</code> will return summary information about each variable in the dataset.</p>
+<p>We can see that the range is [0.453, 2.074], which tells us that the shortest person in the sample has a reported height of less than half a metre, while the tallest person is 2.07 metres tall. The average height in the sample is 1.61 metres. We can get an idea of the distribution of heights in the sample by looking at the percentiles. Half the people in the sample are between 1.55 and 1.68 metres tall.</p>
+<p>Returning to the shortest person in the population, recall that we have restricted the height variable to only include individuals over the age of 20. This means that a person who is 0.453 metres tall is either exceptionally short or that there was an error made in measurement or data capturing. Let’s investigate people who have reported heights that are below ‘normal’.</p>
+<p>How many are there in the sample?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(height<span class="op">&lt;</span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co">#filter all height less than 1 meter</span>
+<span class="st">  </span><span class="kw">select</span>(w1_a_best_age_yrs, w1_a_b2, height) <span class="co">#pick to print data for these variables</span></code></pre></div>
+<pre><code>##    w1_a_best_age_yrs w1_a_b2 height
+## 1                 50       1  0.622
+## 2                 22       2  0.637
+## 3                 49       2  0.453
+## 4                 48       2  0.994
+## 5                 23       2  0.552
+## 6                 26       2  0.641
+## 7                 43       2  0.639
+## 8                 34       1  0.654
+## 9                 74       1  0.725
+## 10                50       1  0.704
+## 11                38       2  0.615
+## 12                57       2  0.610
+## 13                75       2  0.682
+## 14                36       2  0.624
+## 15                50       2  0.847
+## 16                34       2  0.710
+## 17                64       1  0.557
+## 18                41       2  0.542
+## 19                75       1  0.790
+## 20                40       1  0.610
+## 21                26       2  0.585
+## 22                22       2  0.966
+## 23                64       2  0.700
+## 24                49       1  0.668
+## 25                21       2  0.984
+## 26                79       2  0.527
+## 27                57       2  0.771
+## 28                30       2  0.642</code></pre>
+<p>We see there are 28 people who are shorter than one meter tall in the sample. We also list the gender (<code>w1_a_b2</code>) and age of these individuals to give us more information to potentially identify a pattern. There does not appear to be a relationship with age. However, we see that the majority of individuals under one metre are females.</p>
+<p><strong>8. Create a new variable called “weight” that has no negative values and is missing for individual younger than 20. Investigate the weight distribution in the population as we have just done for the height distribution.</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids&lt;-nids <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">weight =</span> <span class="kw">ifelse</span> (w1_a_n2_<span class="dv">1</span> <span class="op">&gt;=</span><span class="st"> </span><span class="dv">0</span> <span class="op">&amp;</span><span class="st"> </span>w1_a_best_age_yrs <span class="op">&gt;=</span><span class="st"> </span><span class="dv">20</span>, w1_a_n2_<span class="dv">1</span>, <span class="ot">NA</span>)) 
+
+<span class="kw">summary</span>(nids<span class="op">$</span>weight)</code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+##   19.20   57.20   66.80   69.59   79.60  150.00   19848</code></pre>
+<p><strong>Generating a variable for BMI</strong></p>
+<p>The heights and weights of people in the South African population are interesting in themselves, but in order to assess the health of an individual we need a measure of weight given height. For instance, we might want to say that someone who weighs 100 kg and is 1.6 metres tall is overweight, while someone who weighs 100 kg, but is 2 metres tall is not. The Body Mass Index (BMI) is a commonly used measure of the relationship between weight and height and allows us to talk about whether an individual is overweight, underweight or of a healthy weight.</p>
+<p>The BMI is calculated by dividing weight (kg) by height squared (<span class="math inline">\(m^2\)</span>) for people over the age of 20 (i.e. <span class="math inline">\(BMI = \frac{weight}{height^2}\)</span>)</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids&lt;-nids <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">bmi =</span> weight<span class="op">/</span>height<span class="op">^</span><span class="dv">2</span>)</code></pre></div>
+<p>Some points to note. Firstly, our <code>bmi</code> variable should have a missing value for individuals who are younger than 20 since both our <code>height</code> and <code>weight</code> variables are missing for these individuals. We will be ignoring them when we look at BMI in this course as calculating the BMI for individuals under the age of 20 involves a different formula.</p>
+<p>It is always good to get a sense of what your new variable looks like. Have we coded it correctly? Does it contain the information we want it to contain? Is the variable missing for those who should not have a value and valid for those who should get a value?</p>
+<p>Check that BMI is missing for people under age 20 and for those who have missing height for weight values.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(w1_a_best_age_yrs<span class="op">&lt;</span><span class="dv">20</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># filter children younger than 20 years</span>
+<span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(bmi)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># filter children whose BMI is not missing</span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n=</span><span class="kw">n</span>()) <span class="co"># count how many are they</span></code></pre></div>
+<pre><code>##   n
+## 1 0</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(<span class="kw">is.na</span>(height) <span class="op">|</span><span class="st"> </span><span class="kw">is.na</span>(weight)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co">#filter those with missing height and missing weight</span>
+<span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(bmi)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># filter not missing BMI</span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n=</span><span class="kw">n</span>()) <span class="co">#count</span></code></pre></div>
+<pre><code>##   n
+## 1 0</code></pre>
+<p>How many respondents have non-missing BMI values?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(bmi)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">count =</span> <span class="kw">n</span>())</code></pre></div>
+<pre><code>##   count
+## 1 11285</code></pre>
+<p>The World Health Organisation classifies a BMI under 18.5 as underweight, a BMI between 18.5 and 24.9 as normal, a BMI between 25 and 29.9 as overweight and a BMI of 30 or more as obese. In light of this, does our new variable appear to be reasonable?</p>
+<p>In the later chapters of this series we will investigate the determinants of BMI and in doing so address the following questions. What happens to your BMI as you get older? Do richer people have a higher or lower BMI than middle income or poor people? Is the average BMI different across racial groups? But for now, try to put what you have learnt in this chapter into practice by completing the following question. Then use the exercises to revise the new tools you have learnt.</p>
+<p><strong>9. See if you can create a variable called <code>age_bins</code> that is equal to 1 if the individual is between ages 20 and 29, 2 for ages 30 - 39, 3 for ages 40 - 49, 4 for ages 50 - 59, 5 for ages 60 - 69, 6 for ages 70 - 120. Ensure that your variable is missing for other values of the age variable.</strong></p>
+</div>
+<div id="question-answers" class="section level2">
+<h2><span class="header-section-number">2.13</span> Question answers</h2>
+<p>Question 1 answer</p>
+<p><strong>What is the hhid value for the 1000th observation?</strong></p>
+<p>Answer:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids[<span class="dv">1000</span>,<span class="kw">c</span>(<span class="st">&quot;hhid&quot;</span>)]</code></pre></div>
+<pre><code>## [1] 105886</code></pre>
+<p>The above command will display the value for the variable hhid for the 1000th observation in the data set. Now it is possible that you could get a different answer than above, it all depends on the order the observations have been saved in. If this is your first time using the NIDS data file then you should get the answer above.</p>
+<p>Question 2 answer</p>
+<p><strong>What are the ages of the respondents with an hhid equal to 101041?</strong></p>
+<p>Answer:</p>
+<p>8, 14, 15, 57, 59</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids[<span class="kw">which</span>(nids<span class="op">$</span>hhid<span class="op">==</span><span class="dv">101041</span>),<span class="kw">c</span>(<span class="st">&quot;w1_r_best_age_yrs&quot;</span>)]</code></pre></div>
+<pre><code>## [1] 57 15 59 14  8</code></pre>
+<p>The above command displays the value for the variable <code>w1_r_best_age_yrs</code> if the variable <code>hhid</code> is equal to 101041.</p>
+<p>Question 3 answer</p>
+<p><strong>How many 50 year old Indian respondents are there in the data?</strong></p>
+<p>Answer:</p>
+<p>Two</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">nrow</span>(nids[<span class="kw">which</span>(nids<span class="op">$</span>w1_best_race <span class="op">==</span><span class="st"> </span><span class="dv">3</span> <span class="op">&amp;</span><span class="st"> </span>nids<span class="op">$</span>w1_r_best_age_yrs<span class="op">==</span><span class="dv">50</span>),])</code></pre></div>
+<pre><code>## [1] 2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#To see the hhid</span>
+nids[<span class="kw">which</span>(nids<span class="op">$</span>w1_best_race <span class="op">==</span><span class="st"> </span><span class="dv">3</span> <span class="op">&amp;</span><span class="st"> </span>nids<span class="op">$</span>w1_r_best_age_yrs<span class="op">==</span><span class="dv">50</span>),<span class="kw">c</span>(<span class="st">&quot;hhid&quot;</span>)]</code></pre></div>
+<pre><code>## [1] 170064 101113</code></pre>
+<p>Question 4 answer</p>
+<p><strong>How can we check to make sure our new variable is equal to 1?</strong></p>
+<p>Answer:</p>
+<p>One way is to tabulate the new variable temp.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(nids<span class="op">$</span>temp)</code></pre></div>
+<pre><code>## 
+##     1 
+## 31170</code></pre>
+<p>Question 5 answer</p>
+<p><strong>How would you create a new variable called “temp2” that is equal to 50 for all of the observations in the data set?</strong></p>
+<p>Answer:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids&lt;-nids <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">temp2=</span><span class="dv">50</span>)
+
+<span class="co">#Or</span>
+
+nids<span class="op">$</span>temp2&lt;-<span class="dv">50</span></code></pre></div>
+<p>Question 6 answer</p>
+<p><strong>How would you create a new variable called “head” that is equal to 1 if the individual is the resident head, and equal to 0 if the individual is not?</strong></p>
+<p>Answer:</p>
+<p>The first step to creating the new variable head is to find a variable in the data set that will tell us who is and is not a resident head. To accomplish this, search for the variables and/or variable labels contain the key text “resident head” from the codebook.</p>
+<p>The variable, <code>w1_r_b3</code> (Household member’s relationship to Resident head), seems the most promising. To verify this we use the NIDS survey metadata pdf (page 56, contains the relevant question for variable <code>w1_r_b3</code> i.e. Wave 1, Full Roster Data, Question B3). It becomes clear after viewing the codelist relating to this question (Appendix A – Table 1 on page 120) that <code>w1_r_b3</code> is the variable we want. From this codelist we see that a resident head is given a value of 1, thus when the variable <code>w1_r_b3</code> is equal to 1, that individual is a resident head.</p>
+<p>With this knowledge, we are able to create the new variable.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids&lt;-<span class="st"> </span>nids<span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">head=</span><span class="kw">ifelse</span>(w1_r_b3 <span class="op">==</span><span class="st"> </span><span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>))
+<span class="co">#nids$head=ifelse(nids$w1_r_b3 == 1,1,0)</span></code></pre></div>
+<p>Here we used the <code>ifelse</code> command where if the condition <code>w1_r_b3 == 1</code> is met, the new variable is equal to 1 and zero for everyone else.</p>
+<p>Question 7 answer</p>
+<p><strong>How would you label this new variable with the following label “Resident head indicator”?</strong></p>
+<p>Answer:</p>
+<p>Not applicable</p>
+<p>Question 8 answer</p>
+<p>Answer:</p>
+<p><strong>Create a new variable called “weight” that has no negative values and is missing for individual younger than 20. Investigate the weight distribution in the population as we have just done for the height distribution.</strong></p>
+<p>The weight variable is <code>w1_a_n2_1</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids&lt;-nids <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">weight =</span> <span class="kw">ifelse</span> (w1_a_n2_<span class="dv">1</span> <span class="op">&gt;=</span><span class="st"> </span><span class="dv">0</span> <span class="op">&amp;</span><span class="st"> </span>w1_a_best_age_yrs <span class="op">&gt;=</span><span class="st"> </span><span class="dv">20</span>, w1_a_n2_<span class="dv">1</span>, <span class="ot">NA</span>)) 
+
+<span class="kw">summary</span>(nids<span class="op">$</span>weight)</code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+##   19.20   57.20   66.80   69.59   79.60  150.00   19848</code></pre>
+<p>Question 9 answer</p>
+<p><strong>Create a variable called age_bins that is equal to 1 if the individual is between ages 20 and 29, 2 for ages 30 – 39, 3 for ages 40 – 49, 4 for ages 50 – 59, 5 for ages 60 – 69, 6 for ages 70 120. Ensure that your variable is missing for other values of the age variable.</strong></p>
+<p>Answer:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids&lt;-nids <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">age_bins=</span><span class="kw">case_when</span>(
+    w1_a_best_age_yrs <span class="op">&gt;</span><span class="st"> </span><span class="dv">20</span> <span class="op">&amp;</span><span class="st"> </span>w1_a_best_age_yrs<span class="op">&lt;=</span><span class="dv">29</span> <span class="op">~</span><span class="st"> </span><span class="dv">1</span>,
+    w1_a_best_age_yrs <span class="op">&gt;</span><span class="st"> </span><span class="dv">29</span> <span class="op">&amp;</span><span class="st"> </span>w1_a_best_age_yrs<span class="op">&lt;=</span><span class="dv">39</span> <span class="op">~</span><span class="st"> </span><span class="dv">2</span>,
+    w1_a_best_age_yrs <span class="op">&gt;</span><span class="st"> </span><span class="dv">39</span> <span class="op">&amp;</span><span class="st"> </span>w1_a_best_age_yrs<span class="op">&lt;=</span><span class="dv">49</span> <span class="op">~</span><span class="st"> </span><span class="dv">3</span>,
+    w1_a_best_age_yrs <span class="op">&gt;</span><span class="st"> </span><span class="dv">49</span> <span class="op">&amp;</span><span class="st"> </span>w1_a_best_age_yrs<span class="op">&lt;=</span><span class="dv">59</span> <span class="op">~</span><span class="st"> </span><span class="dv">4</span>,
+    w1_a_best_age_yrs <span class="op">&gt;</span><span class="st"> </span><span class="dv">59</span> <span class="op">&amp;</span><span class="st"> </span>w1_a_best_age_yrs<span class="op">&lt;=</span><span class="dv">69</span> <span class="op">~</span><span class="st"> </span><span class="dv">5</span>,
+    w1_a_best_age_yrs <span class="op">&gt;</span><span class="st"> </span><span class="dv">69</span> <span class="op">&amp;</span><span class="st"> </span>w1_a_best_age_yrs<span class="op">&lt;=</span><span class="dv">120</span> <span class="op">~</span><span class="st"> </span><span class="dv">6</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">age_bins=</span><span class="kw">factor</span>(age_bins, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;20-29&quot;</span>,<span class="st">&quot;30-39&quot;</span>,<span class="st">&quot;40-49&quot;</span>,<span class="st">&quot;50-59&quot;</span>,<span class="st">&quot;60-69&quot;</span>,<span class="st">&quot;70-120&quot;</span>)))
+
+<span class="co">#OR</span>
+<span class="co">#nids$age_bins&lt;-factor(cut(nids$w1_a_best_age_yrs, c(20,29,39,49,59,69,120),labels = c(&quot;20-29&quot;,&quot;30-39&quot;,&quot;40-49&quot;,&quot;50-59&quot;,&quot;60-69&quot;,&quot;70-120&quot;)))</span>
+
+<span class="co">#OR</span>
+<span class="co">#nids$age_bins&lt;-NA</span>
+<span class="co"># nids$age_bins[nids$w1_a_best_age_yrs&gt;=20 &amp; nids$w1_a_best_age_yrs&lt;=29]&lt;-1</span>
+<span class="co"># nids$age_bins[nids$w1_a_best_age_yrs&gt;29 &amp; nids$w1_a_best_age_yrs&lt;=39]&lt;-2</span>
+<span class="co"># nids$age_bins[nids$w1_a_best_age_yrs&gt;39 &amp; nids$w1_a_best_age_yrs&lt;=49]&lt;-3</span>
+<span class="co"># nids$age_bins[nids$w1_a_best_age_yrs&gt;49 &amp; nids$w1_a_best_age_yrs&lt;=59]&lt;-4</span>
+<span class="co"># nids$age_bins[nids$w1_a_best_age_yrs&gt;59 &amp; nids$w1_a_best_age_yrs&lt;=69]&lt;-5</span>
+<span class="co"># nids$age_bins[nids$w1_a_best_age_yrs&gt;69 &amp; nids$w1_a_best_age_yrs&lt;=120]&lt;-6</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(age_bins)<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">count =</span> <span class="kw">n</span>())</code></pre></div>
+<pre><code>## # A tibble: 7 x 2
+##   age_bins count
+##   &lt;fct&gt;    &lt;int&gt;
+## 1 20-29     3525
+## 2 30-39     2921
+## 3 40-49     2553
+## 4 50-59     2018
+## 5 60-69     1299
+## 6 70-120     955
+## 7 &lt;NA&gt;     17899</code></pre>
+</div>
+<div id="exercises" class="section level2">
+<h2><span class="header-section-number">2.14</span> Exercises</h2>
+<p>Using R and the NIDS dataset, answer the following questions.</p>
+<p><strong>1. How many households are in the NIDS data file?</strong></p>
+<p>Exercise 1 Answer</p>
+<p><strong>2. What are some variables in the data set that are related to food?</strong></p>
+<p>Exercise 2 Answer</p>
+<p><strong>3. How old is the oldest person in the data set?</strong></p>
+<p>Exercise 3 Answer</p>
+<p><strong>4. How many 50 year old women are in the data set?</strong></p>
+<p>Exercise 4 Answer</p>
+<p><strong>5. How would you create a new variable that is equal to 1 for Africans and 0 for non‐Africans?</strong></p>
+<p>Exercise 5 Answer</p>
+<p><strong>6. How would you drop every variable from the data set except the new variable you just created?</strong></p>
+<p>Exercise 6 Answer</p>
+</div>
+<div id="exercise-answers" class="section level2">
+<h2><span class="header-section-number">2.15</span> Exercise answers</h2>
+<p>Exercise 1 answer</p>
+<p><strong>How many households are in the NIDs data file?</strong></p>
+<p>Answer: 7305</p>
+<p>The first step is to determine what variable uniquely identifies each household. From the labels in the codebook, it is clear that the variable <code>hhid</code> is the variable needed as it is the “household identifier”. We can confirm this by using the NIDS survey. One way to obtain the number of unique <code>hhid</code> values, is to use the commands <code>unique</code> and <code>length</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(<span class="kw">unique</span>(nids<span class="op">$</span>hhid))</code></pre></div>
+<pre><code>## [1] 7305</code></pre>
+<p>Exercise 3 answer</p>
+<p><strong>How old is the oldest person in the data set?</strong></p>
+<p>Answer:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">max</span>(nids<span class="op">$</span>w1_r_best_age_yrs, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>## [1] 105</code></pre>
+<p>Exercise 4 answer</p>
+<p><strong>How many 85 year old women are in the data set?</strong></p>
+<p>There are 10 women who are 85 years old in the data set. To obtain the answer to question 4, you could have used the following commands:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">nrow</span>(nids[<span class="kw">which</span>(nids<span class="op">$</span>w1_r_best_age_yrs <span class="op">==</span><span class="st"> </span><span class="dv">85</span> <span class="op">&amp;</span><span class="st"> </span>nids<span class="op">$</span>w1_r_b4 <span class="op">==</span><span class="st"> </span><span class="dv">2</span>),])</code></pre></div>
+<pre><code>## [1] 10</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#OR</span>
+
+nids <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(w1_r_best_age_yrs <span class="op">==</span><span class="st"> </span><span class="dv">85</span> <span class="op">&amp;</span><span class="st"> </span>w1_r_b4 <span class="op">==</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span>nrow</code></pre></div>
+<pre><code>## [1] 10</code></pre>
+<p>Exercise 5 answer</p>
+<p><strong>How would you create a new variable that is equal to 1 for Africans and 0 for non-Africans?</strong></p>
+<p>The first step in creating the new variable is to determine which value of the variable race identifies Africans. From the NIDS survey we know that the value 1 identifies an African respondent. With this knowledge, we are able to create the new variable.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids&lt;-nids <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">newvar=</span><span class="kw">ifelse</span>(w1_best_race<span class="op">==</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>))</code></pre></div>
+<p>Exercise 6 answer</p>
+<p><strong>How would you drop every variable from the data set except the new variable you just created?</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#nids&lt;-data.frame(nids$newvar)</span>
+
+<span class="co">#Or</span>
+
+<span class="co">#nids&lt;-nids %&gt;% </span>
+<span class="co">#  select(newvar)</span></code></pre></div>
+</div>
+<div id="session-information" class="section level2">
+<h2><span class="header-section-number">2.16</span> Session information</h2>
+<p>The output below shows what R packages and versions where used.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">sessionInfo</span>(), <span class="dt">locale =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<pre><code>## R version 3.5.1 (2018-07-02)
+## Platform: x86_64-w64-mingw32/x64 (64-bit)
+## Running under: Windows 7 x64 (build 7601) Service Pack 1
+## 
+## Matrix products: default
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] bindrcpp_0.2.2   forcats_0.3.0    stringr_1.3.1    dplyr_0.7.6     
+##  [5] purrr_0.2.5      readr_1.1.1      tidyr_0.8.1      tibble_1.4.2    
+##  [9] ggplot2_3.0.0    tidyverse_1.2.1  kableExtra_0.9.0 knitr_1.20      
+## [13] foreign_0.8-70  
+## 
+## loaded via a namespace (and not attached):
+##  [1] tidyselect_0.2.4  xfun_0.2          reshape2_1.4.3   
+##  [4] haven_1.1.2       lattice_0.20-35   colorspace_1.3-2 
+##  [7] htmltools_0.3.6   viridisLite_0.3.0 yaml_2.1.19      
+## [10] utf8_1.1.4        rlang_0.2.1       pillar_1.2.3     
+## [13] withr_2.1.2       glue_1.2.0        readxl_1.1.0     
+## [16] modelr_0.1.2      bindr_0.1.1       plyr_1.8.4       
+## [19] cellranger_1.1.0  munsell_0.5.0     gtable_0.2.0     
+## [22] rvest_0.3.2       psych_1.8.4       evaluate_0.10.1  
+## [25] parallel_3.5.1    broom_0.4.5       Rcpp_0.12.17     
+## [28] scales_0.5.0      backports_1.1.2   jsonlite_1.5     
+## [31] mnormt_1.5-5      hms_0.4.2         digest_0.6.15    
+## [34] stringi_1.1.7     bookdown_0.7      rprojroot_1.3-2  
+## [37] grid_3.5.1        cli_1.0.0         tools_3.5.1      
+## [40] magrittr_1.5      lazyeval_0.2.1    crayon_1.3.4     
+## [43] pkgconfig_2.0.1   xml2_1.2.0        lubridate_1.7.4  
+## [46] assertthat_0.2.0  rmarkdown_1.10    httr_1.3.1       
+## [49] rstudioapi_0.7    R6_2.2.2          nlme_3.1-137     
+## [52] compiler_3.5.1</code></pre>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-R-foreign">
+<p>R Core Team. 2017. <em>Foreign: Read Data Stored by ’Minitab’, ’S’, ’Sas’, ’Spss’, ’Stata’, ’Systat’, ’Weka’, ’dBase’, ...</em> <a href="https://CRAN.R-project.org/package=foreign" class="uri">https://CRAN.R-project.org/package=foreign</a>.</p>
+</div>
+<div id="ref-R-haven">
+<p>Wickham, Hadley, and Evan Miller. 2018. <em>Haven: Import and Export ’Spss’, ’Stata’ and ’Sas’ Files</em>. <a href="https://CRAN.R-project.org/package=haven" class="uri">https://CRAN.R-project.org/package=haven</a>.</p>
+</div>
+<div id="ref-R-tidyverse">
+<p>Wickham, Hadley. 2017b. <em>Tidyverse: Easily Install and Load the ’Tidyverse’</em>. <a href="https://CRAN.R-project.org/package=tidyverse" class="uri">https://CRAN.R-project.org/package=tidyverse</a>.</p>
+</div>
+<div id="ref-R-ggplot2">
+<p>Wickham, Hadley, Winston Chang, Lionel Henry, Thomas Lin Pedersen, Kohske Takahashi, Claus Wilke, and Kara Woo. 2018. <em>Ggplot2: Create Elegant Data Visualisations Using the Grammar of Graphics</em>. <a href="https://CRAN.R-project.org/package=ggplot2" class="uri">https://CRAN.R-project.org/package=ggplot2</a>.</p>
+</div>
+<div id="ref-R-dplyr">
+<p>Wickham, Hadley, Romain François, Lionel Henry, and Kirill Müller. 2018. <em>Dplyr: A Grammar of Data Manipulation</em>. <a href="https://CRAN.R-project.org/package=dplyr" class="uri">https://CRAN.R-project.org/package=dplyr</a>.</p>
+</div>
+<div id="ref-R-tidyr">
+<p>Wickham, Hadley, and Lionel Henry. 2018. <em>Tidyr: Easily Tidy Data with ’Spread()’ and ’Gather()’ Functions</em>. <a href="https://CRAN.R-project.org/package=tidyr" class="uri">https://CRAN.R-project.org/package=tidyr</a>.</p>
+</div>
+<div id="ref-R-readr">
+<p>Wickham, Hadley, Jim Hester, and Romain Francois. 2017. <em>Readr: Read Rectangular Text Data</em>. <a href="https://CRAN.R-project.org/package=readr" class="uri">https://CRAN.R-project.org/package=readr</a>.</p>
+</div>
+<div id="ref-R-purrr">
+<p>Henry, Lionel, and Hadley Wickham. 2018. <em>Purrr: Functional Programming Tools</em>. <a href="https://CRAN.R-project.org/package=purrr" class="uri">https://CRAN.R-project.org/package=purrr</a>.</p>
+</div>
+<div id="ref-R-tibble">
+<p>Müller, Kirill, and Hadley Wickham. 2018. <em>Tibble: Simple Data Frames</em>. <a href="https://CRAN.R-project.org/package=tibble" class="uri">https://CRAN.R-project.org/package=tibble</a>.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="introduction.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="understanding-distributions.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

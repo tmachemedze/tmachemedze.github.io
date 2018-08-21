@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "--- \ntitle: \"Online R Course: The Analysis of South African Household Survey Data\"\nauthor: \"Takwanisa Machemedze\"\ndate: \"`r Sys.Date()`\"\nsite: bookdown::bookdown_site\noutput:\n  bookdown::gitbook: default\n  bookdown::pdf_book: default\ndocumentclass: book\nbibliography: [book.bib, packages.bib]\nbiblio-style: apalike\nlink-citations: yes\ndescription: \"The Analysis of South African Household Survey Data using R\"\n---\n\n```{r include=FALSE}\n# automatically create a bib database for R packages\nknitr::write_bib(c(\n  .packages(), 'bookdown', 'knitr', 'rmarkdown','stargazer','dplyr','ggplot2'\n), 'packages.bib')\n```\n",
+    "created" : 1488891456740.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "410712103",
+    "id" : "B28B9267",
+    "lastKnownWriteTime" : 1489062424,
+    "last_content_update" : 1489062423052,
+    "path" : "F:/work/stata2rcourse/index.Rmd",
+    "project_path" : "index.Rmd",
+    "properties" : {
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

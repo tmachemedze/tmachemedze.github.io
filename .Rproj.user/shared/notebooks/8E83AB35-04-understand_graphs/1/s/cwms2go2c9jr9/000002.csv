@@ -1,0 +1,2 @@
+"0","nids<-nids %>%"
+"0","  mutate(adult20 = ifelse(age>=20 & !is.na(age),1,0))"

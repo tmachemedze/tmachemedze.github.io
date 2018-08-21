@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>The Analysis of South African Household Survey Data using R</title>
+  <meta name="description" content="The Analysis of South African Household Survey Data using R">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="The Analysis of South African Household Survey Data using R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="The Analysis of South African Household Survey Data using R" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="The Analysis of South African Household Survey Data using R" />
+  
+  <meta name="twitter:description" content="The Analysis of South African Household Survey Data using R" />
+  
+
+<meta name="author" content="Takwanisa Machemedze">
+
+
+<meta name="date" content="2018-07-23">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="simple-regression-analysis.html">
+<link rel="next" href="further-analysis-and-useful-online-resources.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#what-is-r"><i class="fa fa-check"></i><b>1.1</b> What is R?</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#pros-and-cons-of-r"><i class="fa fa-check"></i><b>1.2</b> Pros and cons of R</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="introduction.html"><a href="introduction.html#pros"><i class="fa fa-check"></i><b>1.2.1</b> Pros</a></li>
+<li class="chapter" data-level="1.2.2" data-path="introduction.html"><a href="introduction.html#cons"><i class="fa fa-check"></i><b>1.2.2</b> Cons</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#what-is-rstudio"><i class="fa fa-check"></i><b>1.3</b> What is RStudio?</a></li>
+<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#the-r-system"><i class="fa fa-check"></i><b>1.4</b> The R system</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="introduction.html"><a href="introduction.html#base-system"><i class="fa fa-check"></i><b>1.4.1</b> Base system</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html"><i class="fa fa-check"></i><b>2</b> Getting started with R</a><ul>
+<li class="chapter" data-level="2.1" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#introduction-1"><i class="fa fa-check"></i><b>2.1</b> Introduction</a></li>
+<li class="chapter" data-level="2.2" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#organize-your-r-session"><i class="fa fa-check"></i><b>2.2</b> Organize your R session</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#working-directory"><i class="fa fa-check"></i><b>2.2.1</b> Working directory</a></li>
+<li class="chapter" data-level="2.2.2" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#load-and-install-required-libraries"><i class="fa fa-check"></i><b>2.2.2</b> Load (and install) required libraries</a></li>
+<li class="chapter" data-level="2.2.3" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#comments"><i class="fa fa-check"></i><b>2.2.3</b> Comments</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#getting-help"><i class="fa fa-check"></i><b>2.3</b> Getting help</a></li>
+<li class="chapter" data-level="2.4" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#output-file"><i class="fa fa-check"></i><b>2.4</b> Output file</a></li>
+<li class="chapter" data-level="2.5" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#objects-in-r"><i class="fa fa-check"></i><b>2.5</b> Objects in R</a><ul>
+<li class="chapter" data-level="2.5.1" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#removing-objects-from-the-r-environment---rm-function"><i class="fa fa-check"></i><b>2.5.1</b> Removing objects from the R environment - rm() function</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#saving-in-r"><i class="fa fa-check"></i><b>2.6</b> Saving in R</a></li>
+<li class="chapter" data-level="2.7" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#importing-nids-data-into-r"><i class="fa fa-check"></i><b>2.7</b> Importing NIDS data into R</a></li>
+<li class="chapter" data-level="2.8" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#exploring-the-data"><i class="fa fa-check"></i><b>2.8</b> Exploring the data</a><ul>
+<li class="chapter" data-level="2.8.1" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#subsetting-data---part-1"><i class="fa fa-check"></i><b>2.8.1</b> Subsetting data - part 1</a></li>
+<li class="chapter" data-level="2.8.2" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#data-documentation---value-and-variable-labels"><i class="fa fa-check"></i><b>2.8.2</b> Data documentation - value and variable labels</a></li>
+<li class="chapter" data-level="2.8.3" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#operators-in-r"><i class="fa fa-check"></i><b>2.8.3</b> Operators in R</a></li>
+<li class="chapter" data-level="2.8.4" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#subsetting-data---part-2"><i class="fa fa-check"></i><b>2.8.4</b> Subsetting data - part 2</a></li>
+</ul></li>
+<li class="chapter" data-level="2.9" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#tidyverse"><i class="fa fa-check"></i><b>2.9</b> Tidyverse</a><ul>
+<li class="chapter" data-level="2.9.1" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#brief-introduction-to-tidyverse"><i class="fa fa-check"></i><b>2.9.1</b> Brief introduction to tidyverse</a></li>
+<li class="chapter" data-level="2.9.2" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#core-tidyverse-packages"><i class="fa fa-check"></i><b>2.9.2</b> Core tidyverse packages</a></li>
+<li class="chapter" data-level="2.9.3" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#install-and-load-tidyverse-packages"><i class="fa fa-check"></i><b>2.9.3</b> Install and load tidyverse packages</a></li>
+<li class="chapter" data-level="2.9.4" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#dplyr-verbs"><i class="fa fa-check"></i><b>2.9.4</b> dplyr verbs</a></li>
+<li class="chapter" data-level="2.9.5" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#using-dplyr-functions"><i class="fa fa-check"></i><b>2.9.5</b> Using dplyr functions</a></li>
+<li class="chapter" data-level="2.9.6" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#pipe-operator"><i class="fa fa-check"></i><b>2.9.6</b> Pipe operator %&gt;%</a></li>
+</ul></li>
+<li class="chapter" data-level="2.10" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#more-data-exploration"><i class="fa fa-check"></i><b>2.10</b> More data exploration</a><ul>
+<li class="chapter" data-level="2.10.1" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#example-1-subset-variables"><i class="fa fa-check"></i><b>2.10.1</b> Example 1: Subset variables</a></li>
+<li class="chapter" data-level="2.10.2" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#example-2-subset-observations"><i class="fa fa-check"></i><b>2.10.2</b> Example 2: Subset observations</a></li>
+<li class="chapter" data-level="2.10.3" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#example-3-subset-both-observations-and-variables"><i class="fa fa-check"></i><b>2.10.3</b> Example 3: Subset both observations and variables</a></li>
+</ul></li>
+<li class="chapter" data-level="2.11" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#managing-the-data"><i class="fa fa-check"></i><b>2.11</b> Managing the data</a></li>
+<li class="chapter" data-level="2.12" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#worked-example-creating-a-bmi-variable"><i class="fa fa-check"></i><b>2.12</b> Worked example: creating a bmi variable</a></li>
+<li class="chapter" data-level="2.13" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#question-answers"><i class="fa fa-check"></i><b>2.13</b> Question answers</a></li>
+<li class="chapter" data-level="2.14" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#exercises"><i class="fa fa-check"></i><b>2.14</b> Exercises</a></li>
+<li class="chapter" data-level="2.15" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#exercise-answers"><i class="fa fa-check"></i><b>2.15</b> Exercise answers</a></li>
+<li class="chapter" data-level="2.16" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#session-information"><i class="fa fa-check"></i><b>2.16</b> Session information</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="understanding-distributions.html"><a href="understanding-distributions.html"><i class="fa fa-check"></i><b>3</b> Understanding distributions</a><ul>
+<li class="chapter" data-level="3.1" data-path="understanding-distributions.html"><a href="understanding-distributions.html#introduction-2"><i class="fa fa-check"></i><b>3.1</b> Introduction</a></li>
+<li class="chapter" data-level="3.2" data-path="understanding-distributions.html"><a href="understanding-distributions.html#variable-types"><i class="fa fa-check"></i><b>3.2</b> Variable types</a></li>
+<li class="chapter" data-level="3.3" data-path="understanding-distributions.html"><a href="understanding-distributions.html#count-observations---dimnrow"><i class="fa fa-check"></i><b>3.3</b> Count observations - dim(),nrow()</a></li>
+<li class="chapter" data-level="3.4" data-path="understanding-distributions.html"><a href="understanding-distributions.html#using-household-level-variables"><i class="fa fa-check"></i><b>3.4</b> Using household level variables</a></li>
+<li class="chapter" data-level="3.5" data-path="understanding-distributions.html"><a href="understanding-distributions.html#frequency-distribution-tables"><i class="fa fa-check"></i><b>3.5</b> Frequency distribution tables</a></li>
+<li class="chapter" data-level="3.6" data-path="understanding-distributions.html"><a href="understanding-distributions.html#frequency-distribution-tables-household-level-data"><i class="fa fa-check"></i><b>3.6</b> Frequency distribution tables: household level data</a></li>
+<li class="chapter" data-level="3.7" data-path="understanding-distributions.html"><a href="understanding-distributions.html#missing-data-and-non-responses"><i class="fa fa-check"></i><b>3.7</b> Missing data and non-responses</a></li>
+<li class="chapter" data-level="3.8" data-path="understanding-distributions.html"><a href="understanding-distributions.html#three-primary-origins-of-na-missing-data-in-nids"><i class="fa fa-check"></i><b>3.8</b> Three primary origins of NA-missing data in NIDS</a></li>
+<li class="chapter" data-level="3.9" data-path="understanding-distributions.html"><a href="understanding-distributions.html#missing-data-and-qualifiers"><i class="fa fa-check"></i><b>3.9</b> Missing data and qualifiers</a></li>
+<li class="chapter" data-level="3.10" data-path="understanding-distributions.html"><a href="understanding-distributions.html#question-answers-1"><i class="fa fa-check"></i><b>3.10</b> Question answers</a></li>
+<li class="chapter" data-level="3.11" data-path="understanding-distributions.html"><a href="understanding-distributions.html#exercises-1"><i class="fa fa-check"></i><b>3.11</b> Exercises</a></li>
+<li class="chapter" data-level="3.12" data-path="understanding-distributions.html"><a href="understanding-distributions.html#session-information-1"><i class="fa fa-check"></i><b>3.12</b> Session information</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="understanding-graphs.html"><a href="understanding-graphs.html"><i class="fa fa-check"></i><b>4</b> Understanding graphs</a><ul>
+<li class="chapter" data-level="4.1" data-path="understanding-graphs.html"><a href="understanding-graphs.html#introduction-3"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="understanding-graphs.html"><a href="understanding-graphs.html#getting-ready"><i class="fa fa-check"></i><b>4.2</b> Getting ready</a></li>
+<li class="chapter" data-level="4.3" data-path="understanding-graphs.html"><a href="understanding-graphs.html#ggplot2-and-its-elements"><i class="fa fa-check"></i><b>4.3</b> ggplot2 and its elements</a></li>
+<li class="chapter" data-level="4.4" data-path="understanding-graphs.html"><a href="understanding-graphs.html#histograms"><i class="fa fa-check"></i><b>4.4</b> Histograms</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="understanding-graphs.html"><a href="understanding-graphs.html#graphing-economic-wellbeing-in-south-africa-in-2008"><i class="fa fa-check"></i><b>4.4.1</b> Graphing economic wellbeing in South Africa in 2008</a></li>
+<li class="chapter" data-level="4.4.2" data-path="understanding-graphs.html"><a href="understanding-graphs.html#facetting"><i class="fa fa-check"></i><b>4.4.2</b> Facetting</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="understanding-graphs.html"><a href="understanding-graphs.html#worked-example-1-what-is-the-most-common-age-at-which-people-start-smoking"><i class="fa fa-check"></i><b>4.5</b> Worked example 1: What is the most common age at which people start smoking?</a></li>
+<li class="chapter" data-level="4.6" data-path="understanding-graphs.html"><a href="understanding-graphs.html#pie-charts"><i class="fa fa-check"></i><b>4.6</b> Pie charts</a></li>
+<li class="chapter" data-level="4.7" data-path="understanding-graphs.html"><a href="understanding-graphs.html#investigating-newborn-and-infant-gender"><i class="fa fa-check"></i><b>4.7</b> Investigating newborn and infant gender</a><ul>
+<li class="chapter" data-level="4.7.1" data-path="understanding-graphs.html"><a href="understanding-graphs.html#exploring-the-distribution-of-race-across-provinces"><i class="fa fa-check"></i><b>4.7.1</b> Exploring the distribution of race across provinces</a></li>
+<li class="chapter" data-level="4.7.2" data-path="understanding-graphs.html"><a href="understanding-graphs.html#urban-vs.rural-where-are-south-africans-living"><i class="fa fa-check"></i><b>4.7.2</b> Urban vs. rural, where are South Africans living?</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="understanding-graphs.html"><a href="understanding-graphs.html#worked-example-2-are-there-differences-between-the-age-at-which-men-and-women-start-smoking"><i class="fa fa-check"></i><b>4.8</b> Worked example 2: Are there differences between the age at which men and women start smoking?</a><ul>
+<li class="chapter" data-level="4.8.1" data-path="understanding-graphs.html"><a href="understanding-graphs.html#exercise"><i class="fa fa-check"></i><b>4.8.1</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="4.9" data-path="understanding-graphs.html"><a href="understanding-graphs.html#bar-graphs"><i class="fa fa-check"></i><b>4.9</b> Bar graphs</a><ul>
+<li class="chapter" data-level="4.9.1" data-path="understanding-graphs.html"><a href="understanding-graphs.html#investigating-satisfaction-levels-in-south-africans"><i class="fa fa-check"></i><b>4.9.1</b> Investigating Satisfaction levels in South Africans</a></li>
+<li class="chapter" data-level="4.9.2" data-path="understanding-graphs.html"><a href="understanding-graphs.html#worked-example-3-does-the-frequency-of-alcohol-consumption-vary-by-gender-race-or-religion"><i class="fa fa-check"></i><b>4.9.2</b> Worked example 3: Does the frequency of alcohol consumption vary by gender, race or religion?</a></li>
+</ul></li>
+<li class="chapter" data-level="4.10" data-path="understanding-graphs.html"><a href="understanding-graphs.html#question-answers-2"><i class="fa fa-check"></i><b>4.10</b> Question answers</a></li>
+<li class="chapter" data-level="4.11" data-path="understanding-graphs.html"><a href="understanding-graphs.html#session-information-2"><i class="fa fa-check"></i><b>4.11</b> Session information</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html"><i class="fa fa-check"></i><b>5</b> Measures of central tendency and variability</a><ul>
+<li class="chapter" data-level="5.1" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#getting-ready-1"><i class="fa fa-check"></i><b>5.1</b> Getting ready</a></li>
+<li class="chapter" data-level="5.2" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#introduction-4"><i class="fa fa-check"></i><b>5.2</b> Introduction</a></li>
+<li class="chapter" data-level="5.3" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#understanding-distributions-of-continuous-variables"><i class="fa fa-check"></i><b>5.3</b> Understanding distributions of continuous variables</a></li>
+<li class="chapter" data-level="5.4" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#continuous-variables-and-recoding"><i class="fa fa-check"></i><b>5.4</b> Continuous variables and recoding</a></li>
+<li class="chapter" data-level="5.5" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#summarise-by---summary-base-r-and-group_by---summarise-dplyr"><i class="fa fa-check"></i><b>5.5</b> Summarise: by - summary (base R) and group_by - summarise (dplyr)</a></li>
+<li class="chapter" data-level="5.6" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#medians-and-modes-of-continuous-variables"><i class="fa fa-check"></i><b>5.6</b> Medians and modes of continuous variables</a></li>
+<li class="chapter" data-level="5.7" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#example-recoding-the-education-variable"><i class="fa fa-check"></i><b>5.7</b> Example: recoding the education variable</a></li>
+<li class="chapter" data-level="5.8" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#measures-of-dispersion---variance-and-standard-deviation"><i class="fa fa-check"></i><b>5.8</b> Measures of dispersion - variance and standard deviation</a></li>
+<li class="chapter" data-level="5.9" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#handling-outliers"><i class="fa fa-check"></i><b>5.9</b> Handling outliers</a></li>
+<li class="chapter" data-level="5.10" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#understanding-the-distributions-of-categorical-variables"><i class="fa fa-check"></i><b>5.10</b> Understanding the distributions of categorical variables</a></li>
+<li class="chapter" data-level="5.11" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#worked-example-1-exploring-the-distribution-of-satisfaction-variable"><i class="fa fa-check"></i><b>5.11</b> Worked example 1: Exploring the distribution of satisfaction variable</a></li>
+<li class="chapter" data-level="5.12" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#group-summary"><i class="fa fa-check"></i><b>5.12</b> Group summary</a></li>
+<li class="chapter" data-level="5.13" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#worked-example-2-investigating-bmi-in-south-africa"><i class="fa fa-check"></i><b>5.13</b> Worked example 2: Investigating BMI in South Africa</a></li>
+<li class="chapter" data-level="5.14" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#question-answers-3"><i class="fa fa-check"></i><b>5.14</b> Question answers</a></li>
+<li class="chapter" data-level="5.15" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#exercises-2"><i class="fa fa-check"></i><b>5.15</b> Exercises</a></li>
+<li class="chapter" data-level="5.16" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#exercise-answers-1"><i class="fa fa-check"></i><b>5.16</b> Exercise answers</a></li>
+<li class="chapter" data-level="5.17" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#exercises-3"><i class="fa fa-check"></i><b>5.17</b> Exercises</a></li>
+<li class="chapter" data-level="5.18" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#exercise-answers-2"><i class="fa fa-check"></i><b>5.18</b> Exercise answers</a></li>
+<li class="chapter" data-level="5.19" data-path="measures-of-central-tendency-and-variability.html"><a href="measures-of-central-tendency-and-variability.html#session-information-3"><i class="fa fa-check"></i><b>5.19</b> Session information</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html"><i class="fa fa-check"></i><b>6</b> Bivariate analysis (cross tabs)</a><ul>
+<li class="chapter" data-level="6.1" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#getting-ready-2"><i class="fa fa-check"></i><b>6.1</b> Getting ready</a></li>
+<li class="chapter" data-level="6.2" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#introduction-5"><i class="fa fa-check"></i><b>6.2</b> Introduction</a></li>
+<li class="chapter" data-level="6.3" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#cross---tabulation"><i class="fa fa-check"></i><b>6.3</b> Cross - tabulation</a></li>
+<li class="chapter" data-level="6.4" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#example-1-where-do-households-with-an-elderly-member-tend-to-live"><i class="fa fa-check"></i><b>6.4</b> Example 1: Where do households with an elderly member tend to live?</a></li>
+<li class="chapter" data-level="6.5" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#example-2-is-there-a-relationship-between-the-race-of-a-household-and-the-average-age-of-the-household"><i class="fa fa-check"></i><b>6.5</b> Example 2: Is there a relationship between the race of a household and the average age of the household?</a></li>
+<li class="chapter" data-level="6.6" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#example-3-does-the-level-of-satisfaction-differ-in-different-racegender-groupings"><i class="fa fa-check"></i><b>6.6</b> Example 3: Does the level of satisfaction differ in different race/gender groupings?</a></li>
+<li class="chapter" data-level="6.7" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#example-4-comparing-household-monthly-income-from-the-labour-market-to-individual-monthly-takehome-pay"><i class="fa fa-check"></i><b>6.7</b> Example 4: Comparing Household Monthly Income from the labour market to individual monthly takehome pay</a></li>
+<li class="chapter" data-level="6.8" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#chi-squared-testing-for-independence"><i class="fa fa-check"></i><b>6.8</b> Chi-Squared: testing for independence</a></li>
+<li class="chapter" data-level="6.9" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#cross-tabs-and-hypothesis-testing-chi2-examples-the-comparative-level-of-happiness-variable"><i class="fa fa-check"></i><b>6.9</b> Cross-tabs and hypothesis testing (Chi^2) examples: The comparative level of happiness variable</a><ul>
+<li class="chapter" data-level="6.9.1" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#example-1-comparative-happiness-and-employment-status"><i class="fa fa-check"></i><b>6.9.1</b> Example 1: Comparative happiness and employment status</a></li>
+<li class="chapter" data-level="6.9.2" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#example-2-comparative-happiness-by-province"><i class="fa fa-check"></i><b>6.9.2</b> Example 2: Comparative happiness by province</a></li>
+<li class="chapter" data-level="6.9.3" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#example-3-comparative-happiness-and-household-income"><i class="fa fa-check"></i><b>6.9.3</b> Example 3: Comparative happiness and household income</a></li>
+<li class="chapter" data-level="6.9.4" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#example-4-comparative-happiness-and-geo-type"><i class="fa fa-check"></i><b>6.9.4</b> Example 4: Comparative happiness and geo-type</a></li>
+</ul></li>
+<li class="chapter" data-level="6.10" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#worked-example-assessing-the-impact-of-per-capita-income-on-bmi"><i class="fa fa-check"></i><b>6.10</b> Worked Example: Assessing the impact of per capita income on BMI</a></li>
+<li class="chapter" data-level="6.11" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#question-answers-4"><i class="fa fa-check"></i><b>6.11</b> Question Answers</a></li>
+<li class="chapter" data-level="6.12" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#exercises-4"><i class="fa fa-check"></i><b>6.12</b> Exercises</a></li>
+<li class="chapter" data-level="6.13" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#exercise-answers-3"><i class="fa fa-check"></i><b>6.13</b> Exercise answers</a></li>
+<li class="chapter" data-level="6.14" data-path="bivariate-analysis-cross-tabs.html"><a href="bivariate-analysis-cross-tabs.html#session-information-4"><i class="fa fa-check"></i><b>6.14</b> Session information</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html"><i class="fa fa-check"></i><b>7</b> Simple regression analysis</a><ul>
+<li class="chapter" data-level="7.1" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#getting-ready-3"><i class="fa fa-check"></i><b>7.1</b> Getting ready</a></li>
+<li class="chapter" data-level="7.2" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#introduction-6"><i class="fa fa-check"></i><b>7.2</b> Introduction</a></li>
+<li class="chapter" data-level="7.3" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#correlation-of-variables"><i class="fa fa-check"></i><b>7.3</b> Correlation of variables</a></li>
+<li class="chapter" data-level="7.4" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#outliers"><i class="fa fa-check"></i><b>7.4</b> Outliers</a></li>
+<li class="chapter" data-level="7.5" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#simple-regression"><i class="fa fa-check"></i><b>7.5</b> Simple regression</a></li>
+<li class="chapter" data-level="7.6" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#understanding-regression-output-tables"><i class="fa fa-check"></i><b>7.6</b> Understanding regression output tables</a></li>
+<li class="chapter" data-level="7.7" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#graphing-the-regression-equation"><i class="fa fa-check"></i><b>7.7</b> Graphing the regression equation</a></li>
+<li class="chapter" data-level="7.8" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#worked-example-is-age-a-strong-determinant-of-bmi"><i class="fa fa-check"></i><b>7.8</b> Worked example: Is age a strong determinant of BMI?</a></li>
+<li class="chapter" data-level="7.9" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#question-answers-5"><i class="fa fa-check"></i><b>7.9</b> Question answers:</a></li>
+<li class="chapter" data-level="7.10" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#exercises-5"><i class="fa fa-check"></i><b>7.10</b> Exercises</a></li>
+<li class="chapter" data-level="7.11" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#exercise-1"><i class="fa fa-check"></i><b>7.11</b> Exercise</a></li>
+<li class="chapter" data-level="7.12" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#exercise-answers-4"><i class="fa fa-check"></i><b>7.12</b> Exercise answers</a></li>
+<li class="chapter" data-level="7.13" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#appendix-a-analysis-of-variance-anova-table"><i class="fa fa-check"></i><b>7.13</b> Appendix A: Analysis of variance (anova) table</a></li>
+<li class="chapter" data-level="7.14" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#appendix-b-further-understanding-the-regression-results-table"><i class="fa fa-check"></i><b>7.14</b> Appendix B: Further understanding the regression results table</a></li>
+<li class="chapter" data-level="7.15" data-path="simple-regression-analysis.html"><a href="simple-regression-analysis.html#session-information-5"><i class="fa fa-check"></i><b>7.15</b> Session information</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="multiple-regression-analysis.html"><a href="multiple-regression-analysis.html"><i class="fa fa-check"></i><b>8</b> Multiple regression analysis</a><ul>
+<li class="chapter" data-level="8.1" data-path="multiple-regression-analysis.html"><a href="multiple-regression-analysis.html#getting-ready-4"><i class="fa fa-check"></i><b>8.1</b> Getting ready</a></li>
+<li class="chapter" data-level="8.2" data-path="multiple-regression-analysis.html"><a href="multiple-regression-analysis.html#introduction-7"><i class="fa fa-check"></i><b>8.2</b> Introduction</a></li>
+<li class="chapter" data-level="8.3" data-path="multiple-regression-analysis.html"><a href="multiple-regression-analysis.html#dummy-variables"><i class="fa fa-check"></i><b>8.3</b> Dummy variables</a></li>
+<li class="chapter" data-level="8.4" data-path="multiple-regression-analysis.html"><a href="multiple-regression-analysis.html#interactions-with-dummy-variables"><i class="fa fa-check"></i><b>8.4</b> Interactions with dummy Variables</a></li>
+<li class="chapter" data-level="8.5" data-path="multiple-regression-analysis.html"><a href="multiple-regression-analysis.html#linear-transformations-of-non-linear-relationships"><i class="fa fa-check"></i><b>8.5</b> Linear transformations of non-linear relationships</a></li>
+<li class="chapter" data-level="8.6" data-path="multiple-regression-analysis.html"><a href="multiple-regression-analysis.html#question-answers-6"><i class="fa fa-check"></i><b>8.6</b> Question Answers</a></li>
+<li class="chapter" data-level="8.7" data-path="multiple-regression-analysis.html"><a href="multiple-regression-analysis.html#exercises-6"><i class="fa fa-check"></i><b>8.7</b> Exercises</a></li>
+<li class="chapter" data-level="8.8" data-path="multiple-regression-analysis.html"><a href="multiple-regression-analysis.html#exercise-answers-5"><i class="fa fa-check"></i><b>8.8</b> Exercise answers</a></li>
+<li class="chapter" data-level="8.9" data-path="multiple-regression-analysis.html"><a href="multiple-regression-analysis.html#session-information-6"><i class="fa fa-check"></i><b>8.9</b> Session information</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="further-analysis-and-useful-online-resources.html"><a href="further-analysis-and-useful-online-resources.html"><i class="fa fa-check"></i><b>9</b> Further analysis and useful online resources</a><ul>
+<li class="chapter" data-level="9.1" data-path="further-analysis-and-useful-online-resources.html"><a href="further-analysis-and-useful-online-resources.html#further-analyses"><i class="fa fa-check"></i><b>9.1</b> Further analyses</a></li>
+<li class="chapter" data-level="9.2" data-path="further-analysis-and-useful-online-resources.html"><a href="further-analysis-and-useful-online-resources.html#useful-online-resources"><i class="fa fa-check"></i><b>9.2</b> Useful online resources</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">The Analysis of South African Household Survey Data using R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="multiple-regression-analysis" class="section level1">
+<h1><span class="header-section-number">8</span> Multiple regression analysis</h1>
+<div id="getting-ready-4" class="section level2">
+<h2><span class="header-section-number">8.1</span> Getting ready</h2>
+<p>In the previous chapters we generated some variables and ran a few commands that will influence the results that we get in this chapter. If you are starting a new session of R, please copy the following lines of code into an R-script and then run it before you begin the chapter. Make sure that you remember what each line of code is doing.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(foreign)
+<span class="kw">library</span>(tidyverse)</code></pre></div>
+<pre><code>## -- Attaching packages --------</code></pre>
+<pre><code>## v ggplot2 3.0.0     v purrr   0.2.5
+## v tibble  1.4.2     v dplyr   0.7.6
+## v tidyr   0.8.1     v stringr 1.3.1
+## v readr   1.1.1     v forcats 0.3.0</code></pre>
+<pre><code>## -- Conflicts -----------------
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids&lt;-<span class="kw">read.dta</span>(<span class="st">&quot;./data/nids.dta&quot;</span>, <span class="dt">convert.factors=</span><span class="ot">FALSE</span>)
+
+nids&lt;-nids<span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">arrange</span>(hhid, pid)<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(hhid) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">hhrestrict =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">n</span>()) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">hhrestrict =</span> <span class="kw">ifelse</span>(hhrestrict<span class="op">==</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>))
+
+<span class="co">#Education</span>
+nids<span class="op">$</span>educ.new&lt;-nids<span class="op">$</span>w1_best_edu
+nids<span class="op">$</span>educ.new[<span class="kw">which</span>(nids<span class="op">$</span>w1_best_edu <span class="op">==</span><span class="st"> </span><span class="dv">25</span>)]&lt;-<span class="dv">0</span>
+nids<span class="op">$</span>educ.new[<span class="kw">which</span>(nids<span class="op">$</span>w1_best_edu <span class="op">&lt;</span><span class="dv">0</span>)]&lt;-<span class="ot">NA</span>
+nids<span class="op">$</span>educ.new[<span class="kw">which</span>(nids<span class="op">$</span>w1_best_edu <span class="op">==</span><span class="st"> </span><span class="dv">24</span>)]&lt;-<span class="ot">NA</span>
+nids<span class="op">$</span>educ.new[<span class="kw">which</span>(nids<span class="op">$</span>w1_best_edu <span class="op">==</span><span class="st"> </span><span class="dv">13</span> <span class="op">|</span><span class="st"> </span>nids<span class="op">$</span>w1_best_edu <span class="op">==</span><span class="st"> </span><span class="dv">16</span>)]&lt;-<span class="dv">10</span>
+nids<span class="op">$</span>educ.new[<span class="kw">which</span>(nids<span class="op">$</span>w1_best_edu <span class="op">==</span><span class="st"> </span><span class="dv">14</span> <span class="op">|</span><span class="st"> </span>nids<span class="op">$</span>w1_best_edu <span class="op">==</span><span class="st"> </span><span class="dv">17</span>)]&lt;-<span class="dv">11</span>
+nids<span class="op">$</span>educ.new[<span class="kw">which</span>(nids<span class="op">$</span>w1_best_edu <span class="op">==</span><span class="st"> </span><span class="dv">15</span>)]&lt;-<span class="dv">12</span>
+nids<span class="op">$</span>educ.new[<span class="kw">which</span>(nids<span class="op">$</span>w1_best_edu <span class="op">==</span><span class="st"> </span><span class="dv">18</span>)]&lt;-<span class="dv">13</span>
+nids<span class="op">$</span>educ.new[<span class="kw">which</span>(nids<span class="op">$</span>w1_best_edu <span class="op">==</span><span class="st"> </span><span class="dv">18</span>)]&lt;-<span class="dv">13</span>
+nids<span class="op">$</span>educ.new[<span class="kw">which</span>(nids<span class="op">$</span>w1_best_edu <span class="op">==</span><span class="st"> </span><span class="dv">19</span>)]&lt;-<span class="dv">14</span>
+nids<span class="op">$</span>educ.new[<span class="kw">which</span>(nids<span class="op">$</span>w1_best_edu <span class="op">==</span><span class="st"> </span><span class="dv">20</span>)]&lt;-<span class="dv">15</span>
+nids<span class="op">$</span>educ.new[<span class="kw">which</span>(nids<span class="op">$</span>w1_best_edu <span class="op">==</span><span class="st"> </span><span class="dv">21</span> <span class="op">|</span><span class="st"> </span>nids<span class="op">$</span>w1_best_edu <span class="op">==</span><span class="st"> </span><span class="dv">22</span>)]&lt;-<span class="dv">16</span>
+nids<span class="op">$</span>educ.new[<span class="kw">which</span>(nids<span class="op">$</span>w1_best_edu <span class="op">==</span><span class="st"> </span><span class="dv">23</span>)]&lt;-<span class="dv">17</span>
+
+<span class="co">#Age</span>
+nids<span class="op">$</span>age&lt;-nids<span class="op">$</span>w1_r_best_age_yrs[<span class="op">!</span><span class="kw">is.na</span>(nids<span class="op">$</span>w1_r_best_age_yrs)]
+
+<span class="co">#Rename</span>
+nids &lt;-<span class="st"> </span>nids<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">race =</span> w1_best_race,
+        <span class="dt">age =</span> w1_r_best_age_yrs,
+        <span class="dt">gender =</span> w1_r_b4,
+        <span class="dt">province =</span> w1_hhprov, 
+        <span class="dt">hhincome =</span> w1_hhincome) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">gender =</span> <span class="kw">factor</span>(gender, <span class="dt">levels =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>)),
+         <span class="dt">race =</span> <span class="kw">factor</span>(race, <span class="dt">levels =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;African&quot;</span>, <span class="st">&quot;Coloured&quot;</span>,<span class="st">&quot;Asian&quot;</span>, <span class="st">&quot;White&quot;</span>)),
+         <span class="dt">province =</span> <span class="kw">factor</span>(province, <span class="dt">levels=</span><span class="dv">1</span><span class="op">:</span><span class="dv">9</span>, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Western Cape&quot;</span>,<span class="st">&quot;Eastern Cape&quot;</span>,<span class="st">&quot;Northern Cape&quot;</span>,<span class="st">&quot;Free State&quot;</span>,<span class="st">&quot;KwaZulu-Natal&quot;</span>,<span class="st">&quot;North West&quot;</span>,<span class="st">&quot;Gauteng&quot;</span>,<span class="st">&quot;Mpumalanga&quot;</span>,<span class="st">&quot;Limpopo&quot;</span>)),
+         <span class="dt">w1_hhgeo =</span> <span class="kw">factor</span>(w1_hhgeo, <span class="dt">levels =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Rural formal&quot;</span>, <span class="st">&quot;Tribal authority areas&quot;</span>,<span class="st">&quot;Urban formal&quot;</span>, <span class="st">&quot;Urban informal&quot;</span>)))</code></pre></div>
+</div>
+<div id="introduction-7" class="section level2">
+<h2><span class="header-section-number">8.2</span> Introduction</h2>
+<p>In <em>Chapter 7</em>, we learned about simple bivariate regression. Now, it is time to move on to the more complex, but also more exciting multiple regression.</p>
+<p>Let’s quickly review what we know about simple regression analysis. In its general form, the simple linear regression model has one independent variable (X) and one dependent variable (Y). In multiple regression, the dependent variable Y is assumed to be a function of a set of K independent variables - <span class="math inline">\(X_1\)</span>, <span class="math inline">\(X_2\)</span>, <span class="math inline">\(X_3\)</span>, …, <span class="math inline">\(X_k\)</span>. This yields a new regression equation - an extension of the one in <em>Chapter 7</em>:</p>
+<p><span class="math inline">\(Y = a + b_1X_1 + b_2X_2 + ... + b_kX_k\)</span></p>
+<p>As with the simple regression equation, the interpretation of each of these coefficients is straight forward. Each “b” is a partial slope coefficient. Put differently, each “b” coefficient is the slope between that particular independent variable X and the dependent variable Y when all other independent variables in the model are equal to zero, or “held constant.” For example, the b1 coefficient refers to the slope between X1 and the dependent variable Y when all other variables in the equation, X2, X3, etc., equal zero. Similarly, the value for b2 is the slope for the relationship between X2 and the dependent variable Y, when all other variables, X1, X3, etc., are equal to zero. As in Chapter 7, the “a” refers to the intercept, also known as the constant. This value is the value of predicted Y (i.e. yhat) when all of the independent variables, X1, X2, X3, etc., are equal to zero. Thus, multiple-regression allows us to state relationships between two main variables while controlling for other factors - also known as partial effects.</p>
+<p>It should be obvious how useful this approach can be for quantitative social researchers, since we are often interested in social phenomena that go beyond a basic bivariate relationship. As mentioned in the previous chapter, we might be interested in whether the relationship between total monthly household income and total monthly household expenditures vary by rural setting. Or perhaps the relationship is not a matter of household income, but rather of how many household members are present in the home. All of these types of interests require multiple regression. This new approach will allow us to investigate the initial relationship while controlling for a 3rd, a 4th, or even many more factors.</p>
+<p>Therefore, for this chapter we will investigate in depth, the relationship between income (<code>w1_fwag</code>) and education (<code>w1_best_edu</code>). In particular, we are hypothesizing that the amount of income earned by any individual is dependent upon their individual level of education. First, we will need to recode the education variable into linear form. In Chapter 5 we had to recode the original <code>w1_best_edu</code> variable into the linear variable <code>educ_new</code>. We have therefore including the code in the ‘getting ready’ of this chapter. If you need to go back to review the explanation behind this coding <a href="measures-of-central-tendency-and-variability.html#example-recoding-the-education-variable">click</a> here.</p>
+<p>We should always check that our recoding worked. So let’s type:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(educ.new)<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n=</span><span class="kw">n</span>())</code></pre></div>
+<pre><code>## # A tibble: 19 x 2
+##    educ.new     n
+##       &lt;dbl&gt; &lt;int&gt;
+##  1        0  6655
+##  2        1   883
+##  3        2   905
+##  4        3  1175
+##  5        4  1340
+##  6        5  1381
+##  7        6  1531
+##  8        7  1766
+##  9        8  1782
+## 10        9  1701
+## 11       10  2270
+## 12       11  1821
+## 13       12  2806
+## 14       13   407
+## 15       14   582
+## 16       15   158
+## 17       16   145
+## 18       17    67
+## 19       NA  3795</code></pre>
+<p>When running a regression we will often only want to consider a certain subset of observations. For instance in our regression we want to look at returns to education but not everyone in the population is of working age, thus the returns we are interested in only apply to a certain group in the population. In our context we choose to limit our sample to people between the ages of 25 to 60. A lower bound of 25 allows us to assume that individuals have completed their formal education while an upper bound of 60 was slightly below the official retirement age in 2008.</p>
+<p>There are a few ways to enforce this restriction in our data. One option would be to subset: <code>subset= (age &gt;= 25 &amp; age &lt;= 60)</code> or <code>[age &gt;= 25 &amp; age &lt;= 60]</code>, but this of course can be rather tedious! A much more useful way, is to create a dummy variable that marks a subsample from the dataset and then subset on that variable.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids&lt;-nids <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">sample1=</span><span class="kw">ifelse</span>(age<span class="op">&gt;=</span><span class="dv">25</span> <span class="op">&amp;</span><span class="st"> </span>age<span class="op">&lt;=</span><span class="dv">60</span>,<span class="dv">1</span>,<span class="dv">0</span>))</code></pre></div>
+<p>This command creates a dummy variable called sample1 which has a value of one wherever age is between 25 and 60 and a value of 0 otherwise. Thus, to restrict our attention to the subsample of interest we simply have to subset/filter on <code>sample1==1</code> (we shall use this third and final option for the remainder of this chapter).</p>
+<p>Everything looks good so far. Now, as we have done in the past, we want to do a cursory check of the relationship between our variables using the <code>cor</code> command. A check like this also helps us to pick up if we made a mistake in our code. For instance, if we find a negative relationship between education and income (meaning that more education was associated with lower wages), one of the first explanations we might investigate is whether we made a mistake in our coding.</p>
+<p>Let’s type:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cor</span>(<span class="kw">subset</span>(nids, <span class="dt">subset=</span>sample1<span class="op">==</span><span class="dv">1</span>, <span class="dt">select=</span><span class="kw">c</span>(w1_fwag, educ.new)), <span class="dt">use=</span><span class="st">&quot;complete.obs&quot;</span>)</code></pre></div>
+<pre><code>##            w1_fwag  educ.new
+## w1_fwag  1.0000000 0.3953829
+## educ.new 0.3953829 1.0000000</code></pre>
+<p>The correlation between <code>educ_new</code> and <code>w1_fwag</code> is 0.3954, so education level is moderately associated with income earned. With a correlation, however, we do not know to what extent education makes a difference; we just know that it is positively associated with income. To further understand this relationship, we need to estimate the regression of income on education.</p>
+<p>We accomplish this by typing:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lm &lt;-<span class="st"> </span><span class="kw">lm</span>(w1_fwag<span class="op">~</span>educ.new, <span class="dt">data =</span> nids <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(sample1<span class="op">==</span><span class="dv">1</span>))
+<span class="kw">summary</span>(lm)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = w1_fwag ~ educ.new, data = nids %&gt;% filter(sample1 == 
+##     1))
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+##  -6446  -2399  -1029   1077  84077 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -1241.14     198.00  -6.268 4.06e-10 ***
+## educ.new      511.71      19.46  26.290  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 5066 on 3730 degrees of freedom
+##   (7993 observations deleted due to missingness)
+## Multiple R-squared:  0.1563, Adjusted R-squared:  0.1561 
+## F-statistic: 691.1 on 1 and 3730 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p><span class="math inline">\(Y = a + bX\)</span></p>
+<p>In our case, this equation becomes:</p>
+<p><span class="math inline">\((predicted w1\_fwag) = -1241.1 +511.7*(educ.new)\)</span></p>
+<p>We can immediately interpret the slope coefficient for <code>educ.new</code> as the number of Rands (511.7) that average monthly take home pay would increase by for every additional year of education (<code>educ.new</code>). Judging from the t-value (26.29), we can tell that the coefficient is significant.</p>
+<p>The constant, as discussed before, reflects the value of the dependent variable Y when the independent variables are equal to zero. While this property is technically useful in the calculation of the regression coefficients and calculation of predicted Y values, its actual value is not always of use. Obviously we do not want to ignore it, but we also do not need to dwell on it since it is often not easily interpretable. In our current case, it literally says that when education level is zero, predicted income is -1241.135 Rand. If, however, we had centered our education variable on the sample’s mean education, then the “zero” value would actually be the average level of education. Interpreting the constant in that case would be more useful.</p>
+<p>Moving along, the R-squared for this regression tells us that education accounts for almost 16% of the variation around the mean of income. Another way to think about it is if we were asked to guess at random the income for an individual in a population sample, our guess would improve by approximately 16% if we knew the education level of the individual instead of just knowing the mean income of the sample.</p>
+<p>Let’s now try graphing the regression equation.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">scatter&lt;-<span class="kw">data.frame</span>(<span class="kw">subset</span>(nids, <span class="dt">subset=</span>sample1<span class="op">==</span><span class="dv">1</span>, <span class="dt">select=</span><span class="kw">c</span>(educ.new, w1_fwag)))
+scatter&lt;-<span class="kw">na.omit</span>(scatter)
+ 
+<span class="kw">ggplot</span>(scatter, <span class="kw">aes</span>(<span class="dt">x =</span> educ.new, <span class="dt">y =</span> w1_fwag)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">stat_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>, <span class="dt">colour =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Recoded education&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Monthly take home pay&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_classic</span>()</code></pre></div>
+<p><img src="08-multiple_regression_analysis_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>Is our regression line a good fit? It is rather hard to tell from the graph above, we have too many data points at each education level to be able to tell how well the line fits these observations! What if we compared our line to the mean wage at each education level? This should give us a better indication of the fit.</p>
+<p>First we generate a <code>meanwage</code> variable and then we can plot the graph::</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">scatter<span class="op">$</span>yhat&lt;-lm<span class="op">$</span>fitted.values
+scatter<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(educ.new)<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">meanwage=</span><span class="kw">mean</span>(w1_fwag))<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">gather</span>(<span class="dt">key =</span> type,<span class="dt">value=</span>value, <span class="op">-</span>educ.new, <span class="op">-</span>w1_fwag)<span class="op">%&gt;%</span><span class="st"> </span><span class="co">#reshaping the data using tidyr functions</span>
+<span class="st">  </span><span class="kw">ggplot</span>(., <span class="kw">aes</span>(educ.new,value, <span class="dt">color =</span> type)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;blue&quot;</span>,<span class="st">&quot;red&quot;</span>))<span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_classic</span>()</code></pre></div>
+<p><img src="08-multiple_regression_analysis_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>This graph is much easier to evaluate: the blue line is the mean wage across education while the red line plots our fitted/estimated values. The fundamental problem that we see in this graph is that we have fitted a straight line while the relationship between education and wage seems non-linear! We will correct for this non-linear relationship later in this chapter, but for now, we will stick with the assumption that we have a linear relationship between education and wage.</p>
+<p><strong>Issues of Parsimony vs. Saturation</strong></p>
+<p>When thinking about introducing variables into a model, it is important to keep the notions of parsimony and saturation in mind. That is, we should always strive to include only the variables that make sense and that are efficient at capturing the desired social phenomenon. Model building is often a balancing act between parsimony and saturation. When we say that a model is “saturated,” we mean that the model has too many variables - it is over specified. Overspecification of a model can have an adverse effect on the results. Therefore, when selecting variables for a model, it is prudent to only include the most necessary variables or risk over specifying the model. With that in mind, let’s proceed.</p>
+<p><strong>Introducing a Third Variable</strong></p>
+<p>At this point, we can consider including our first control variable. It is likely that the amount of income earned by any one person, is not only dependent on their years of education, but also on their age. By including age in our model, we acknowledge that income is also a function of age. It is important to include this factor because most people accumulate not only life experience as they age, but also work experience and skills, thus making them more likely to earn a higher wage.</p>
+<p>If you remember our earlier discussion on how to interpret coefficients, each coefficient in a regression model is a partial effect, meaning that the coefficient reflects the effect of a given variable while controlling for the others. In this case it means that when we include <code>age</code>, our coefficient for <code>educ.new</code> will be the effect of education while controlling for <code>age</code>. Let’s try running the multiple regression model now:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lm2 &lt;-<span class="st"> </span><span class="kw">lm</span>(w1_fwag<span class="op">~</span>age<span class="op">+</span>educ.new, <span class="dt">data =</span> nids <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(sample1<span class="op">==</span><span class="dv">1</span>))
+<span class="kw">summary</span>(lm2)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = w1_fwag ~ age + educ.new, data = nids %&gt;% filter(sample1 == 
+##     1))
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+##  -7908  -2304   -968    915  83784 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -6804.60     447.31  -15.21   &lt;2e-16 ***
+## age           123.42       8.95   13.79   &lt;2e-16 ***
+## educ.new      586.22      19.74   29.69   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 4943 on 3729 degrees of freedom
+##   (7993 observations deleted due to missingness)
+## Multiple R-squared:  0.1973, Adjusted R-squared:  0.1968 
+## F-statistic: 458.2 on 2 and 3729 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>Compare our old equation (from above):</p>
+<p><span class="math inline">\((predicted w1\_fwag) = -1241.1 +511.7(educ\_new)\)</span></p>
+<p><span class="math inline">\(\rightarrow {R-squared = 0.1563}\)</span></p>
+<p>To our new multiple regression equation:</p>
+<p><span class="math inline">\((predicted w1\_fwag) = -6804.60 + 586.22*(educ\_new) + 123.4208*(age)\)</span></p>
+<p><span class="math inline">\(\rightarrow {R-squared = 0.1968}\)</span></p>
+<p>Right away you should notice the effect that age has on our model. With age included, there is an increase in the coefficient of education (586.22), up from 511.71. Therefore, after controlling for age, on average every additional year of education produces an additional R586.22 per month of income. In addition to this, people tend to earn R123.42 more for every year that they age. Another way of thinking about these new results is that in the initial model, the “true” effect of <code>educ.new</code> was being masked by the effect of age.</p>
+<p>The addition of a single regressor to the bivariate model probably does not seem that difficult, but as we progress in this chapter, you will realize that this is merely the tip of the iceberg. Now that you have been introduced to multiple regression, try the following two exercises:</p>
+<p><strong>1. It is possible that income as well as the number of household members predict the amount of money a household spends on clothing. Run a regression to see if this hypothesis finds support in our data.</strong></p>
+<p>Question 1 Answer</p>
+<p><strong>2. Among people who reported working, to what extent does the number of hours worked in a week predict a person’s monthly income? Without running any further regressions, what other variables might also help predict a person’s monthly income?</strong></p>
+<p>Question 2 Answer</p>
+</div>
+<div id="dummy-variables" class="section level2">
+<h2><span class="header-section-number">8.3</span> Dummy variables</h2>
+</div>
+<div id="interactions-with-dummy-variables" class="section level2">
+<h2><span class="header-section-number">8.4</span> Interactions with dummy Variables</h2>
+<p>Thus far, we have only dealt with the additive effects of dummy variables. That is, the assumption has been that for each independent variable Xi, the amount of change in our dependent variable Y is the same regardless of the values of the other independent variables in the equation. That is to say, if the mean income is higher for males than for females, this is so regardless of race. What if you have a situation where White males earn more than White females, but African women and men tend to earn the same amount? This assumption that there is no interaction between our variables allows us to interpret the partial coefficients as the effect of a variable while controlling for the other independent variables in the model.</p>
+<p>The additive assumption, however, does not always hold. As we mentioned above, you may have an interaction between gender and race, where gender differences in income are different for different racial groups. In other words there may be interaction between the categorical variables <code>gender</code> and <code>w1_best_race</code>. More generally, when results indicate a statistically significant interaction effect between gender and race, the data suggests that being an “African Female” or a “White Male”, or any other combination of race and gender, is qualitatively different from being in both race and gender categories independently.</p>
+<p>We can illustrate what we mean by the additive effect of dummy variables in regression with the graphs below. Let’s assume we have a regression consisting of three variables: income is the dependent variable (Y) and age (X1) and gender(X2) are the dependent variables. Now, the two lines in the graph below give the relationship between income and age for men (top line) and women (bottom line). That is, because men on average earn more than women we would expect to find predicted regression lines like the ones below. However, notice that these lines are parallel with slope b1 (coefficient of age) and that we assumed in the regression that holding age constant men earn b2 Rand more than women.</p>
+<p><img src="images/reg1.png" width="80%" /></p>
+<p>This graph is not merely theoretical. We can easily reproduce it using our data:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dum&lt;-nids <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(sample1<span class="op">==</span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>(hhid, pid, hhrestrict, w1_best_race, age, educ.new, w1_fwag, w1_r_b4, gender, race) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">na.omit</span>()
+
+lmx &lt;-<span class="st"> </span><span class="kw">lm</span>(w1_fwag<span class="op">~</span>age<span class="op">+</span>gender, <span class="dt">data =</span> dum)
+<span class="kw">summary</span>(lmx)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = w1_fwag ~ age + gender, data = dum)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+##  -4812  -2454  -1517    373  85986 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   1858.95     390.89   4.756 2.05e-06 ***
+## age             55.26       9.55   5.786 7.79e-09 ***
+## genderFemale -1222.89     180.21  -6.786 1.34e-11 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 5465 on 3725 degrees of freedom
+## Multiple R-squared:  0.01963,    Adjusted R-squared:  0.01911 
+## F-statistic:  37.3 on 2 and 3725 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dum<span class="op">$</span>prediction&lt;-lmx<span class="op">$</span>fitted.values
+
+<span class="kw">ggplot</span>(dum, <span class="kw">aes</span>(<span class="dt">x =</span> age, <span class="dt">y =</span> prediction, <span class="dt">color=</span>gender))<span class="op">+</span>
+<span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span>
+<span class="kw">xlab</span>(<span class="st">&quot;Age in years&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Fitted values&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_classic</span>()</code></pre></div>
+<p><img src="08-multiple_regression_analysis_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p>It is important to realize that these two lines are parallel by construction. No matter what data we have, these lines are forced to be parallel by the way in which we include gender and age separately in our regression. At the risk of sounding repetitive, we force the difference in income between men and women to be exactly the same, after we have controlled for the other variables included in the regression (here only age). If we want to allow for this relationship to vary, we must use interaction terms.</p>
+<p>In the second graph below, we find a hypothetical interaction effect between age and gender. That is, the effect of age (slope of the line) on income depends on the gender of the individual. In this case, we find that the upper-most line on the graph has a steeper slope than the line below it, thus the effect of gender depends on the value of Xi – in this case, the gender of the individual. This is saying that we might have a situation where young men and women tend to earn similar amounts, but as people get older men’s income tend to increase by a greater amount every year than women’s income.</p>
+<p><img src="images/reg2.png" width="80%" /></p>
+<p>The above graph is simply a hypothetical example. Do you think that this relationship will be reflected in the data? Let’s see:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lmz &lt;-<span class="st"> </span><span class="kw">lm</span>(w1_fwag<span class="op">~</span>age<span class="op">*</span>gender, <span class="dt">data =</span> dum)
+<span class="kw">summary</span>(lmz)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = w1_fwag ~ age * gender, data = dum)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+##  -5479  -2303  -1548    351  85983 
+## 
+## Coefficients:
+##                  Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)        565.20     511.62   1.105   0.2693    
+## age                 88.50      12.77   6.928 5.00e-12 ***
+## genderFemale      1749.25     781.31   2.239   0.0252 *  
+## age:genderFemale   -75.00      19.19  -3.909 9.43e-05 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 5454 on 3724 degrees of freedom
+## Multiple R-squared:  0.02364,    Adjusted R-squared:  0.02285 
+## F-statistic: 30.06 on 3 and 3724 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dum<span class="op">$</span>prediction&lt;-lmz<span class="op">$</span>fitted.values
+
+<span class="kw">ggplot</span>(dum, <span class="kw">aes</span>(<span class="dt">x =</span> age, <span class="dt">y =</span> prediction, <span class="dt">color=</span>gender)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Age in years&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Fitted values&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_classic</span>()</code></pre></div>
+<p><img src="08-multiple_regression_analysis_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p>It appears as if there is a strong interaction between age and gender in this simple regression. The regression output and graph suggest that men and women start with a similar income level at a young age (25), but thereafter the average man’s income increases by R87 every year, while the average woman’s income increases by only R88.5-R75=R13.5 per year.</p>
+<p>Let’s return to our slightly more complete model and see whether we can use interaction between variables to improve our model. It is important however to always remember that just as you should not arbitrarily include new variables in your model without a theoretical justification; similarly you should never arbitrarily interact two variables without a good reason for doing so.</p>
+<p>In practice, creating an interaction term in R between two categorical variables is as easy as inserting an asterisk <span class="math inline">\(&quot;*&quot;\)</span> between the two variables you wish to interact. Understanding fully what you are doing is a little trickier. For instance, we might wish to interact gender (2 categories) with race (4 categories).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lm5 &lt;-<span class="st"> </span><span class="kw">lm</span>(w1_fwag<span class="op">~</span>educ.new<span class="op">+</span>age<span class="op">+</span><span class="kw">relevel</span>(race, <span class="st">&quot;White&quot;</span>)<span class="op">*</span>gender, <span class="dt">data =</span> dum)</code></pre></div>
+<p>Using <code>stargazer</code> package <span class="citation">(Hlavac <a href="#ref-R-stargazer">2018</a>)</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(stargazer)
+<span class="co">#summary(lm5)</span>
+<span class="kw">stargazer</span>(lm5, <span class="dt">type =</span> <span class="st">&quot;text&quot;</span>)</code></pre></div>
+<pre><code>## 
+## =======================================================================
+##                                                 Dependent variable:    
+##                                             ---------------------------
+##                                                       w1_fwag          
+## -----------------------------------------------------------------------
+## educ.new                                            461.210***         
+##                                                      (19.498)          
+##                                                                        
+## age                                                  99.577***         
+##                                                       (8.452)          
+##                                                                        
+## relevel(race, &quot;White&quot;)African                      -7,536.520***       
+##                                                      (366.344)         
+##                                                                        
+## relevel(race, &quot;White&quot;)Coloured                     -7,584.998***       
+##                                                      (407.904)         
+##                                                                        
+## relevel(race, &quot;White&quot;)Asian                        -3,416.403***       
+##                                                      (778.996)         
+##                                                                        
+## genderFemale                                       -5,522.407***       
+##                                                      (474.680)         
+##                                                                        
+## relevel(race, &quot;White&quot;)African:genderFemale         4,266.182***        
+##                                                      (509.259)         
+##                                                                        
+## relevel(race, &quot;White&quot;)Coloured:genderFemale        4,486.902***        
+##                                                      (572.918)         
+##                                                                        
+## relevel(race, &quot;White&quot;)Asian:genderFemale           4,646.987***        
+##                                                     (1,180.159)        
+##                                                                        
+## Constant                                           2,763.515***        
+##                                                      (591.960)         
+##                                                                        
+## -----------------------------------------------------------------------
+## Observations                                           3,728           
+## R2                                                     0.318           
+## Adjusted R2                                            0.316           
+## Residual Std. Error                            4,562.474 (df = 3718)   
+## F Statistic                                  192.537*** (df = 9; 3718) 
+## =======================================================================
+## Note:                                       *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
+<p>When interpreting regressions with interaction effects, we need to be careful to not just interpret the partial effects and ignore the interaction terms. The partial coefficients no longer “stand alone” and the interaction terms need to be incorporated into our explanations. For instance, we can say that White women earn R5522 less than White men, on average holding education and age constant, since White is the reference racial group. But if we compare African men to African women, we can say that African women earn R5522 - R4266 = R1256 less than African men. This gender difference in earnings is <strong>much smaller</strong> for Africans than for Whites. Previously, we were forcing it to be equal across racial categories. This is why it is so important to include these interactions in our regression!</p>
+<p>Provided we update our formula, we still calculate any estimated yhat value as normal. For example, if we were interested in calculating the income for an African female aged 35 with a 12 year level of education, we compute the following:</p>
+<p><span class="math inline">\(predicted income = 2763.515 + 461.2096(12) + 99.57732(35) - 7536.52(1) -5 522.407(1)+4266.182(1)\)</span></p>
+<p><span class="math inline">\(predicted income = 1731.95\)</span></p>
+<p><strong>5. In figuring out what predicts someone’s net pay, is there an interaction effect between education and gender? Compute a regression where education, age, gender and race are the independent variables explaining someone’s net pay. (Restrict your analysis to sample1).</strong></p>
+<p>Question 5 Answer</p>
+</div>
+<div id="linear-transformations-of-non-linear-relationships" class="section level2">
+<h2><span class="header-section-number">8.5</span> Linear transformations of non-linear relationships</h2>
+<p>Thus far, we have assumed linear relationships for all of our regression models. In fact, a linear relationship is a basic requirement for regression analysis. Empirically, however, variables are often not associated in a linear fashion. Yet this reality hardly precludes regression analyses from accurately predicting and describing real world phenomenon. In this section we will show you two basic approaches to dealing with non-linear relationships. The first method will be to include a quadratic term; and the second will use natural logarithms to improve our model. It will often be the case that we can use the natural logarithm of a term to transform a non-linear relationship into an approximately linear one and vastly improve the fit of a regression line. Note: Logarithmic and Quadratic transformations are not restricted to multiple regression, however, we have placed them in the multiple regression chapter because they are rather advanced topics and should only be addressed after one has a clear understanding of all of the material in chapters 7 and 8 prior to this section.</p>
+<p><strong>Transformations Using the Natural Logarithm</strong></p>
+<p>Often it is desirable to run a regression using the natural logarithm (a log to the base of the mathematical constant e) of a variable instead of the variable itself. The advantages of using logarithms include the following: 1. Firstly, logarithms transform a variable in such a way that the logged variable contains exactly the same information as the original variable but the influence of outliers is greatly diminished. This can sometimes drastically affect the slope of the regression line because the natural logarithm of a variable compresses the data and is much less sensitive to extreme observations than is the variable itself. 2. Secondly, taking logarithms of a variable allows us to interpret the relevant coefficients in our regression as percentage changes. 3. Thirdly, taking the logarithm of a variable can often make the distribution closer to a ‘normal’ distribution. 4. And lastly, if the relationship between a dependent variable and the independent variable is non-linear, making one or both of the variables logarithmic can sometimes produce a linear relationship. Therefore, although a linear relationship might not exist between two variables, a linear relationship might exist between the natural logarithms of the two variables.</p>
+<p>At the beginning of this chapter we hinted that the relationship between wage and education in our regression was non-linear. Let us examine the relationship between these two variables in more depth. If we type:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nids<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(educ.new)<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">Mean =</span> <span class="kw">mean</span>(w1_fwag, <span class="dt">na.rm=</span><span class="ot">TRUE</span>), <span class="dt">sd=</span><span class="kw">sd</span>(w1_fwag, <span class="dt">na.rm=</span><span class="ot">TRUE</span>))</code></pre></div>
+<pre><code>## # A tibble: 19 x 3
+##    educ.new   Mean     sd
+##       &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+##  1        0  1162.  1053.
+##  2        1  1292.  1032.
+##  3        2   992.   767.
+##  4        3  1282.  1222.
+##  5        4  1668.  3272.
+##  6        5  1228.  1003.
+##  7        6  1329.   988.
+##  8        7  1584.  2645.
+##  9        8  1698.  1668.
+## 10        9  1528.  1285.
+## 11       10  2396.  2438.
+## 12       11  2114.  2302.
+## 13       12  3862.  5485.
+## 14       13  4572.  4275.
+## 15       14  7417.  7834.
+## 16       15  8414.  5942.
+## 17       16 11163.  9193.
+## 18       17 22572. 17303.
+## 19       NA  1774.  2979.</code></pre>
+<p>The above data implies reveals that the returns to education are non-linear. In fact, earnings are fairly flat in early grades, but we see big increases from 9 to 10, 12 to 13 and for every additional year of tertiary education. Below we also reproduce the graph we generated in the beginning of this chapter, which corroborates our conclusions above.</p>
+<p><img src="08-multiple_regression_analysis_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p>As you have probably guessed by now, we can most likely improve the fit of our model by logging one or both of the variables. The distribution of the wage variable has been well researched and it has become common-practice to use a log transformation to make it ‘behave better’. Apart from the non-linear relationship between wage and education, we can see the benefit of logging the wage variable from the two graphs below. The first shows a density plot of the wage variable and the second shows a density plot of the transformed log-wage variable.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">kernel&lt;-nids <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(sample1<span class="op">==</span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>(hhid, w1_fwag, educ.new, sample1, age, race, gender) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">na.omit</span>()
+
+<span class="kw">library</span>(scales)</code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;scales&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:purrr&#39;:
+## 
+##     discard</code></pre>
+<pre><code>## The following object is masked from &#39;package:readr&#39;:
+## 
+##     col_factor</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(kernel, <span class="kw">aes</span>(<span class="dt">x =</span> w1_fwag)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_density</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks=</span><span class="kw">seq</span>(<span class="dv">0</span>,<span class="fl">0.0003</span>,<span class="fl">0.0001</span>), <span class="dt">labels =</span> comma) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks=</span><span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">100000</span>,<span class="dv">20000</span>), <span class="dt">labels =</span> comma) <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;Monthly take home pay from main job including BRACKETS&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_classic</span>()</code></pre></div>
+<p><img src="08-multiple_regression_analysis_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">kernel<span class="op">$</span>lnwage&lt;-<span class="kw">log</span>(kernel<span class="op">$</span>w1_fwag)
+<span class="kw">ggplot</span>(kernel, <span class="kw">aes</span>(<span class="dt">x =</span> lnwage)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_density</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_classic</span>()</code></pre></div>
+<p><img src="08-multiple_regression_analysis_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p>From these two graphs, it is immediately clear that the second has a far more ‘normal’ distribution and that since all the values are squashed closer together, outliers are unlikely to exert as great an influence on our regression. These two reasons, in addition to the nonlinear relationship between wage and education, as well as the precedent set in the literature, provide ample rationale for taking the log of our wage variable.</p>
+<p>Thus we are now going to investigate what happens if we include the logged wage variable in our simple linear regression with education as our independent variable:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lmy &lt;-<span class="st"> </span><span class="kw">lm</span>(lnwage<span class="op">~</span>educ.new, <span class="dt">data =</span> <span class="kw">subset</span>(kernel, <span class="dt">subset=</span>sample1 <span class="op">==</span><span class="dv">1</span>))
+<span class="kw">summary</span>(lmy)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = lnwage ~ educ.new, data = subset(kernel, subset = sample1 == 
+##     1))
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -4.2731 -0.5126 -0.0075  0.5421  3.4487 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 6.315605   0.033577  188.10   &lt;2e-16 ***
+## educ.new    0.136170   0.003301   41.25   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.8588 on 3726 degrees of freedom
+## Multiple R-squared:  0.3135, Adjusted R-squared:  0.3134 
+## F-statistic:  1702 on 1 and 3726 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>The R-squared value suggests that we have a much better fitting regression line when compared to a regression of <code>w1_fwag</code> on <code>educ_new</code> (see the first regression run in this chapter). In fact, a simple log transformation of the wage variable has increased the predictive power of our model from 15.63 to 31.34%! Let’s generate a new graph for this regression:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">kernel<span class="op">$</span>lnwage&lt;-<span class="kw">log</span>(kernel<span class="op">$</span>w1_fwag)
+
+lmy &lt;-<span class="st"> </span><span class="kw">lm</span>(lnwage<span class="op">~</span>educ.new, <span class="dt">data =</span> <span class="kw">subset</span>(kernel, <span class="dt">subset=</span>sample1<span class="op">==</span><span class="dv">1</span>))
+<span class="kw">summary</span>(lmy)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = lnwage ~ educ.new, data = subset(kernel, subset = sample1 == 
+##     1))
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -4.2731 -0.5126 -0.0075  0.5421  3.4487 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 6.315605   0.033577  188.10   &lt;2e-16 ***
+## educ.new    0.136170   0.003301   41.25   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.8588 on 3726 degrees of freedom
+## Multiple R-squared:  0.3135, Adjusted R-squared:  0.3134 
+## F-statistic:  1702 on 1 and 3726 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">kernel<span class="op">$</span>lmyhat&lt;-lmy<span class="op">$</span>fitted.values   <span class="co">#other predict options</span>
+
+kernel<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(sample1<span class="op">==</span><span class="dv">1</span>)<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(educ.new)<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">meanlnwage=</span><span class="kw">mean</span>(lnwage), <span class="dt">lmyhat=</span>lmyhat)<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(educ.new, lmyhat, meanlnwage)<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">gather</span>(<span class="dt">key =</span> type,<span class="dt">value=</span>value, <span class="op">-</span>educ.new)<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(., <span class="kw">aes</span>(educ.new,value, <span class="dt">color =</span> type)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values=</span><span class="kw">c</span>(<span class="st">&quot;red&quot;</span>,<span class="st">&quot;blue&quot;</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Recoded education&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_classic</span>()</code></pre></div>
+<p><img src="08-multiple_regression_analysis_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p>Transforming the wage variable has helped to linearise the data (the blue line) and so our linear model (red line) can produce a better fit!</p>
+<p>Now we regress <code>lnwage</code> on <code>educ_new</code> as well as our set of control variables.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lmy &lt;-<span class="st"> </span><span class="kw">lm</span>(lnwage<span class="op">~</span>educ.new<span class="op">+</span>age<span class="op">+</span><span class="kw">relevel</span>(race, <span class="st">&quot;White&quot;</span>)<span class="op">*</span>gender, <span class="dt">data =</span> <span class="kw">subset</span>(kernel, <span class="dt">subset=</span>sample1<span class="op">==</span><span class="dv">1</span>))
+<span class="co">#summary(lmy)</span>
+<span class="kw">stargazer</span>(lmy, <span class="dt">type=</span><span class="st">&quot;text&quot;</span>)</code></pre></div>
+<pre><code>## 
+## =======================================================================
+##                                                 Dependent variable:    
+##                                             ---------------------------
+##                                                       lnwage           
+## -----------------------------------------------------------------------
+## educ.new                                             0.133***          
+##                                                       (0.003)          
+##                                                                        
+## age                                                  0.022***          
+##                                                       (0.001)          
+##                                                                        
+## relevel(race, &quot;White&quot;)African                        -0.909***         
+##                                                       (0.061)          
+##                                                                        
+## relevel(race, &quot;White&quot;)Coloured                       -0.905***         
+##                                                       (0.067)          
+##                                                                        
+## relevel(race, &quot;White&quot;)Asian                           -0.164           
+##                                                       (0.129)          
+##                                                                        
+## genderFemale                                         -0.462***         
+##                                                       (0.079)          
+##                                                                        
+## relevel(race, &quot;White&quot;)African:genderFemale             0.025           
+##                                                       (0.084)          
+##                                                                        
+## relevel(race, &quot;White&quot;)Coloured:genderFemale            0.084           
+##                                                       (0.095)          
+##                                                                        
+## relevel(race, &quot;White&quot;)Asian:genderFemale               0.236           
+##                                                       (0.195)          
+##                                                                        
+## Constant                                             6.474***          
+##                                                       (0.098)          
+##                                                                        
+## -----------------------------------------------------------------------
+## Observations                                           3,728           
+## R2                                                     0.471           
+## Adjusted R2                                            0.469           
+## Residual Std. Error                              0.755 (df = 3718)     
+## F Statistic                                  367.382*** (df = 9; 3718) 
+## =======================================================================
+## Note:                                       *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
+<p>The Adjusted R-squared value is 0.4694, thus logging the wage variable appears to be advantageous. We need to be careful when we interpret the coefficients in this regression since our dependant variable is now in a different form. The coefficients should, in fact, be interpreted as rates of return. For example, the rate of return to education is 0.1326 - that is, an extra year of education will, on average and controlling for other variables, increase average wages by 13.26%.</p>
+<p><strong>Transformations using Squared Terms</strong></p>
+<p>You may remember that we previously noted that it may not make sense that as we get older we continue to earn more money. Researchers often include both age and age2 in regression models because it allows the effect of one-year increase in age to change as a person gets older. By including age squared, we are controlling for the idea that there comes a point in time after which age no longer provides an advantage in the workforce. That is, the effect of age is not likely to remain the same as we get older; after all, a 90 year old employee is likely to earn less, rather than more, than say a 60 year old. Therefore, by including age2, we allow for age to have a parabolic effect on income (think back to the simple parabolas you used to draw in school - first up and then down). We can see this relationship by plotting mean wage levels for every age group against age:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">kernel<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(age)<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean.wage.age=</span><span class="kw">mean</span>(w1_fwag, <span class="dt">na.rm=</span><span class="ot">TRUE</span>))<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(., <span class="kw">aes</span>(<span class="dt">x =</span> age, <span class="dt">y =</span> mean.wage.age)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Age in years&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;meanwage_age&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_classic</span>()</code></pre></div>
+<p><img src="08-multiple_regression_analysis_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<p>It is clear from this graph that the relationship between mean wages at every age and age is parabolic. So, let’s create a new age-squared variable in order to try to improve the fit of our regression.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">kernel&lt;-kernel<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">age2 =</span> age<span class="op">*</span>age)
+  
+lmy &lt;-<span class="st"> </span><span class="kw">lm</span>(lnwage<span class="op">~</span>educ.new<span class="op">+</span>age<span class="op">+</span>age2<span class="op">+</span><span class="kw">relevel</span>(race, <span class="st">&quot;White&quot;</span>)<span class="op">+</span>gender, <span class="dt">data =</span> kernel)
+<span class="co">#summary(lmy)</span>
+<span class="kw">stargazer</span>(lmy, <span class="dt">type=</span><span class="st">&quot;text&quot;</span>)</code></pre></div>
+<pre><code>## 
+## ==========================================================
+##                                    Dependent variable:    
+##                                ---------------------------
+##                                          lnwage           
+## ----------------------------------------------------------
+## educ.new                                0.132***          
+##                                          (0.003)          
+##                                                           
+## age                                     0.075***          
+##                                          (0.012)          
+##                                                           
+## age2                                    -0.001***         
+##                                         (0.0001)          
+##                                                           
+## relevel(race, &quot;White&quot;)African           -0.899***         
+##                                          (0.045)          
+##                                                           
+## relevel(race, &quot;White&quot;)Coloured          -0.872***         
+##                                          (0.050)          
+##                                                           
+## relevel(race, &quot;White&quot;)Asian              -0.077           
+##                                          (0.097)          
+##                                                           
+## genderFemale                            -0.426***         
+##                                          (0.025)          
+##                                                           
+## Constant                                5.441***          
+##                                          (0.236)          
+##                                                           
+## ----------------------------------------------------------
+## Observations                              3,728           
+## R2                                        0.473           
+## Adjusted R2                               0.472           
+## Residual Std. Error                 0.753 (df = 3720)     
+## F Statistic                     477.787*** (df = 7; 3720) 
+## ==========================================================
+## Note:                          *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
+<p>Let’s interpret our coefficients. We find that each year of education increases income by 13.18% on average. Looking at age, we see that coefficient on <code>age</code> is positive, but the coefficient on <code>age2</code> is negative. If you think back to the quadratic formula (<span class="math inline">\(ax^2 + bx + c\)</span>), this means that <strong>a</strong> is negative and <strong>b</strong> is positive. This suggests a parabolic influence of <code>age</code> on <code>lnwage</code> with a maximum at the turning point <span class="math inline">\(\frac{-b}{2a}\)</span>. In other words, every additional year of age increases wages up to the age of 58 and thereafter every additional year decreases wages. We calculate this turning point using the turning point formula (<span class="math inline">\(\frac{-b}{2a}\)</span>), which for our <code>age</code> and <code>age2</code> coefficients is:</p>
+<p><span class="math inline">\(\frac{-0.0751816}{2*(-0.0006515)}\)</span></p>
+<p>We can also get a graphical idea of what is going on if we look at a simple regression of wage on age:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lmz &lt;-<span class="st"> </span><span class="kw">lm</span>(w1_fwag<span class="op">~</span>age, <span class="dt">data =</span> kernel)
+kernel<span class="op">$</span>lmzhat&lt;-lmz<span class="op">$</span>fitted.values
+
+kernel<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(age)<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">mean.wage.age=</span><span class="kw">mean</span>(w1_fwag, <span class="dt">na.rm=</span><span class="ot">TRUE</span>))<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(age, mean.wage.age, lmzhat)<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">gather</span>(<span class="dt">key =</span> type,<span class="dt">value=</span>value, <span class="op">-</span>age)<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(., <span class="kw">aes</span>(age,value, <span class="dt">color =</span> type)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values=</span><span class="kw">c</span>(<span class="st">&quot;red&quot;</span>,<span class="st">&quot;blue&quot;</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Age in years&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_classic</span>()</code></pre></div>
+<p><img src="08-multiple_regression_analysis_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<p>As expected the linear predicted values are poor estimates for the actual income values. Let’s see whether included the age-squared variable in the regression improves the fit of the predicted values.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">kernel&lt;-kernel<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">age2 =</span> age<span class="op">*</span>age)
+
+lmz &lt;-<span class="st"> </span><span class="kw">lm</span>(w1_fwag<span class="op">~</span>age <span class="op">+</span><span class="st"> </span>age2, <span class="dt">data =</span> kernel)
+kernel<span class="op">$</span>lmzhat&lt;-lmz<span class="op">$</span>fitted.values
+
+kernel<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(age)<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">mean.wage.age=</span><span class="kw">mean</span>(w1_fwag, <span class="dt">na.rm=</span><span class="ot">TRUE</span>))<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(age, mean.wage.age, lmzhat)<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">gather</span>(<span class="dt">key =</span> type,<span class="dt">value=</span>value, <span class="op">-</span>age)<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(., <span class="kw">aes</span>(age,value, <span class="dt">color =</span> type)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values=</span><span class="kw">c</span>(<span class="st">&quot;red&quot;</span>,<span class="st">&quot;blue&quot;</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Age in years&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_classic</span>()</code></pre></div>
+<p><img src="08-multiple_regression_analysis_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<p>Much better! Also, you may have found that many of the ideas learnt in these chapters simpler to understand when they were expressed as graphs. There is a lesson here. As they say, a picture says a thousand words. Even though you are now starting to become more familiar with more complicated statistical analysis, such as multiple regression, you should never overlook the power of simple descriptive statistics and graphical representations of the data. In fact, it is a common mistake that people jump into complicated statistical analysis without getting properly acquainted with their data. This can lead to rubbish results which could have been easily avoided.</p>
+<p>Nevertheless, since you have now completed this course, we are sure that you are well on your way to doing some fantastic statistical research and will be able to avoid many of the potential pitfalls! But before you do, quickly try the exercises to make sure you are comfortable with these new methods and to explore some slightly more complicated ideas. Good luck!</p>
+</div>
+<div id="question-answers-6" class="section level2">
+<h2><span class="header-section-number">8.6</span> Question Answers</h2>
+</div>
+<div id="exercises-6" class="section level2">
+<h2><span class="header-section-number">8.7</span> Exercises</h2>
+<p><strong>1. What effect does being Indian/Asian have on household size, in comparison to being Coloured?</strong></p>
+<p>Exercise 1 Answer</p>
+<p><strong>2. Regress household expenditure on household income and number of rooms in the house. What exactly are the F and t statistics testing in this regression? (Difficult)</strong></p>
+<p>Exercise 2 Answer</p>
+<p><strong>3. Households speaking which language have the lowest total monthly expenditure (controlling for total monthly income)? What about the lowest?</strong></p>
+<p>Exercise 3 Answer</p>
+<p><strong>4. Graph total monthly nonfood expenditure on total monthly household income. Now logarithmically transform both variables and graph them. Which do you think will produce a stronger regression model? Now run the regression with the original variables and the log transformed ones. Were you right? Why or why not?</strong></p>
+<p>Exercise 4 Answer</p>
+</div>
+<div id="exercise-answers-5" class="section level2">
+<h2><span class="header-section-number">8.8</span> Exercise answers</h2>
+</div>
+<div id="session-information-6" class="section level2">
+<h2><span class="header-section-number">8.9</span> Session information</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">sessionInfo</span>(), <span class="dt">locale =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<pre><code>## R version 3.5.1 (2018-07-02)
+## Platform: x86_64-w64-mingw32/x64 (64-bit)
+## Running under: Windows 7 x64 (build 7601) Service Pack 1
+## 
+## Matrix products: default
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] scales_0.5.0    stargazer_5.2.2 bindrcpp_0.2.2  forcats_0.3.0  
+##  [5] stringr_1.3.1   dplyr_0.7.6     purrr_0.2.5     readr_1.1.1    
+##  [9] tidyr_0.8.1     tibble_1.4.2    ggplot2_3.0.0   tidyverse_1.2.1
+## [13] foreign_0.8-70 
+## 
+## loaded via a namespace (and not attached):
+##  [1] tidyselect_0.2.4 xfun_0.2         reshape2_1.4.3   haven_1.1.2     
+##  [5] lattice_0.20-35  colorspace_1.3-2 htmltools_0.3.6  yaml_2.1.19     
+##  [9] utf8_1.1.4       rlang_0.2.1      pillar_1.2.3     withr_2.1.2     
+## [13] glue_1.2.0       modelr_0.1.2     readxl_1.1.0     bindr_0.1.1     
+## [17] plyr_1.8.4       munsell_0.5.0    gtable_0.2.0     cellranger_1.1.0
+## [21] rvest_0.3.2      psych_1.8.4      evaluate_0.10.1  labeling_0.3    
+## [25] knitr_1.20       parallel_3.5.1   broom_0.4.5      Rcpp_0.12.17    
+## [29] backports_1.1.2  jsonlite_1.5     mnormt_1.5-5     hms_0.4.2       
+## [33] digest_0.6.15    stringi_1.1.7    bookdown_0.7     grid_3.5.1      
+## [37] rprojroot_1.3-2  cli_1.0.0        tools_3.5.1      magrittr_1.5    
+## [41] lazyeval_0.2.1   crayon_1.3.4     pkgconfig_2.0.1  xml2_1.2.0      
+## [45] lubridate_1.7.4  assertthat_0.2.0 rmarkdown_1.10   httr_1.3.1      
+## [49] rstudioapi_0.7   R6_2.2.2         nlme_3.1-137     compiler_3.5.1</code></pre>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-R-stargazer">
+<p>Hlavac, Marek. 2018. <em>Stargazer: Well-Formatted Regression and Summary Statistics Tables</em>. <a href="https://CRAN.R-project.org/package=stargazer" class="uri">https://CRAN.R-project.org/package=stargazer</a>.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="simple-regression-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="further-analysis-and-useful-online-resources.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

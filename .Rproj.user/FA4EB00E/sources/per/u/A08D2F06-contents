@@ -1,0 +1,69 @@
+library(sitar)
+#> Loading required package: nlme
+#> Loading required package: splines
+ff <- na.omit(berkeley[berkeley$sex == 2 & berkeley$age >= 8 & berkeley$age <= 18, 
+                       c('id', 'age', 'height')])
+fh1 <- sitar(x = age, y = height, id = id, data = ff, df = 5)
+
+
+par(mar = c(4,4,1,1) + 0.1, cex = 0.8)
+mplot(x = age, y = height, id = id, data = ff, col = id, las = 1)
+plot(fh1, opt = 'a', col = id, las = 1, xlim = xaxsd(), ylim = yaxsd())
+
+par(mar = c(4,4,1,1) + 0.1, cex = 0.8)
+plot(fh1, opt = 'd', las = 1, apv = TRUE)
+plot(fh1, opt = 'v', las = 1, apv = TRUE, lty = 2)
+
+par(mar = c(4,4,1,1) + 0.1, cex = 0.8)
+plot(fh1, opt = 'u', las = 1, col = 8, lwd = 0.5)
+lines(fh1, opt = 'd', lty = 2)
+lines(fh1, opt = 'ua', col = id, subset = id == 310 | id == 355)
+legend('bottomright', c('id 310', 'mean', 'id 355'), lty = c(1, 2, 1), col = c(4, 1, 2), cex = 0.8, inset=0.04)
+pairs(ranef(fh1), labels = c('size', 'timing', 'intensity'), pch=20)
+
+
+ranef(fh1)
+
+
+
+
+## fit sitar model
+m1 <- sitar(x=age, y=height, id=id, data=heights, df=4)
+
+## draw fitted distance and velocity curves
+## with velocity curve in blue
+## adding age at peak velocity
+plot(m1, y2par=list(col='blue'), apv=TRUE)
+
+## draw individually coloured growth curves adjusted for random effects
+## using same x-axis limits as for previous plot
+plot(m1, opt='a', col=id, xlim=xaxsd())
+
+## add mean curve in red
+lines(m1, opt='d', col='red', lwd=2)
+
+## add mean curve for a, b, c = -1 SD
+lines(m1, opt='d', lwd=2, abc=-sqrt(diag(getVarCov(m1))))
+
+## draw fitted height distance curves coloured by subject, using ggplot
+## Not run: 
+require(ggplot2)
+ggplot(plot_D(m1), aes(.x, .y, colour=.id)) +
+  labs(x='age', y='height') +
+  geom_line(show.legend=FALSE)
+
+
+
+plot_d(m1)
+
+plot_v(m1)
+
+plot_D(x, ...)
+
+plot_V(x, ...)
+
+plot_u(x, ...)
+
+plot_a(x, ...)
+
+plot_c(x, ...)

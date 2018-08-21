@@ -1,0 +1,16 @@
+new_session: yes
+
+rmd_files: [
+  "index.Rmd",
+
+  "01-intro_r.Rmd",
+  "02-getstarted_r.Rmd",
+  "03-understand_dist.Rmd",
+  "04-understand_graphs.Rmd",
+  "05-central_tendency.Rmd",
+  "06-bivariate_analysis.Rmd",
+  "07-simple_regression_analysis.Rmd",
+  "08-multiple_regression_analysis.Rmd",
+  "09-further-analyses-additional-resources.Rmd",
+  "10-references.Rmd",
+  ]

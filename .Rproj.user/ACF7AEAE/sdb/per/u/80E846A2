@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "library(dplyr)\nlibrary(ggplot2)\nlibrary(sjmisc)\n#library(tidyverse)\n\nnids<-read.dta(\"./nids-data/nids_course_data/nids.dta\", convert.factors = FALSE)\n\nnids<-nids%>% \n  arrange(hhid, pid)%>%\n  group_by(hhid) %>%\n  mutate(hhrestrict = 1:n()) %>%\n  mutate(hhrestrict = ifelse(hhrestrict==1,1,0))\n\nnids <- nids%>%\n  mutate(race = w1_best_race,\n         age = w1_r_best_age_yrs,\n         gender = w1_r_b4,\n         province = w1_hhprov, \n         hhincome = w1_hhincome)\n\nnids$race = factor(nids$race, levels = 1:4, labels = c(\"African\", \"Coloured\",\"Asian\", \"White\"))\nnids$gender = factor(nids$gender, levels = 1:2, labels = c(\"Male\", \"Female\"))\n\n\nnids$gender<-factor(nids$gender, levels = 1:2, labels = c(\"Male\", \"Female\"))\nnids$phealth<-ifelse(nids$w1_a_j1>0, nids$w1_a_j1, NA)\nnids$phealth<-factor(nids$phealth, levels=1:5, labels=c(\"Excellent\", \"Very Good\", \"Good\", \"Fair\", \"Poor\"))\n\nlibrary(descr)\n#library(gmodels)\nCrossTable(nids$gender, nids$phealth)\n\n\nnids<-nids%>%\n  group_by(hhid)%>%\n  mutate(maxage = max(w1_r_best_age_yrs, na.rm = T))\n\nnids$w1_hhgeo<-factor(nids$w1_hhgeo, levels = 1:4, labels = c(\"Rural formal\", \"Tribal authority\", \"Urban formal\", \"Urban informal\"))\n\nhead(nids[,c(\"hhid\", \"w1_r_best_age_yrs\", \"maxage\")], n = 25L)\n\nnids_max_age<-nids%>%\n  filter(hhrestrict==1)\n\nCrossTable(nids_max_age$maxage, nids_max_age$w1_hhgeo, expected = FALSE, prop.r = FALSE, prop.c = FALSE, prop.t = FALSE,prop.chisq = FALSE)\n\nnids_max_age80<-nids%>%\n  filter(hhrestrict==1 & maxage>80)\n\nCrossTable(nids_max_age80$maxage, nids_max_age80$w1_hhgeo, expected = FALSE, prop.r = FALSE, prop.c = FALSE, prop.t = FALSE,prop.chisq = FALSE)\n\nnids$race.gender<-paste(nids$race,nids$gender, sep = \"\")\ntable(nids$race.gender)\ntable(nids$w1_a_m5)\n\nCrossTable(nids$race, nids$gender, expected = FALSE, prop.r = FALSE, prop.c = FALSE, prop.t = FALSE,prop.chisq = FALSE)\n\n\nCrossTable(nids$w1_a_m5, nids$race.gender, expected = FALSE, prop.r = FALSE, prop.c = FALSE, prop.t = FALSE, prop.chisq = FALSE)\n\nCrossTable(nids$race.gender, nids$w1_r_b4)\n",
+    "created" : 1488575766347.000,
+    "dirty" : true,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "3856866893",
+    "id" : "80E846A2",
+    "lastKnownWriteTime" : 3419473789575321445,
+    "last_content_update" : 1488577542685,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

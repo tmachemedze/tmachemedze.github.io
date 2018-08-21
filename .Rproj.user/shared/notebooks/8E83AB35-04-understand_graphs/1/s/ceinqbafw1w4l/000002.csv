@@ -1,0 +1,3 @@
+"0","nids<-nids %>%"
+"0","  mutate(alc = ifelse(adult20==1, alc, NA)) %>%"
+"0","  mutate(alc = factor(alc, levels = 1:4, labels = c(""Never drank alcohol"", ""Drink rarely"",""Frequent drinkers"", ""Very frequent drinkers"")))"
