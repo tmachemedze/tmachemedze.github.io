@@ -6,6 +6,10 @@ site: bookdown::bookdown_site
 output:
   bookdown::pdf_book: 
   bookdown::gitbook: default
+    config:
+      sharing:
+        facebook: false
+          twitter: false
 documentclass: book
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
